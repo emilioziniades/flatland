@@ -5,6 +5,14 @@
  */
 
 module.exports = {
+	siteMetadata: {
+	    title: `Flatland`,
+	    siteUrl: `https://www.flatland.gq`,
+	    description: `Collaborative blockchain pixel art`,
+	  },
   /* Your site config here */
-  plugins: [],
+	plugins: [
+		`gatsby-plugin-react-helmet`,
+		`gatsby-plugin-styled-components`,
+	]
 }
