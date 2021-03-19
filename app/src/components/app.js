@@ -8,7 +8,6 @@ import Header from './header';
 import Hero from './hero';
 import Canvas from './canvas';
 import SquareManager from './squareManager';
-import { async } from "@ungap/global-this";
 
 export default class App extends React.Component {
 
