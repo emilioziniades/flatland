@@ -19,8 +19,17 @@ module.exports = {
 			resolve: `gatsby-source-filesystem`,
 			options: {
 			  name: `images`,
-			  path: `./src/images`,
+			  path: `${__dirname}/src/images`,
 			}
+		  },
+		  {
+			resolve: `gatsby-plugin-manifest`,
+			options: {
+			  name: `Flatland Crypto Art`,
+			  short_name: `Flatland`,
+			  start_url: `/`,
+			  icon: `src/images/favicon.png`, // This path is relative to the root of the site.
+			},
 		  },
 	]
 }

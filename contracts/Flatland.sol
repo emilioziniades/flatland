@@ -9,29 +9,29 @@ contract Flatland is ERC721 {
   constructor() ERC721("Flatland", "FLATLAND") public {
   }
 
-  event NewSquare(uint squareId, string color);
+  event NewSquare(uint256 squareId, uint256 color);
 
-  uint maxLength = 256;
-  uint maxSquares = maxLength ** 2;
+  uint256 maxLength = 16;
+  uint256 maxSquares = maxLength ** 2;
 
-  struct Square {
-    string colour;
-  }
+  // Using 32 bit numbers instead of 256, to ensure smallest possible database size
+  uint256[] public squares;
 
-  string[] public squares;
+  // Mapping recording the existence of each square by ID
+  mapping (uint256 => bool) _squareExists;
 
-  mapping(uint => bool) _squareExists;
-  mapping (uint => address) public squareToOwner;
-  mapping (address => uint) public ownerSquareCount;
-  mapping (uint => string) squareColour;
+  // Mapping from square ID to owner address
+  mapping (uint256 => address) public squareToOwner;
 
-  function mint(string memory _colour) public canvasHasSpace ownsNoSquares {
+  // Mapping from owner address to square count
+  mapping (address => uint256) public ownerSquareCount;
 
-    // No one should own more than one square
-    require(ownerSquareCount[msg.sender] == 0, 'Each address may only own one square');
+
+  // Note: ownsNoSquares modifier is omitted from this function for testing purposes
+  function mint(uint256 _colour) public canvasHasSpace  {
 
     squares.push(_colour);
-    uint id = squares.length;
+    uint256 id = squares.length;
     squareToOwner[id] = msg.sender;
     ownerSquareCount[msg.sender].add(1);
     _squareExists[id] = true;
@@ -46,16 +46,46 @@ contract Flatland is ERC721 {
     emit NewSquare(id, _colour);
   }
 
-  function changeColour(uint _id, string memory _newColour) public OnlyOwner(_id) {
+  function changeColour(uint256 _id, uint256 _newColour) public OnlyOwner(_id) {
     squares[_id - 1] = _newColour;
   }
+
+  function getSquares() public view returns(uint256[] memory) {
+    return squares;
+  }
+
+  // Returns square IDs. IDs start at 1.
+  function getSquaresIdsByOwner(address _owner) public view returns(uint256[] memory) {
+    uint256[] memory result = new uint256[](balanceOf(_owner));
+    uint counter = 0;
+    for (uint i = 0; i < squares.length; i++) {
+      if (ownerOf(i + 1) == _owner) {
+        result[counter] = i + 1;
+        counter++;
+      }
+    }
+    return result;
+  }
+
+  function getSquareColoursFromIds(uint256[] memory _squareIds) public view returns (uint256[] memory) {
+    uint256[] memory result = new uint256[](_squareIds.length);
+    uint counter = 0;
+    for (uint i = 0; i <_squareIds.length; i++) {
+      uint squareId = _squareIds[i];
+      uint squareColour = squares[squareId - 1];
+      result[counter] = squareColour;
+      counter++;
+    }
+    return result;
+  }
+
 
 function getMaxSupply() public view returns(uint) {
   return maxSquares;
 }
 
-function getOwnerSquareCount(address _owner) public view returns(uint) {
-  return ownerSquareCount[_owner];
+function getOwnerSquareCount(address _owner) public view returns(uint256) {
+  return balanceOf(_owner);
 }
 
   modifier canvasHasSpace {
@@ -63,11 +93,11 @@ function getOwnerSquareCount(address _owner) public view returns(uint) {
       _;
   }
   modifier ownsNoSquares {
-      require(ownerSquareCount[msg.sender] == 0);
+      require(balanceOf(msg.sender) < 1, 'Each account may only own one square');
       _;
   }
 
-  modifier OnlyOwner (uint _id) {
+  modifier OnlyOwner (uint256 _id) {
     require(msg.sender == squareToOwner[_id]);
     _;
   }

@@ -1,146 +1,101 @@
-import React from "react";
-import { Container, Row } from "react-bootstrap";
-import { ethers } from "ethers";
-import $ from "jquery"
+import React, { useState, useEffect, useReducer, createContext } from "react"
+import { Container } from "react-bootstrap"
+import { ethers } from "ethers"
 
-import Flatland from "../../../build/contracts/Flatland.json";
-import Header from './header';
-import Hero from './hero';
-import Canvas from './canvas';
-import SquareManager from './squareManager';
+import Flatland from "../../../build/contracts/Flatland.json"
+import Header from './header'
+import Hero from './hero'
+import Canvas from './canvas'
+import SquareManager from './squareManager'
+import { BlockchainContext } from './BlockchainContext'
 
-export default class App extends React.Component {
+import { blockchainReducer } from '../utils/blockchainUtils'
+import { bigNumberToHexColour, bigNumberToNumber } from '../utils/utilityFunctions'
 
-    constructor(props) {
-        super(props);
-        this.state = {       
-        account: '',
+/*
+
+MNEMONIC USED FOR TESTING PURPOSES: 
+roof gasp satisfy cause gather frequent forget swim swarm real unaware video
+
+ */
+
+const App = () => {
+
+    const initialState = {
+        connected: false,
         contract: null,
-        totalSupply: 0,
+        provider: null,
         squares: [],
-        ownedSquares: 0
-        };
+        totalSupply: 0,
+        maxSupply: 0,
+        account: '',
+        ownedSquares: []
+
     }
+    let [state, dispatch] = useReducer(blockchainReducer, initialState)
 
-        loadBlockchain = async() => {
-            console.log("Button clicked!");
-            if (window.ethereum) { 
-                console.log("Found window.ethereeum")
-                await window.ethereum.enable();
-                // A Web3Provider wraps a standard Web3 provider, which is
-                // what Metamask injects as window.ethereum into each page
-                const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const {connected, contract, provider, squares, totalSupply, maxSupply, account, ownedSquares} = state
 
-                // The Metamask plugin also allows signing transactions to
-                // send ether and pay to change state within the blockchain.
-                // For this, you need the account signer...
-                const signer = provider.getSigner(0)
-    
-                // JsonRpcProvider defaults to localhost:8545
-                const providerRpc = new ethers.providers.JsonRpcProvider();
-                const signerRpc = providerRpc.getSigner();
-                
+   //Hook to listen for new squares
+    useEffect(() => {
+        const interval = setInterval(() => {
+            //Updates squares every second
+            // listenForSquares()
+            // updateSquares()
+        }, 1000);
+            return () => clearInterval(interval)
+    })
 
-                // update account
-                const account = await signer.getAddress()
-                this.setState({account})
-
-                // update nework
-                const networkId = await providerRpc.send('net_version', [])
-                const networkData = Flatland.networks[networkId]
-                if(networkData) {
-                    const abi = Flatland.abi;
-                    const address = networkData.address;
-
-                    // CHANGE THIS TO FIT WITH ETHERS
-                    const contract = new ethers.Contract(address, abi, signer)
-                    this.setState({contract})
-
-                    // contract.mint("#444555")
-                    // contract.mint("#444555")
-                    const totalSupply = await contract.totalSupply()
-                    this.setState({ totalSupply })
-
-                    //Load colours
-                    for (var i = 1; i <= totalSupply; i++) {
-                      const square = await contract.squares(i-1)
-                      console.log(square)
-                      const localSquares = this.state.squares;
-                      localSquares.push(square)
-                      this.setState({squares: localSquares})
-                    }
-                    this.colourCanvas()
-                }
-                else {
-                    window.alert('Smart contract not deployed to detected network.')
-                }
-
-
+    const listenForSquares = async () => {
+        if (state.contract) {
+            const filter = {
+                address: state.contract.address,
+                topics: [
+                ethers.utils.id("NewSquare(uint256,uint256)")
+                ]
             }
-            else if (window.web3) {
-                console.log("we got a window.web3");
-            }
-            else {
-                window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-                console.log('No wallet found');
-            }
-    }
-        colourCanvas = async() => {
-        for (var i = 1; i <= this.state.totalSupply; i++ ) {
-          const square = await this.state.squares[i-1]
-          const nodeId = "#node-".concat(i)
-          console.log(nodeId)
-          console.log(square)
-          $(nodeId).css("background-color", square)
-        }
-      }
-        mint = (square) => {
-                if (this.state.contract) {
-                  this.state.contract.mint(square)
-                  .then('receipt', (receipt) => {
-                    this.setState({
-                      squares: [...this.state.squares, square],
-                      totalSupply: this.state.totalSupply + 1
-                    })
-                    //  ** Different way of changing total supply state? **
-                    // this.state.contract.methods.totalSupply().call().then((result) => {
-                    //   this.setState({ totalSupply: result })
-                    // })
-                  })
-            
-                }
-                else {console.log("Contract not found!")}
-            
-                // Event listener that updates squares once minted
-                // this.state.contract.events.NewSquare()
-                //   .on("data", async() => {
-                //     this.colourCanvas()
-                //   }
-                // )
+            state.provider.once(filter, (event) => {
+                // updateSquares()
+            })
 
         }
+    }
 
-    render() {
+    const changeColour = async (squareId, squareColour) => {
+
+            if (state.contract) {
+
+                console.log(squareId)
+                console.log(squareColour)
+
+                await state.contract.changeColour(squareId, squareColour)
+
+                const newSquareArray = state.squares
+                newSquareArray[squareId - 1] = squareColour
+
+                // setFlatlandState(prevState => {
+                //     return {
+                //         ...flatlandState,
+                //         squares: newSquareArray
+
+                //     }
+                // })
+
+              }
+            else {console.log("Contract not found!")}
+    }
+
         return(
-        <div>
-        < Header 
-            loadBlockchain={this.loadBlockchain}
-            account={this.state.account}/>                    
+        <BlockchainContext.Provider value={{state, dispatch}}>
+        <Header/>                    
         <Container>
-            <Row>
-                <Hero />
-            </Row>
-            <Row>
-                <Canvas />
-            </Row>
-            <hr />
-            <Row>
-                <SquareManager 
-                    account={this.state.account} 
-                    squares={this.state.squares}
-                    mint={this.mint} />
-            </Row>
+            <Hero />
+            <Canvas/>                    
+            <hr/>
+            <SquareManager />
+            
         </Container>
-        </div>)
+        </BlockchainContext.Provider>)
     }
-}
+
+export default App

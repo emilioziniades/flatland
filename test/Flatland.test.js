@@ -1,5 +1,5 @@
-const { describe, it } = require('@ungap/global-this');
 const { assert } = require('chai')
+const BigNumber = require('bignumber.js');
 
 const Flatland = artifacts.require('./Flatland.sol')
 
@@ -35,7 +35,7 @@ contract('Flatland', (accounts) => {
 
     describe('minting', async() => {
         it('creates a new token', async() => {
-            const result = await contract.mint('#BBBBBB')
+            const result = await contract.mint(0xBBBBBB)
             const totalSupply = await contract.totalSupply()
            
             // SUCCESS
@@ -46,19 +46,22 @@ contract('Flatland', (accounts) => {
             assert.equal(event.to, accounts[0], 'to is correct')
         })
 
-        // it('prevents someone from obtaining more squares', async() => {
-        //     const count = await contract.getOwnerSquareCount(accounts[0])
-        //     console.log(count)
-        //     await contract.mint('#CCCCCC').should.be.rejected;
-        // })
+        it('updates owner square count', async() => {
+            const ownerSquareCount = await contract.balanceOf(accounts[0])
+            assert.equal(ownerSquareCount, 1)
+        })
+
+        it('prevents someone from obtaining more squares', async() => {
+            await contract.mint('#CCCCCC').should.be.rejected;
+        })
 
         })
     
     describe('indexing', async () => {
         it('lists squares', async() => {
-            await contract.mint('#FAC8CD')
-            await contract.mint('#98B6B1')
-            await contract.mint('#629677')
+            await contract.mint(0xFAC8CD, { from: accounts[1]})
+            await contract.mint(0x98B6B1, { from: accounts[2]})
+            await contract.mint(0x629677, { from: accounts[3]})
 
             const totalSupply = await contract.totalSupply()
 
@@ -70,8 +73,21 @@ contract('Flatland', (accounts) => {
                 result.push(square)
             }
 
-            let expected = ['#BBBBBB','#FAC8CD', '#98B6B1', '#629677']
+            let expected = [0xBBBBBB,0xFAC8CD, 0x98B6B1, 0x629677]
             assert.equal(result.join(','), expected.join(','))
+        })
+
+        it('can fetch squares by owner', async() => {
+            const squareIds = await contract.getSquaresIdsByOwner(accounts[0])
+            assert.equal(squareIds, 1)
+
+            const ownerSquareColours = await contract.getSquareColoursFromIds(squareIds)
+            assert.equal(ownerSquareColours, 0xBBBBBB)
+        })
+        
+        it('can fetch max supply', async () => {
+            const maxSupply = await contract.getMaxSupply()
+            assert.equal(256, maxSupply)
         })
     })
 
@@ -81,9 +97,9 @@ contract('Flatland', (accounts) => {
 
             //Change colour of first square
 
-            contract.changeColour(1, "#CCCCCC")
+            await contract.changeColour(1, 0xCCCCCC)
             squareOne = await contract.squares(0)
-            assert.equal(squareOne, "#CCCCCC")
+            assert.equal(squareOne.toNumber(), 0xCCCCCC)
             
         })
 
@@ -99,12 +115,9 @@ contract('Flatland', (accounts) => {
                 result.push(square)
             }
 
-            let expected = ['#CCCCCC','#FAC8CD', '#98B6B1', '#629677']
+            let expected = [0xCCCCCC,0xFAC8CD, 0x98B6B1, 0x629677]
             assert.equal(result.join(','), expected.join(',') )
         })
-
-
-
 
 
 

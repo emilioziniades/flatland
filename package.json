@@ -3,6 +3,8 @@
     "@openzeppelin/contracts": "^3.4.1",
     "@ungap/global-this": "^0.4.4",
     "@web3-react/core": "^6.1.9",
+    "bignumber": "^1.1.0",
+    "bignumber.js": "^9.0.1",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "ethers": "^5.0.32",
