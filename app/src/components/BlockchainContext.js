@@ -1,5 +1,5 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 
-const BlockchainContext = React.createContext(null);
+const BlockchainContext = createContext(null);
 
 export { BlockchainContext };

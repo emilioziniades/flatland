@@ -31,7 +31,7 @@ const Square = (props) => {
 
 const Canvas = (props) => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
+    const { state } = useContext(BlockchainContext)
 
     const grid = [];
     for (let row = 0; row < gridLength; row++) {
@@ -48,7 +48,7 @@ const Canvas = (props) => {
             return () => { clearInterval(interval) };
     },
     //Only colours canvas if squares have changed
-    [state.squares])
+    [state.squares, colourCanvas])
 
     function colourCanvas() {
 

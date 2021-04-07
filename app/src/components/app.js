@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useReducer, createContext } from "react"
+import React, { useReducer } from "react"
 import { Container } from "react-bootstrap"
-import { ethers } from "ethers"
 
-import Flatland from "../../../build/contracts/Flatland.json"
 import Header from './header'
 import Hero from './hero'
 import Canvas from './canvas'
 import SquareManager from './squareManager'
 import { BlockchainContext } from './BlockchainContext'
-
 import { blockchainReducer } from '../utils/blockchainUtils'
-import { bigNumberToHexColour, bigNumberToNumber } from '../utils/utilityFunctions'
 
 /*
 
@@ -32,70 +28,21 @@ const App = () => {
         ownedSquares: []
 
     }
-    let [state, dispatch] = useReducer(blockchainReducer, initialState)
 
-    const {connected, contract, provider, squares, totalSupply, maxSupply, account, ownedSquares} = state
-
-   //Hook to listen for new squares
-    useEffect(() => {
-        const interval = setInterval(() => {
-            //Updates squares every second
-            // listenForSquares()
-            // updateSquares()
-        }, 1000);
-            return () => clearInterval(interval)
-    })
-
-    const listenForSquares = async () => {
-        if (state.contract) {
-            const filter = {
-                address: state.contract.address,
-                topics: [
-                ethers.utils.id("NewSquare(uint256,uint256)")
-                ]
-            }
-            state.provider.once(filter, (event) => {
-                // updateSquares()
-            })
-
-        }
-    }
-
-    const changeColour = async (squareId, squareColour) => {
-
-            if (state.contract) {
-
-                console.log(squareId)
-                console.log(squareColour)
-
-                await state.contract.changeColour(squareId, squareColour)
-
-                const newSquareArray = state.squares
-                newSquareArray[squareId - 1] = squareColour
-
-                // setFlatlandState(prevState => {
-                //     return {
-                //         ...flatlandState,
-                //         squares: newSquareArray
-
-                //     }
-                // })
-
-              }
-            else {console.log("Contract not found!")}
-    }
+    const [state, dispatch] = useReducer(blockchainReducer, initialState)
 
         return(
-        <BlockchainContext.Provider value={{state, dispatch}}>
-        <Header/>                    
-        <Container>
-            <Hero />
-            <Canvas/>                    
-            <hr/>
-            <SquareManager />
-            
-        </Container>
-        </BlockchainContext.Provider>)
-    }
+            <BlockchainContext.Provider value={{ state, dispatch }}>
+            <Header/>                    
+            <Container>
+                <Hero />
+                <Canvas/>                    
+                <hr/>
+                <SquareManager />
+                
+            </Container>
+            </BlockchainContext.Provider>
+        )   
+}
 
 export default App

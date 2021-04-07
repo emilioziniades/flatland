@@ -29,6 +29,7 @@ export default function ManageForm(props) {
         const receipt = await tx.wait(1)
 
         console.log(tx)
+        console.log(receipt)
 
         const newSquareArray = state.squares
         newSquareArray[props.squareId - 1] = squareDec 

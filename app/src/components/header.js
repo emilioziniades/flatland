@@ -6,9 +6,9 @@ import { BlockchainContext } from './BlockchainContext'
 import pallette from "../images/gatsby-icon.png";
 import { loadBlockchain } from '../utils/blockchainUtils'
 
-const Header = (props) => {
+const Header = () => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
+  const { state, dispatch } = useContext(BlockchainContext)
 
     const handleClick = async () => {
 

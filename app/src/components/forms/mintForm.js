@@ -26,6 +26,8 @@ export default function MintForm() {
         const squareId = await state.contract.getSquares().length
 
         console.log(tx)
+        console.log(receipt)
+        
         dispatch({
           type: 'MINT',
           colour: squareDec,

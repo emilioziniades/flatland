@@ -8,7 +8,6 @@ import { Container } from "react-bootstrap";
 const NotFound = () => {
   return (
   	<div>
-    <Header />
     <Container>
           <h1>Page not found</h1>
       <p>

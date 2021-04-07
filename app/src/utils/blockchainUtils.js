@@ -1,6 +1,6 @@
 import { ethers } from "ethers"
 import Flatland from "../../../build/contracts/Flatland.json"
-import { bigNumberToHexColour, bigNumberToNumber } from '../utils/utilityFunctions'
+import { bigNumberToNumber } from '../utils/utilityFunctions'
 
 const blockchainReducer = (state, action) => {
     switch(action.type) {
@@ -23,6 +23,8 @@ const blockchainReducer = (state, action) => {
         	squares: action.payload
         }
     }
+ 	default:
+  		return state;
     }
 }
 
@@ -40,7 +42,7 @@ const loadBlockchain = async () => {
 	    const provider = new ethers.providers.Web3Provider(window.ethereum)
 	    const signer = provider.getSigner(0)
 	    const providerRpc = new ethers.providers.JsonRpcProvider()
-	    const signerRpc = providerRpc.getSigner()
+	    // const signerRpc = providerRpc.getSigner()
 	    const account = await signer.getAddress()
 	    const networkId = await providerRpc.send('net_version', [])
 	    const networkData = Flatland.networks[networkId]

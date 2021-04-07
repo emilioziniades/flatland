@@ -18,7 +18,7 @@ const Square = styled.div`
     
 const SquareManager = (props) => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
+    const { state } = useContext(BlockchainContext)
 
     const OwnsSquares  = (props) => {
 
@@ -64,7 +64,7 @@ const SquareManager = (props) => {
         return (
             <Row className="justify-content-center p-2">
             <Row>
-                <h3 className="p-2"> Looks like you own {state.ownedSquares.length == 1 ? 'a square' : 'squares'}! Manage here </h3>
+                <h3 className="p-2"> Looks like you own {state.ownedSquares.length === 1 ? 'a square' : 'squares'}! Manage here </h3>
             </Row>
             {state.ownedSquares.map((squareId) => <SquareHandler squareId={squareId} /> )}
             </Row>
