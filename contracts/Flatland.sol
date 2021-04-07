@@ -10,6 +10,7 @@ contract Flatland is ERC721 {
   }
 
   event NewSquare(uint256 squareId, uint256 color);
+  event ColourChange(uint256 squareId, uint256 color);
 
   uint256 maxLength = 16;
   uint256 maxSquares = maxLength ** 2;
@@ -47,7 +48,9 @@ contract Flatland is ERC721 {
   }
 
   function changeColour(uint256 _id, uint256 _newColour) public OnlyOwner(_id) {
+
     squares[_id - 1] = _newColour;
+    emit ColourChange(_id, _newColour);
   }
 
   function getSquares() public view returns(uint256[] memory) {

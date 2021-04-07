@@ -41,7 +41,7 @@ const loadBlockchain = async () => {
 
 	    const provider = new ethers.providers.Web3Provider(window.ethereum)
 	    const signer = provider.getSigner(0)
-	    const providerRpc = new ethers.providers.JsonRpcProvider()
+	    const providerRpc = new ethers.providers.JsonRpcProvider('https://ropsten.infura.io/v3/6c1af6d1f94e4ffa9226b0e60b719aa5')
 	    // const signerRpc = providerRpc.getSigner()
 	    const account = await signer.getAddress()
 	    const networkId = await providerRpc.send('net_version', [])

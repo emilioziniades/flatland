@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "gatsby";
 
-import Header from "../components/header";
- 
 import { Container } from "react-bootstrap";
 
 const NotFound = () => {
