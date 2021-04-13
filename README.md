@@ -14,13 +14,37 @@
 
 [Here](https://flatland.gq) is a working live demo.
 
-For testing purposes, earlier versions of Flatland will be deployed to the Ropsten Test Network. To use the app, you'll need a [Metamask](https://metamask.io/) wallet and some test Ether from a [faucet](https://faucet.ropsten.be/).
+For testing purposes, earlier versions of Flatland will be deployed to the Ropsten Test Network. To use the app, you'll need a [Metamask](https://metamask.io/) wallet and some test Ether from a [faucet](https://faucet.ropsten.be/). Yay, free money!
+
+## File structure
+
+```
+.
+|–– README.md
+|–– truffle-config.js
+|–– app
+    |–– gatsby-config.js
+    |–– static
+    |–– src
+        |–– components
+        |–– content
+        |–– images
+        |–– pages
+        |–– utils
+|–– build
+    |–– contracts
+|–– contracts
+    |–– Flatland.sol
+|–– migrations
+|–– test
+
+```
 
 ## Built with
 
 - [Gatsby](https://www.gatsbyjs.com/) - Static site generator written in JavaScript, and built using the React framework.
 
-- [React](https://reactjs.org/) - Component based javascript framework. Includes support for state management.
+- [React](https://reactjs.org/) - Component based javascript framework. Includes support for state management. This project makes use of ES6 syntax, function components, and [hooks](https://reactjs.org/docs/hooks-intro.htmlhttps://reactjs.org/docs/hooks-intro.html)
 
 - [React Bootstrap](https://react-bootstrap.github.io/) - A combination of React and Bootstrap, both front-end frameworks.
 

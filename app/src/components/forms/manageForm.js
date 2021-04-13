@@ -55,13 +55,12 @@ export default function ManageForm(props) {
     const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, changeSquareColour);
     return(
         <Form onSubmit={handleSubmit}>
-            <Row className='m-1'>
+            <Row className='p-2'>
             <Col>
             <Form.Control 
                 type='text'
                 name='colour'
                 placeholder= 'e.g. #FFFFFF'
-                className='m-4'
                 value={inputs.colour}
                 onChange={handleChange}
             />
@@ -70,7 +69,6 @@ export default function ManageForm(props) {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
-                className = 'm-4'
             >
             {loading ? 'awaiting confirmation' : 'change colour'}
             </Button>

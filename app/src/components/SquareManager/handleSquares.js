@@ -11,7 +11,7 @@ export const HandleSquares  = (props) => {
     const { state } = useContext(BlockchainContext)
 
     return (
-        <Row className='justify-content-center p-2'>
+        <Row className='justify-content-center mr-auto ml-auto p-2'>
         <Row>
             <h3 className='p-2'> Looks like you own {state.ownedSquares.length === 1 ? 'a square' : 'squares'}! Manage here </h3>
         </Row>

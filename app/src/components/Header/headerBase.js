@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { Nav, Navbar, Container, Form, Button } from 'react-bootstrap'
+import { Nav, Navbar, Container } from 'react-bootstrap'
 
 import pallette from '../../images/gatsby-icon.png'
 

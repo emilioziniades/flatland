@@ -6,7 +6,6 @@ import ManageForm from '../forms/manageForm'
 import { decimalToHexColour } from '../../utils/utilityFunctions'
 
 const Square = styled.div`
-    padding: 0em;
     border: 0.1px solid #000000;
     text-align: center;
     height: 16px;
@@ -16,25 +15,26 @@ const Square = styled.div`
 
 export const HandleSquare = (props) => {
 
-    return (<main role='main' className='col-lg-12 d-flex text-center'>
-            <Row className='content mr-auto ml-auto'>
-
-                <Row className='justify-content-center align-items-center'> 
-                <Col className='d-flex justify-content-center'>
+    return (    
+            <div>
+            <Row className='d-flex ml-auto mr-auto'>
+                <Col md='auto' className='justify-content-center'>
                     <h4 className='m-1'> Square {props.squareId ? props.squareId : '-'} </h4>
                 </Col>
-                <Col className='d-flex justify-content-center'>
+                <Col md='auto' className='align-self-center justify-content-center'>
                     <Square
                         background={decimalToHexColour(props.squareColour)} />
                 </Col>
-                <Col className='d-flex justify-content-center'>
+                <Col md='auto' className='justify-content-center m-1'>
                     <p><i> current colour : {decimalToHexColour(props.squareColour) ? decimalToHexColour(props.squareColour) : '-'}</i></p>
 
                 </Col>
-                </Row>
+                <Col className='justify-content-center ml-1 mr-1'>
                 <ManageForm 
                     squareId= {props.squareId}
                 />
-            </Row>  
-        </main>)
+                </Col>
+            </Row>
+            <hr/>
+            </div>)
 }

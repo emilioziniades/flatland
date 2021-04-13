@@ -1,8 +1,8 @@
 import React from 'react'
 
-import App from '../components/app';
+import App from '../components/app'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const IndexPage = () => {
   return (

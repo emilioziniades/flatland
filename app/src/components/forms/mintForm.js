@@ -46,13 +46,12 @@ export default function MintForm() {
     const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, mintSquare);
     return(
         <Form onSubmit={handleSubmit}>
-            <Row>
+            <Row className='m-5'>
             <Col>
             <Form.Control 
                 type='text'
                 name='colour'
                 placeholder= 'e.g. #FFFFFF'
-                className='m-4'
                 value={inputs.colour}
                 onChange={handleChange}
             />
@@ -61,9 +60,9 @@ export default function MintForm() {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
-                className = 'm-4'
+                className = 'pl-3 pr-3'
             > 
-            {loading ? 'awaiting confirmation' : 'mint'}
+            {loading ? 'awaiting confirmation' : 'claim square'}
             </Button>
             <HashLoader loading={loading} color='FFC145' /> 
 

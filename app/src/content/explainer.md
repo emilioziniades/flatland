@@ -28,7 +28,9 @@ Ensure that you have some funds in your wallet. In order to update the Flatland 
 
 - 0.2 : Monthly Canvas NFT created, including a mechanism for bidding and voting on bids
 
-## Technical Details
+- 0.3 : Ability for artists to submit proposals for fixed period, conditional on square-owner consesus
+
+## Technical details
 
 The source code for this project is open source. View it on [GitHub](https://github.com/emilioziniades/flatland).
 
