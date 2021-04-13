@@ -1,38 +1,45 @@
-import React, { useContext } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import React, { useState, useContext } from 'react'
+import { Row, Col, Form, Button } from 'react-bootstrap'
+import HashLoader from 'react-spinners/HashLoader'
 
-import {useBlockchainForm} from "../customHooks/useBlockchainForm";
+import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
 
 export default function MintForm() {
 
     const { state, dispatch } = useContext(BlockchainContext)
+    const [loading, setLoading] = useState(false)
 
     // Callback function, called by handleSubmit when form is submitted
     const mintSquare = async () => {
 
-        // this code assumes that input is "#XXXXXX" , where X is a hexadecimal digit
-        const square = inputs.colour.trim()
-        const squareHex = '0x' + square.slice(1,)
-        const squareDec = parseInt(squareHex, 16)
+        try {
 
-        // TODO check user inputs, ensuring it is six hex digits 
-        // (otherwise, hash that input and just take first six digits)
-        console.log("minting " + squareDec)
+            setLoading(true)
 
+            // this code assumes that input is "#XXXXXX" , where X is a hexadecimal digit
+            const square = inputs.colour.trim()
+            const squareHex = '0x' + square.slice(1,)
+            const squareDec = parseInt(squareHex, 16)
 
-        let tx = await state.contract.mint(squareDec)
-        let receipt = await tx.wait(1)
-        const squareId = await state.contract.getSquares().length
+            // TODO check user inputs, ensuring it is six hex digits 
+            // (otherwise, hash that input and just take first six digits)
 
-        console.log(tx)
-        console.log(receipt)
-        
-        dispatch({
-          type: 'MINT',
-          colour: squareDec,
-          id: squareId
-        })
+            let tx = await state.contract.mint(squareDec)
+            await tx.wait(1)
+            const squareId = state.squares.length + 1
+
+            dispatch({
+              type: 'MINT',
+              colour: squareDec,
+              id: squareId
+            })
+        }
+        catch (e) {
+            console.log(e)
+        }
+
+        setLoading(false)
 
     }
 
@@ -42,22 +49,24 @@ export default function MintForm() {
             <Row>
             <Col>
             <Form.Control 
-                type="text"
-                name="colour"
-                placeholder= "e.g. #FFFFFF"
-                className="m-1"
+                type='text'
+                name='colour'
+                placeholder= 'e.g. #FFFFFF'
+                className='m-4'
                 value={inputs.colour}
                 onChange={handleChange}
             />
             </Col>
             <Col>
             <Button 
-                type="submit"
-                variant="primary"
-                className = "m-1"
+                type='submit'
+                variant={ loading ? 'warning' : 'primary'}
+                className = 'm-4'
             > 
-            MINT
+            {loading ? 'awaiting confirmation' : 'mint'}
             </Button>
+            <HashLoader loading={loading} color='FFC145' /> 
+
             </Col>
             </Row>
         </Form>

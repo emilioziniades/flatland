@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 import App from '../components/app';
 
@@ -10,4 +10,4 @@ const IndexPage = () => {
   )
 }
 
-export default IndexPage;
+export default IndexPage

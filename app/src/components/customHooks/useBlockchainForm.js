@@ -5,11 +5,12 @@ export const useBlockchainForm = (initialValues, callback) => {
 
     const handleSubmit = (event) => {
         if (event) {
-          event.preventDefault();
+          event.preventDefault()
+          setInputs(initialValues)
           // window.alert('Mint button clicked')
         }
         if (callback) {
-            callback();
+            callback()
         }
     }
 

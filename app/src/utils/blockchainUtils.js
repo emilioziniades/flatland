@@ -1,5 +1,5 @@
-import { ethers } from "ethers"
-import Flatland from "../../../build/contracts/Flatland.json"
+import { ethers } from 'ethers'
+import Flatland from '../../../build/contracts/Flatland.json'
 import { bigNumberToNumber } from '../utils/utilityFunctions'
 
 const blockchainReducer = (state, action) => {
@@ -8,19 +8,24 @@ const blockchainReducer = (state, action) => {
             return action.payload
         }
     case 'MINT': {
+
+		let newOwnedSquares = state.ownedSquares
+		newOwnedSquares[action.id] = action.colour
+
         return {
             ...state,
             totalSupply: state.totalSupply + 1,
             squares: 
                 [ ...state.squares, action.colour ],
-            ownedSquares: [...state.ownedSquares, action.id]
+            ownedSquares: newOwnedSquares
         }
     }
 
     case 'CHANGE': {
         return {
         	...state,
-        	squares: action.payload
+        	squares: action.squares,
+        	ownedSquares: action.mySquares,
         }
     }
  	default:
@@ -60,7 +65,10 @@ const loadBlockchain = async () => {
 	    }
 
 	    const maxSupply = await contract.getMaxSupply()
-	    const totalSupply = await contract.totalSupply()
+	    
+	    let totalSupply = await contract.totalSupply()
+	    totalSupply = bigNumberToNumber(totalSupply)
+
 
 	    //LOAD ALL SQUARES
         let squares = await contract.getSquares()
@@ -68,7 +76,11 @@ const loadBlockchain = async () => {
 
 	    //LOAD ACCOUNT-OWNED SQUARES
 	    let ownedSquares = await contract.getSquaresIdsByOwner(account)
-        ownedSquares = ownedSquares.map(bigNumberToNumber)
+		ownedSquares = ownedSquares.map(bigNumberToNumber)
+		let result = {}
+		ownedSquares.forEach((item, index, array)=>{
+			result[item] = squares[item - 1]
+		})
 
 	    return {
 	        connected: true,
@@ -78,7 +90,7 @@ const loadBlockchain = async () => {
 	        totalSupply: totalSupply,
 	        maxSupply: maxSupply,
 	        account: account,
-	        ownedSquares: ownedSquares   
+	        ownedSquares: result   
 	    }
 
 	}

@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import React, { useContext, useState } from 'react'
+import { Row, Col, Form, Button } from 'react-bootstrap'
+import HashLoader from 'react-spinners/HashLoader'
 
-import {useBlockchainForm} from '../customHooks/useBlockchainForm';
+import {useBlockchainForm} from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
 import { hexColourToDecimal } from '../../utils/utilityFunctions'
 
@@ -10,12 +11,16 @@ export default function ManageForm(props) {
 
     const { state, dispatch } = useContext(BlockchainContext)
 
+    const [loading, setLoading] = useState(false)
+
     // Callback function, called by handleSubmit when form is submitted
     const changeSquareColour = async () => {
 
+        setLoading(true)
+
         console.log(inputs)
 
-        // this code assumes that input is "#XXXXXX" , where X is a hexadecimal digit
+        // this code assumes that input is '#XXXXXX' , where X is a hexadecimal digit
         const square = inputs.colour.trim()
         const squareDec = hexColourToDecimal(square)
 
@@ -32,37 +37,44 @@ export default function ManageForm(props) {
         console.log(receipt)
 
         const newSquareArray = state.squares
-        newSquareArray[props.squareId - 1] = squareDec 
+        newSquareArray[props.squareId - 1] = squareDec
+
+        const newOwnedSquares = state.ownedSquares
+        newOwnedSquares[props.squareId] = squareDec
 
         dispatch({
             type: 'CHANGE',
-            payload: newSquareArray
+            squares: newSquareArray,
+            mySquares: newOwnedSquares,
         })
+
+        setLoading(false)
 
     }
 
     const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, changeSquareColour);
     return(
         <Form onSubmit={handleSubmit}>
-            <Row className="m-3">
+            <Row className='m-1'>
             <Col>
             <Form.Control 
-                type="text"
-                name="colour"
-                placeholder= "e.g. #FFFFFF"
-                className="m-1"
+                type='text'
+                name='colour'
+                placeholder= 'e.g. #FFFFFF'
+                className='m-4'
                 value={inputs.colour}
                 onChange={handleChange}
             />
             </Col>
             <Col>
             <Button 
-                type="submit"
-                variant="primary"
-                className = "m-1"
-            > 
-            Change Colour
+                type='submit'
+                variant={ loading ? 'warning' : 'primary'}
+                className = 'm-4'
+            >
+            {loading ? 'awaiting confirmation' : 'change colour'}
             </Button>
+            <HashLoader loading={loading} color='FFC145'className='p-4' /> 
             </Col>
             </Row>
         </Form>

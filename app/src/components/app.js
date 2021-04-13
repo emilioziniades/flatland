@@ -1,19 +1,12 @@
-import React, { useReducer } from "react"
-import { Container } from "react-bootstrap"
+import React, { useReducer } from 'react'
+import { Container } from 'react-bootstrap'
 
-import Header from './header'
+import Header from './Header/header'
 import Hero from './hero'
 import Canvas from './canvas'
-import SquareManager from './squareManager'
+import SquareManager from './SquareManager/squareManager'
 import { BlockchainContext } from './BlockchainContext'
 import { blockchainReducer } from '../utils/blockchainUtils'
-
-/*
-
-MNEMONIC USED FOR TESTING PURPOSES: 
-roof gasp satisfy cause gather frequent forget swim swarm real unaware video
-
- */
 
 const App = () => {
 
@@ -33,7 +26,7 @@ const App = () => {
 
         return(
             <BlockchainContext.Provider value={{ state, dispatch }}>
-            <Header/>                    
+            <Header />                    
             <Container>
                 <Hero />
                 <Canvas/>                    

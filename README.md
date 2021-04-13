@@ -1,5 +1,7 @@
 <!-- # ![WebApp](https://iharsh234.github.io/WebApp/images/demo/demo_landing.JPG) -->
+
 # Flatland🎨
+
 <table>
 <tr>
 <td>
@@ -8,37 +10,38 @@
 </tr>
 </table>
 
-
 ## Demo
-Here is a working live demo :  https://flatland.gq
 
-## Built with 
+[Here](https://flatland.gq) is a working live demo.
 
-- [Gatsby](https://www.gatsbyjs.com/) - Static site generator written in JavaScript.
-- [React Bootstrap](https://react-bootstrap.github.io/) - A combination of React and Bootstrap, both front-end frameworks
-- [Truffle Suite](https://www.trufflesuite.com/) - Smart contract test, build and deploy suite. Truffle and Ganache are the two main tools.
+For testing purposes, earlier versions of Flatland will be deployed to the Ropsten Test Network. To use the app, you'll need a [Metamask](https://metamask.io/) wallet and some test Ether from a [faucet](https://faucet.ropsten.be/).
+
+## Built with
+
+- [Gatsby](https://www.gatsbyjs.com/) - Static site generator written in JavaScript, and built using the React framework.
+
+- [React](https://reactjs.org/) - Component based javascript framework. Includes support for state management.
+
+- [React Bootstrap](https://react-bootstrap.github.io/) - A combination of React and Bootstrap, both front-end frameworks.
+
+- [Ethers](https://docs.ethers.io/v5/) - Javascript library used to interact with Ethereum blockchain.
+
+- [Truffle Suite](https://www.trufflesuite.com/) - Smart contract test, build and deploy suite. 
+
+- [Ganache-CLI](https://www.trufflesuite.com/docs/ganache/overview) - Local blockchain for testing purposes.
+
 - [Solidity](https://docs.soliditylang.org/en/v0.8.2/) - Smart contract programming language, compiles to the Ethereum Virtual Machine (EVM). [Crypto Zombies](https://cryptozombies.io/) is a good starting point for learning solidity.
 
 ## To-do
-- Determine number of squares
-- Finalize voting procedure for submissions
+
+- Finalize number of squares (currently 256).
+- Finalize voting procedure for submissions.
+- Implement colour picker instead of manually pasting the hex colour code.
+- Implement monthly Canvas NFT minting and related governance.
 - ...
-
-## Site
-
-
-## [Usage]
-
-### Metamask
-
-This tool is currently being tested using Metamask, an Ethereum wallet client plugin for Firefox and Chrome. Go ahead and set up a wallet with a 12 word mnemonic.
-
-### Ropsten Testnet
-
-For testing purposes, earlier versions of Flatland will be deployed to the Ropsten Test Network. You will need some test Ether, which you can get from a [faucet](https://faucet.ropsten.be/)
 
 ## Bug / Feature Request
 
-If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/emilioziniades/flatland/issues/new) by including your search query and the expected result.
+If you find a bug, kindly open an issue [here](https://github.com/emilioziniades/flatland/issues/new) by including your search query and the expected result.
 
-If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/emilioziniades/flatland/issues/new). Please include sample queries and their corresponding results.
+If you'd like to request a new feature, feel free to do so by opening an issue [here](https://github.com/emilioziniades/flatland/issues/new). 

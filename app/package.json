@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "flatland-dapp",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "Collaborative on-chain project",
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {
@@ -16,6 +16,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.1",
     "@web3-react/core": "^6.1.9",
+    "ahooks": "^2.10.0",
     "babel-plugin-styled-components": "^1.12.0",
     "bootstrap": "^4.6.0",
     "crypto": "^1.0.1",
@@ -28,6 +29,7 @@
     "gatsby-plugin-sharp": "^3.1.1",
     "gatsby-plugin-styled-components": "^4.1.0",
     "gatsby-source-filesystem": "^3.1.0",
+    "gatsby-transformer-remark": "^3.2.0",
     "jquery": "^3.6.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
@@ -35,6 +37,7 @@
     "react-helmet": "^6.1.0",
     "react-is": "^17.0.1",
     "react-redux": "^7.2.3",
+    "react-spinners": "^0.10.6",
     "redux": "^4.0.5",
     "stream": "^0.0.2",
     "styled-components": "^5.2.1",
