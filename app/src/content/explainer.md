@@ -6,6 +6,8 @@ date: "2021-04-13"
 
 
 
+## What is this?
+
 Flatland is a collaborative art project on the Ethereum blockchain. The area consists of 256 squares (*Note*: for now). Anyone can claim a square. Once you own a square, you may change its colour as frequently as desired. Squares may also be bought and sold in the secondary market, like other Non-Fungible Tokens.
 
 Flatland has some similarities to [Place](https://en.wikipedia.org/wiki/Place_(Reddit)), a collaborative pixel art project on Reddit. The difference is that Flatland's state persists on the Ethereum blockchain. In addition, one must own a square in order to change its colour, either by claiming it or buying it from someone else. 

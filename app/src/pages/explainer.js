@@ -22,7 +22,7 @@ const ExplainerPage = ({ data, }) => {
             <HeaderBase />
             <Container >
                 <Row className='justify-content-center p-3'>
-                <h1>{frontmatter.title}</h1>  
+                <h1 className='m-2'>{frontmatter.title}</h1>  
                 </Row>
                 <Row className='justify-content-left p-3'>
                 <div
