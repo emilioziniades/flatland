@@ -1,5 +1,3 @@
-<!-- # ![WebApp](https://iharsh234.github.io/WebApp/images/demo/demo_landing.JPG) -->
-
 # Flatland🎨
 
 <table>
@@ -22,8 +20,10 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
 .
 |–– README.md
 |–– truffle-config.js
+|–– package.json
 |–– app
     |–– gatsby-config.js
+    |–– package.json
     |–– static
     |–– src
         |–– components
@@ -31,12 +31,15 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
         |–– images
         |–– pages
         |–– utils
+        |–– static
 |–– build
     |–– contracts
+      |–– Flatland.json
 |–– contracts
     |–– Flatland.sol
 |–– migrations
 |–– test
+    |–– Flatland.test.js
 
 ```
 
@@ -44,7 +47,7 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
 
 - [Gatsby](https://www.gatsbyjs.com/) - Static site generator written in JavaScript, and built using the React framework.
 
-- [React](https://reactjs.org/) - Component based javascript framework. Includes support for state management. This project makes use of ES6 syntax, function components, and [hooks](https://reactjs.org/docs/hooks-intro.htmlhttps://reactjs.org/docs/hooks-intro.html)
+- [React](https://reactjs.org/) - Component based javascript framework. Includes support for state management. This project makes use of ES6 syntax, function components, and [hooks](https://reactjs.org/docs/hooks-overview.html)
 
 - [React Bootstrap](https://react-bootstrap.github.io/) - A combination of React and Bootstrap, both front-end frameworks.
 
@@ -58,11 +61,18 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
 
 ## To-do
 
-- Finalize number of squares (currently 256).
-- Finalize voting procedure for submissions.
-- Implement colour picker instead of manually pasting the hex colour code.
-- Implement monthly Canvas NFT minting and related governance.
-- ...
+### Decide on ...
+#### number of squares (currently 256).
+#### voting procedure for bids and submissions
+#### limits to square ownership (1 per account? / x per account?)
+### Features
+#### Colour picker
+#### Monthly Canvas NFT minting
+#### bids on Canvas NFT
+#### governance on accepting bids
+#### submitting proposals
+#### governance regarding proposals
+
 
 ## Bug / Feature Request
 

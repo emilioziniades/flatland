@@ -5,7 +5,7 @@ import { Row } from 'react-bootstrap'
 import $ from 'jquery'
 
 import { BlockchainContext } from './BlockchainContext'
-
+import EtherscanLink from './etherscanLink'
 const gridLength = 256
 let counter = 1
 
@@ -17,7 +17,6 @@ const Grid = styled.div`
     height: 256px;
     width: 256px;
     `
-
 const Node = styled.div`
     padding: 0em;
     border: 0.1px solid #000000;
@@ -87,7 +86,7 @@ const Canvas = (props) => {
         </Row>
         <Row className='d-flex justify-content-center p-3'>
             <h6>
-                Source: { state.contract ? 'deployed on Ropsten Testnet at ' + state.contract.address  : 'random colours' }
+                Source: { state.contract ? <EtherscanLink address={state.contract.address} type='address' /> : 'random colours' }
             </h6>
         </Row>
     </div>

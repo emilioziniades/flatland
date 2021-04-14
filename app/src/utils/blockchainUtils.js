@@ -101,6 +101,10 @@ const loadBlockchain = async () => {
 
 }
 
+const ropstenLinkMaker = (address, type) => {
+    const baseSlug = 'https://ropsten.etherscan.io/' + type + '/'
+    return baseSlug + address
+}
 
 
-export { blockchainReducer, loadBlockchain }
+export { blockchainReducer, loadBlockchain, ropstenLinkMaker }

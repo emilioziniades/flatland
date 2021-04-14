@@ -1,9 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
+import $ from 'jquery'
 
 import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
+import EtherscanLink from '../etherscanLink'
+import { window } from '@ungap/global-this'
 
 export default function MintForm() {
 
@@ -28,6 +31,8 @@ export default function MintForm() {
             let tx = await state.contract.mint(squareDec)
             await tx.wait(1)
             const squareId = state.squares.length + 1
+            
+            console.log(tx)
 
             dispatch({
               type: 'MINT',
@@ -60,13 +65,16 @@ export default function MintForm() {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
-                className = 'pl-3 pr-3'
+                className = 'ml-2 mr-5 pl-2 pr-2 mint-button'
             > 
             {loading ? 'awaiting confirmation' : 'claim square'}
             </Button>
             <HashLoader loading={loading} color='FFC145' /> 
 
             </Col>
+            </Row>
+            <Row className='mint-notif-row'>
+                {/* { tx ? <EtherscanLink address={tx.hash} type='tx' /> : <div /> } */}
             </Row>
         </Form>
         )

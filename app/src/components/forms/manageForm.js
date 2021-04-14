@@ -69,6 +69,7 @@ export default function ManageForm(props) {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
+                className='ml-2 mr-5'
             >
             {loading ? 'awaiting confirmation' : 'change colour'}
             </Button>

@@ -24,7 +24,7 @@ export const ConnectButton = () => {
     return(
             <Form inline>
                 <Button
-                className='m-1'
+                className='m-1 mr-4'
                 variant= { loading ? 'warning' : state.account ? 'success' : 'primary' }
                 onClick={handleClick}>
                 { loading ? 'connecting...' : state.account ? state.account : 'connect account' }
