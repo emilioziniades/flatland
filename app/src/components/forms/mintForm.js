@@ -1,12 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
-import $ from 'jquery'
 
 import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
 import EtherscanLink from '../etherscanLink'
-import { window } from '@ungap/global-this'
 
 export default function MintForm() {
 
