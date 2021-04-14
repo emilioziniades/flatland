@@ -40,7 +40,6 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
 |–– migrations
 |–– test
     |–– Flatland.test.js
-
 ```
 
 ## Built with
@@ -61,18 +60,27 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
 
 ## To-do
 
-### Decide on ...
-#### number of squares (currently 256).
-#### voting procedure for bids and submissions
-#### limits to square ownership (1 per account? / x per account?)
-### Features
-#### Colour picker
-#### Monthly Canvas NFT minting
-#### bids on Canvas NFT
-#### governance on accepting bids
-#### submitting proposals
-#### governance regarding proposals
+- [ ]  Decide on ...
+  
+  - [ ]  number of squares (currently 256)
+  
+  - [ ]  voting procedure for bids and submissions
+  
+  - [ ]  limits to square ownership (1 per account? / x per account?
 
+- [ ]  Functionality 
+  
+  - [ ] Colour picker
+  
+  - [ ]  monthly Canvas NFT minting
+  
+  - [ ]  bids on Canvas NFT
+  
+  - [ ]   governance on accepting bids
+  
+  - [ ]  submitting proposals
+  
+  - [ ]  governance regarding proposals
 
 ## Bug / Feature Request
 
