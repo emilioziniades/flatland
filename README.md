@@ -60,7 +60,7 @@ Remain in the `app` directory, and start the local development server
 
 `gatsby develop`
 
-Now, you should be able to visit `https://localhost:8000` in your browser and see a local instance of Flatland. Gatsby features hot reloading, so you can just make changes in the flatland/app/ directory and view the changes live.
+Now, you should be able to visit `https://localhost:8000` in your browser and see a local instance of Flatland. Gatsby features hot reloading, so you can just make changes in the `flatland/app/` directory and view the changes live.
 
 ## Built with
 
