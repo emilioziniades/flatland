@@ -14,12 +14,10 @@ const Grid = styled.div`
     grid-gap: 0em;
     grid-template-rows: repeat(16, 1fr);
     grid-template-columns: repeat(16, 1fr);
-    height: 256px;
-    width: 256px;
+    border: 2px solid #000000;
     `
 const Node = styled.div`
     padding: 0em;
-    border: 0.1px solid #000000;
     text-align: center;
     height: 16px;
     width: 16px;
