@@ -11,7 +11,7 @@ const bigNumberToNumber = (bigNumber) => {
 	
 const hexColourToDecimal = (hexColour) => {
 
-    if (hexColour.slice(1,2) === '#') {
+    if (hexColour.slice(0,1) === '#') {
         // # provided before hex colour
         const hexNumber = '0x' + hexColour.slice(1,)
         const decimal = parseInt(hexNumber, 16)
