@@ -4,6 +4,7 @@ import HashLoader from 'react-spinners/HashLoader'
 
 import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
+import { hexColourToDecimal } from '../../utils/utilityFunctions'
 import EtherscanLink from '../etherscanLink'
 
 export default function MintForm() {
@@ -18,13 +19,8 @@ export default function MintForm() {
 
             setLoading(true)
 
-            // this code assumes that input is "#XXXXXX" , where X is a hexadecimal digit
             const square = inputs.colour.trim()
-            const squareHex = '0x' + square.slice(1,)
-            const squareDec = parseInt(squareHex, 16)
-
-            // TODO check user inputs, ensuring it is six hex digits 
-            // (otherwise, hash that input and just take first six digits)
+            const squareDec = hexColourToDecimal(square)
 
             let tx = await state.contract.mint(squareDec)
             await tx.wait(1)

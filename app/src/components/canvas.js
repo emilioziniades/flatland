@@ -43,12 +43,6 @@ const Square = (props) => {
         }
     }
 
-    const handleHover = (e) => {
-        
-        const squareId = e.target.id
-        console.log(squareId)
-    }
-
   return <Node 
             className='node' 
             id={props.id}

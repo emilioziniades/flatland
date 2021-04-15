@@ -20,12 +20,9 @@ export default function ManageForm(props) {
 
         console.log(inputs)
 
-        // this code assumes that input is '#XXXXXX' , where X is a hexadecimal digit
         const square = inputs.colour.trim()
         const squareDec = hexColourToDecimal(square)
 
-        // TODO check user inputs, ensuring it is six hex digits 
-        // (otherwise, hash that input and just take first six digits)
 
         console.log(square)
         console.log(squareDec)
