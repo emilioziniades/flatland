@@ -42,7 +42,7 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
     |–– Flatland.test.js
 ```
 
-## Local development
+## Contributing
 
 If you want to run a local version of this app on your computer, follow the steps below.
 
@@ -62,6 +62,10 @@ Remain in the `app` directory, and start the local development server
 
 Now, you should be able to visit `https://localhost:8000` in your browser and see a local instance of Flatland. Gatsby features hot reloading, so you can just make changes in the `flatland/app/` directory and view the changes live.
 
+Go ahead and have a look at the open issues and assign one to yourself. Now that you have cloned the repo, try to fix the bug / implement the functionality. 
+
+**NB** The app should succesfully build. Run `gatsby build`. If there are no errors, commit your changes. Create a pull request and link it to the issue that your pull request addresses.
+
 ## Built with
 
 - [Gatsby](https://www.gatsbyjs.com/) - Static site generator written in JavaScript, and built using the React framework.
@@ -77,11 +81,6 @@ Now, you should be able to visit `https://localhost:8000` in your browser and se
 - [Ganache-CLI](https://www.trufflesuite.com/docs/ganache/overview) - Local blockchain for testing purposes.
 
 - [Solidity](https://docs.soliditylang.org/en/v0.8.2/) - Smart contract programming language, compiles to the Ethereum Virtual Machine (EVM). [Crypto Zombies](https://cryptozombies.io/) is a good starting point for learning solidity.
-
-## Contributing
-
-Go ahead and have a look at the open issues. Clone the repo following the instructions above and try to fix the bug / implement the functionality. Create a pull request and link it to the issue that your pull request addresses. 
-
 
 ## Bug / Feature Request
 
