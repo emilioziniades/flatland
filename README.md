@@ -42,6 +42,26 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
     |–– Flatland.test.js
 ```
 
+## Local development
+
+If you want to run a local version of this app on your computer, follow the steps below.
+
+First, clone the repo
+
+`git clone https://github.com/emilioziniades/flatland`
+
+Change to the `flatland` directory and install the dependencies in `/flatland/` and `/flatland/app`
+
+`cd flatland && npm install`
+
+`cd app && npm install`
+
+Remain in the `app` directory, and start the local development server
+
+`gatsby develop`
+
+Now, you should be able to visit `https://localhost:8000` in your browser and see a local instance of Flatland. Gatsby features hot reloading, so you can just make changes in the flatland/app/ directory and view the changes live.
+
 ## Built with
 
 - [Gatsby](https://www.gatsbyjs.com/) - Static site generator written in JavaScript, and built using the React framework.
@@ -58,29 +78,10 @@ For testing purposes, earlier versions of Flatland will be deployed to the Ropst
 
 - [Solidity](https://docs.soliditylang.org/en/v0.8.2/) - Smart contract programming language, compiles to the Ethereum Virtual Machine (EVM). [Crypto Zombies](https://cryptozombies.io/) is a good starting point for learning solidity.
 
-## To-do
+## Contributing
 
-- [ ]  Decide on ...
-  
-  - [ ]  number of squares (currently 256)
-  
-  - [ ]  voting procedure for bids and submissions
-  
-  - [ ]  limits to square ownership (1 per account? / x per account?
+Go ahead and have a look at the open issues. Clone the repo following the instructions above and try to fix the bug / implement the functionality. Create a pull request and link it to the issue that your pull request addresses. 
 
-- [ ]  Functionality 
-  
-  - [ ] Colour picker
-  
-  - [ ]  monthly Canvas NFT minting
-  
-  - [ ]  bids on Canvas NFT
-  
-  - [ ]   governance on accepting bids
-  
-  - [ ]  submitting proposals
-  
-  - [ ]  governance regarding proposals
 
 ## Bug / Feature Request
 
