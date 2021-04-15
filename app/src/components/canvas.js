@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useInterval } from 'ahooks'
 import styled from 'styled-components'
 import { Row } from 'react-bootstrap'
@@ -6,6 +6,7 @@ import $ from 'jquery'
 
 import { BlockchainContext } from './BlockchainContext'
 import EtherscanLink from './etherscanLink'
+
 const gridLength = 256
 let counter = 1
 
@@ -16,15 +17,45 @@ const Grid = styled.div`
     grid-template-columns: repeat(16, 1fr);
     border: 2px solid #000000;
     `
-const Node = styled.div`
+const Node = styled.button`
     padding: 0em;
+    border: none;
     text-align: center;
     height: 16px;
     width: 16px;
 `
 
 const Square = (props) => {
-  return <Node className='node' id={props.id}></Node>;
+
+    const [clicked, setClicked] = useState(false)
+
+    const handleClick = (e) => {
+
+        console.log(e)
+
+        if (clicked) {
+            setClicked(false)
+            e.target.style.border = 'none'
+        }
+        else {
+            setClicked(true)
+            e.target.style.border = '1px solid black'
+        }
+    }
+
+    const handleHover = (e) => {
+        
+        const squareId = e.target.id
+        console.log(squareId)
+    }
+
+  return <Node 
+            className='node' 
+            id={props.id}
+            onClick={handleClick}
+            >
+            
+            </Node>;
 }
 
 const Canvas = (props) => {
