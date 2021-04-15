@@ -42,4 +42,17 @@ const zip = (obj) => {
 
     return result
 }
-export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip };
+
+const numberToCoords = (squareNumber) => {
+    let squaresAcross = 16
+    const xCoord = squareNumber % squaresAcross
+    const yCoord = Math.trunc(squareNumber / squaresAcross) + 1
+    
+    return {
+    	xCoord,
+	yCoord
+    }
+}	
+
+
+export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords };
