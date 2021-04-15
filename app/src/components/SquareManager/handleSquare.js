@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Table } from 'react-bootstrap'
 import styled from 'styled-components'
 
 import ManageForm from '../forms/manageForm'
@@ -10,31 +10,33 @@ const Square = styled.div`
     text-align: center;
     height: 16px;
     width: 16px;
+    margin: auto;
     ${props => `background: ${props.background};`}
     `
-
+const TableData = styled.td`
+    vertical-align: middle !important;
+    text-align: center;
+    
+`
 export const HandleSquare = (props) => {
 
     return (    
-            <div>
-            <Row className='d-flex ml-auto mr-auto'>
-                <Col md='auto' className='justify-content-center'>
-                    <h4 className='m-1'> Square {props.squareId ? props.squareId : '-'} </h4>
-                </Col>
-                <Col md='auto' className='align-self-center justify-content-center'>
+            <tr>
+                <TableData>
+                    <h4 className='m-1'> {props.squareId ? props.squareId : '-'} </h4>
+                </TableData>
+                <TableData md='auto' >
                     <Square
                         background={decimalToHexColour(props.squareColour)} />
-                </Col>
-                <Col md='auto' className='justify-content-center m-1'>
-                    <p><i> current colour : {decimalToHexColour(props.squareColour) ? decimalToHexColour(props.squareColour) : '-'}</i></p>
+                </TableData>
+                <TableData>
+                    <p><i> {decimalToHexColour(props.squareColour) ? decimalToHexColour(props.squareColour) : '-'}</i></p>
 
-                </Col>
-                <Col className='justify-content-center ml-1 mr-1'>
+                </TableData>
+                <TableData>
                 <ManageForm 
                     squareId= {props.squareId}
                 />
-                </Col>
-            </Row>
-            <hr/>
-            </div>)
+                </TableData>
+            </tr>)
 }

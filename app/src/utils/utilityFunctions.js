@@ -10,9 +10,19 @@ const bigNumberToNumber = (bigNumber) => {
 }
 	
 const hexColourToDecimal = (hexColour) => {
-    const hexNumber = '0x' + hexColour.slice(1,)
-    const decimal = parseInt(hexNumber, 16)
-	return decimal
+
+    if (hexColour.slice(1,2) == '#') {
+        // # provided before hex colour
+        const hexNumber = '0x' + hexColour.slice(1,)
+        const decimal = parseInt(hexNumber, 16)
+        return decimal
+    }
+    else {
+        // colour provided without the #
+        const hexNumber = '0x' + hexColour
+        const decimal = parseInt(hexNumber, 16)
+        return decimal
+    }
 }
 
 const decimalToHexColour = (decimal) => {
