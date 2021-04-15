@@ -18,10 +18,17 @@ export default function MintForm() {
 
             setLoading(true)
 
-            // this code assumes that input is "#XXXXXX" , where X is a hexadecimal digit
-            const square = inputs.colour.trim()
-            const squareHex = '0x' + square.slice(1,)
-            const squareDec = parseInt(squareHex, 16)
+            // Looks if input starts with a #
+            if (inputs.colour.indexOf('#') > -1) {
+                const square = inputs.colour.trim()
+                const squareHex = '0x' + square.slice(1,)
+                const squareDec = parseInt(squareHex, 16)    
+            } else {
+                const square = inputs.colour.trim()
+                const squareHex = '0x' + square
+                const squareDec = parseInt(squareHex, 16)    
+            }
+            
 
             // TODO check user inputs, ensuring it is six hex digits 
             // (otherwise, hash that input and just take first six digits)
