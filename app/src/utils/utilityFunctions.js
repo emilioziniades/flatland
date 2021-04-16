@@ -53,4 +53,10 @@ const numberToCoords = (squareNumber) => {
 }	
 
 
-export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords };
+const coordToString(squareNumber) {
+    const coordJoin = numberToCoords(squareNumber).join()
+    const coordSummary = "(" + coordJoin.replace(","," ; ") + ")"
+    return coordSummary
+}
+
+export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString };
