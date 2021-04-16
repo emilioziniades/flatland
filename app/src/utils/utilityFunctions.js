@@ -49,7 +49,7 @@ const numberToCoords = (squareNumber) => {
     const yCoord = Math.trunc(squareNumber / squaresAcross) + 1
     
     return [xCoord, yCoord]
-    }
+    
 }	
 
 
