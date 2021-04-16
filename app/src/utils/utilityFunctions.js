@@ -53,7 +53,7 @@ const numberToCoords = (squareNumber) => {
 }	
 
 
-const coordToString(squareNumber) {
+const coordToString = (squareNumber) => {
     const coordJoin = numberToCoords(squareNumber).join()
     const coordSummary = "(" + coordJoin.replace(","," ; ") + ")"
     return coordSummary

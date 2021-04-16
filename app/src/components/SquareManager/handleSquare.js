@@ -27,7 +27,7 @@ export const HandleSquare = (props) => {
                     <h4 className='m-1'> {props.squareId ? props.squareId : '-'} </h4>
                 </TableData>
                 <TableData>
-                    <p> {coordToString(props.squareId)} </p>
+                    <p> {coordToString(props.squareId) ? coordToString(props.squareId) : '-'} </p>
                 </TableData>
                 <TableData md='auto' >
                     <Square
