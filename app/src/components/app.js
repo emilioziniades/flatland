@@ -3,11 +3,10 @@ import { Container, Row, Alert } from 'react-bootstrap'
 
 import Header from './Header/header'
 import Hero from './hero'
-import Canvas from './canvas'
+import Canvas from './Canvas/canvas'
 import SquareManager from './SquareManager/squareManager'
 import { BlockchainContext } from './BlockchainContext'
 import { blockchainReducer } from '../utils/blockchainUtils'
-import '@fontsource/roboto'
 
 const App = () => {
 
