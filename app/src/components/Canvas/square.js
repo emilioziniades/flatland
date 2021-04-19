@@ -15,7 +15,6 @@ const Square = (props) => {
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
     }
-    console.log(chosenSquare)
 
     const unchosenSquare = {
         'border': 'none',
