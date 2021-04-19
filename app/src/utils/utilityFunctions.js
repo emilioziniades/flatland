@@ -103,9 +103,13 @@ const getSquareRow = (id) => {
             result.push(right)
         }
     }
-
-    console.log(result)
     return result
 }
 
-export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString, numbersUpTo, getSquareColumn, getSquareRow };
+const invertColour = (colourDecimal) => {
+    const white = 16777215
+    const inverted = white - colourDecimal
+    return decimalToHexColour(inverted)
+}
+
+export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString, numbersUpTo, getSquareColumn, getSquareRow, invertColour };

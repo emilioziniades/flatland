@@ -2,17 +2,20 @@ import React, { useContext } from 'react'
 import $ from 'jquery'
 import GridItem from './gridItem'
 import { BlockchainContext } from '../BlockchainContext'
-import { getSquareColumn, getSquareRow } from '../../utils/utilityFunctions'
+import { getSquareColumn, getSquareRow, invertColour } from '../../utils/utilityFunctions'
 
 const Square = (props) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const {isSquareClicked, clickedSquare} = state
+    const {squares, isSquareClicked, clickedSquare} = state
     const squareId = parseInt(props.id.split('-')[1])
+    const squareColour = squares[squareId - 1]
+    const invertedColour = invertColour(squareColour)
 
     const chosenSquare = {
-        'border': '2px solid black',
+        'border': '2px solid ' + invertedColour,
     }
+    console.log(chosenSquare)
 
     const unchosenSquare = {
         'border': 'none',
@@ -37,6 +40,7 @@ const Square = (props) => {
     const handleClick = (e) => {
 
         console.log(e)
+        console.log(chosenSquare)
 
         if (isSquareClicked && clickedSquare === props.id ) {
             $('#'+ props.id).css(unchosenSquare)
