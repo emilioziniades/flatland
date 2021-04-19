@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useInterval } from 'ahooks'
-import styled from 'styled-components'
-import { Row } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import $ from 'jquery'
 
 import { BlockchainContext } from '../BlockchainContext'
-import EtherscanLink from '../etherscanLink'
 import Square from './square'
 import Grid from './grid'
+import CanvasAlert from './canvasAlert'
+import SidePanel from './sidePanel'
 
 const gridLength = 256
 let counter = 1
@@ -22,8 +22,10 @@ const Canvas = (props) => {
         counter++;
     }
 
-    //Hook to colour canvas
+    //Effects hooks updated every second
     useInterval(() => {
+
+        // Paint squares
         if (state.contract) {
 
             //Clear squares first
@@ -52,26 +54,35 @@ const Canvas = (props) => {
                 $(nodeId).css('background-color', randomColor)
               }
         }
+
     }, 1000,
     //Only colours canvas if squares have changed
     [state.squares])
 
   return (
     <div>
-        <Row className='d-flex justify-content-center p-3'>
-            <Grid className='mx-auto'> 
-            {grid.map((node, nodeId) => {
-              return (
-                      <Square key={nodeId} id={'node-'.concat(nodeId + 1)}> {node} </Square>
-                    )
-                  })}
-            </Grid>
-        </Row>
-        <Row className='d-flex justify-content-center p-3'>
-            <h6>
-                Source: { state.contract ? <EtherscanLink address={state.contract.address} type='address' /> : 'random colours' }
-            </h6>
-        </Row>
+        <Container >
+            <Row className='justify-content-center p-3'>
+                <Col lg={5}>
+                    <Grid className='mx-auto mr-auto ml-auto'> 
+                    {grid.map((node, nodeId) => {
+                    return (
+                            <Square key={nodeId} id={'node-'.concat(nodeId + 1)}> {node} </Square>
+                            )
+                        })}
+                    </Grid>
+                </Col>
+                <Col className='align-items-left'>
+                    <SidePanel />
+                </Col>
+            </Row>
+        </Container>
+        <Container >
+            <Row className='justify-content-center p-3'>
+                <CanvasAlert />
+            </Row>
+        </Container>
+        
     </div>
     )}
 

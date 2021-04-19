@@ -4,12 +4,12 @@ import styled from 'styled-components'
 
 import { BlockchainContext } from '../BlockchainContext'
 import { zip } from '../../utils/utilityFunctions'
-import { HandleSquare } from './handleSquare'
+import HandleSquare from './handleSquare'
 
 const TableHead = styled.th`
     text-align: center
     `
-export const HandleSquares  = (props) => {
+const HandleSquares  = (props) => {
 
     const { state } = useContext(BlockchainContext)
 
@@ -34,5 +34,7 @@ export const HandleSquares  = (props) => {
         </Table>
         </Row>
 )}
+
+export default HandleSquares
 
 

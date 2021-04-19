@@ -59,4 +59,14 @@ const coordToString = (squareNumber) => {
     return coordSummary
 }
 
-export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString };
+const numbersUpTo = (number)=> {
+    const result = []
+    for (let i = 1 ; i <= number ; i++) {
+        console.log(i)
+        result.push(i)
+    }
+    console.log(result)
+    return result
+}
+
+export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString, numbersUpTo };

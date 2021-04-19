@@ -5,7 +5,7 @@ import HashLoader from 'react-spinners/HashLoader'
 import { BlockchainContext } from '../BlockchainContext'
 import { loadBlockchain } from '../../utils/blockchainUtils'
 
-export const ConnectButton = () => {
+const ConnectButton = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const [loading, setLoading] = useState(false)
@@ -33,3 +33,5 @@ export const ConnectButton = () => {
             </Form>
     )
 }
+
+export default ConnectButton

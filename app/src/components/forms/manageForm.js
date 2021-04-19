@@ -7,7 +7,7 @@ import { BlockchainContext } from '../BlockchainContext'
 import { hexColourToDecimal } from '../../utils/utilityFunctions'
 
 
-export default function ManageForm(props) {
+const ManageForm = (props) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
 
@@ -76,3 +76,5 @@ export default function ManageForm(props) {
         </Form>
         )
 }
+
+export default ManageForm

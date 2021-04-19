@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import { Container } from 'react-bootstrap'
 
 import { BlockchainContext } from '../BlockchainContext'
-import { HandleSquares } from './handleSquares'
-import { MintSquares } from './mintSquares'
-import { MissingData } from './missingData'
+import HandleSquares from './handleSquares'
+import MintSquares from './mintSquares'
+import MissingData from './missingData'
 
-export const SquareManager = (props) => {
+const SquareManager = (props) => {
 
     const { state } = useContext(BlockchainContext)
 

@@ -4,7 +4,7 @@ import { Nav, Navbar, Container } from 'react-bootstrap'
 
 import pallette from '../../images/gatsby-icon.png'
 
-export const HeaderBase = (props) => {
+const HeaderBase = (props) => {
     return (
         <header className='bg-dark'>
             <Helmet>

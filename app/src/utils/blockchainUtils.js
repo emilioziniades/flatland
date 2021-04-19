@@ -28,9 +28,24 @@ const blockchainReducer = (state, action) => {
         	ownedSquares: action.mySquares,
         }
     }
- 	default:
-  		return state;
-    }
+	case 'CLICK-SQUARE': {
+		return {
+			...state,
+			isSquareClicked: true,
+			clickedSquare: action.clickedSquare
+		}
+	}
+
+	case 'UNCLICK-SQUARE': {
+		return {
+			...state,
+			isSquareClicked: false,
+			clickedSquare: null
+		}
+	}
+	default:
+		return state;
+  }
 }
 
 const loadBlockchain = async () => {

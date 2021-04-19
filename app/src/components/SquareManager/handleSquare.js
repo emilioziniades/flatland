@@ -1,5 +1,4 @@
 import React from 'react'
-import { Row, Col, Table } from 'react-bootstrap'
 import styled from 'styled-components'
 
 import ManageForm from '../forms/manageForm'
@@ -19,7 +18,7 @@ const TableData = styled.td`
     
 `
 
-export const HandleSquare = (props) => {
+const HandleSquare = (props) => {
 
     return (    
             <tr>
@@ -44,3 +43,5 @@ export const HandleSquare = (props) => {
                 </TableData>
             </tr>)
 }
+
+export default HandleSquare

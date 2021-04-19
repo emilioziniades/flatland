@@ -4,7 +4,7 @@ import { Row } from 'react-bootstrap'
 import MintForm from '../forms/mintForm'
 import { BlockchainContext } from '../BlockchainContext'
 
-export const MintSquares = (props) => {
+const MintSquares = (props) => {
 
     const { state } = useContext(BlockchainContext)
 
@@ -20,3 +20,5 @@ export const MintSquares = (props) => {
         </main> 
         </Row>
     )}
+
+export default MintSquares

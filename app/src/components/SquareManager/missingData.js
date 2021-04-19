@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row } from 'react-bootstrap'
 
-export const MissingData = (props) => {
+const MissingData = (props) => {
     return(
         <Row>
         <main role='main' className='col-lg-12 d-flex text-center'>
@@ -11,3 +11,5 @@ export const MissingData = (props) => {
         </main>
         </Row>
     )}
+
+export default MissingData

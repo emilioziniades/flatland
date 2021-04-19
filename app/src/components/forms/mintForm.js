@@ -5,9 +5,8 @@ import HashLoader from 'react-spinners/HashLoader'
 import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
 import { hexColourToDecimal } from '../../utils/utilityFunctions'
-import EtherscanLink from '../etherscanLink'
 
-export default function MintForm() {
+const MintForm = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const [loading, setLoading] = useState(false)
@@ -73,3 +72,5 @@ export default function MintForm() {
         </Form>
         )
 }
+
+export default MintForm
