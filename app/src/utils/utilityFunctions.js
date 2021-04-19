@@ -45,8 +45,8 @@ const zip = (obj) => {
 
 const numberToCoords = (squareNumber) => {
     let squaresAcross = 16
-    const xCoord = squareNumber % squaresAcross
-    const yCoord = Math.trunc(squareNumber / squaresAcross) + 1
+    let xCoord = squareNumber % squaresAcross
+    let yCoord = Math.trunc(squareNumber / squaresAcross) + 1
     
     if (xCoord === 0) {
         xCoord = squaresAcross

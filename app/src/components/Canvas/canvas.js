@@ -74,6 +74,7 @@ const Canvas = (props) => {
                 </Col>
                 <Col className='align-items-left'>
                     <SidePanel />
+                    
                 </Col>
             </Row>
         </Container>

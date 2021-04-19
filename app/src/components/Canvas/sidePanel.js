@@ -20,6 +20,7 @@ const SidePanel = () => {
                 <h6>
                     Source: { state.contract ? <EtherscanLink address={state.contract.address} type='address' /> : 'random colours' }
                 </h6>
+                { state.connected ?
                 <p>
                     # claimed squares : {state.squares.length}
                     <br/>
@@ -27,6 +28,7 @@ const SidePanel = () => {
                     <br/>
                     Recent activity: 
                 </p>
+                : <div/> }
             </Alert>
         )
     }
