@@ -2,18 +2,36 @@ import React, { useContext } from 'react'
 import $ from 'jquery'
 import GridItem from './gridItem'
 import { BlockchainContext } from '../BlockchainContext'
+import { getSquareColumn, getSquareRow } from '../../utils/utilityFunctions'
 
 const Square = (props) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const {isSquareClicked, clickedSquare} = state
+    const squareId = parseInt(props.id.split('-')[1])
 
-    const activeCss = {
+    const chosenSquare = {
         'border': '2px solid black',
     }
 
-    const inactiveCss = {
+    const unchosenSquare = {
         'border': 'none',
+    }
+
+    const hoveredSquareColumn = {
+        'opacity': '0.5',
+    }
+
+    const hoveredSquareRow = {
+        'opacity': '0.5',
+    }
+
+    const unhoveredSquareColumn = {
+        'opacity': '1',
+    }
+
+    const unhoveredSquareRow = {
+        'opacity': '1',
     }
 
     const handleClick = (e) => {
@@ -21,18 +39,18 @@ const Square = (props) => {
         console.log(e)
 
         if (isSquareClicked && clickedSquare === props.id ) {
-            $('#'+ props.id).css(inactiveCss)
-            dispatch({type: 'UNCLICK-SQUARE', previousSquare: props.id})
+            $('#'+ props.id).css(unchosenSquare)
+            dispatch({type: 'UNCLICK-SQUARE'})
         }
 
         else if (isSquareClicked && clickedSquare !== props.id) {
             $('#'+ clickedSquare).css('border', 'none')
-            $('#'+ props.id).css(activeCss)
+            $('#'+ props.id).css(chosenSquare)
             dispatch({type: 'CLICK-SQUARE', clickedSquare: props.id})
         }
         else {
             //No square is clicked
-            $('#'+ props.id).css(activeCss)
+            $('#'+ props.id).css(chosenSquare)
             dispatch({type: 'CLICK-SQUARE', clickedSquare: props.id})
  
         }
@@ -41,10 +59,35 @@ const Square = (props) => {
 
     const handleEnter = (e) => {
         e.target.style.opacity = '0.5'
+
+        const column = getSquareColumn(squareId)
+        const row = getSquareRow(squareId)
+
+        for (let columnSquare of column) {
+            let nodeId = '#node-' + columnSquare
+            $(nodeId).css(hoveredSquareColumn)
+        }
+        for (let rowSquare of row) {
+            let nodeId = '#node-' + rowSquare
+            $(nodeId).css(hoveredSquareRow)
+        }
     }
 
     const handleLeave = (e) => {
         e.target.style.opacity = '1'
+
+        const column = getSquareColumn(squareId)
+        const row = getSquareRow(squareId)
+
+        for (let columnSquare of column) {
+            let nodeId = '#node-' + columnSquare
+            $(nodeId).css(unhoveredSquareColumn)
+            
+        }
+        for (let rowSquare of row) {
+            let nodeId = '#node-' + rowSquare
+            $(nodeId).css(unhoveredSquareRow)
+        }
     }
 
   return (

@@ -52,7 +52,7 @@ const ManageForm = (props) => {
     const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, changeSquareColour);
     return(
         <Form onSubmit={handleSubmit}>
-            <Row className='p-2'>
+            <Row className='p-2 justify-content-center'>
             <Col>
             <Form.Control 
                 type='text'
@@ -66,7 +66,7 @@ const ManageForm = (props) => {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
-                className='ml-2 mr-5'
+                className='ml-4 mr-4'
             >
             {loading ? 'awaiting confirmation' : 'change colour'}
             </Button>

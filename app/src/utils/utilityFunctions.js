@@ -57,12 +57,12 @@ const numberToCoords = (squareNumber) => {
 
 const coordToString = (squareNumber) => {
     const coordJoin = numberToCoords(squareNumber).join()
-    const coordSummary = "(" + coordJoin.replace(","," ; ") + ")"
+    const coordSummary = "(" + coordJoin.replace(","," , ") + ")"
     return coordSummary
 }
 
 const numbersUpTo = (number)=> {
-    const result = []
+    let result = []
     for (let i = 1 ; i <= number ; i++) {
         console.log(i)
         result.push(i)
@@ -71,4 +71,41 @@ const numbersUpTo = (number)=> {
     return result
 }
 
-export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString, numbersUpTo };
+const getSquareColumn = (id) => {
+    let result = []
+
+    for (let i = 1; i < 16 ; i ++) {
+
+        let distance = 16 * i
+        let above = id - distance
+        let below = id + distance
+
+        result.push(above)
+        result.push(below)
+    }
+
+    result = result.filter((item) => { return item > 0 && item < 256 })
+    return result
+}
+
+const getSquareRow = (id) => {
+    let result = []
+
+    for (let i = 1; i < 16 ; i ++) {
+
+        let left = id - i
+        let right = id + i
+
+        if (Math.floor( (left - 1) / 16) === Math.floor( id / 16)) {
+            result.push(left)
+        }
+        if (Math.floor( (right - 1) / 16) === Math.floor( id / 16)) {
+            result.push(right)
+        }
+    }
+
+    console.log(result)
+    return result
+}
+
+export { bigNumberToHexColour, bigNumberToNumber, hexColourToDecimal, decimalToHexColour, zip, numberToCoords, coordToString, numbersUpTo, getSquareColumn, getSquareRow };
