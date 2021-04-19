@@ -48,6 +48,11 @@ const numberToCoords = (squareNumber) => {
     const xCoord = squareNumber % squaresAcross
     const yCoord = Math.trunc(squareNumber / squaresAcross) + 1
     
+    if (xCoord === 0) {
+        xCoord = squaresAcross
+        yCoord = Math.trunc(squareNumber / squaresAcross) 
+    }
+    
     return [xCoord, yCoord]
     
 }	
