@@ -39,11 +39,21 @@ const Square = (props) => {
 
     }
 
+    const handleEnter = (e) => {
+        e.target.style.opacity = '0.5'
+    }
+
+    const handleLeave = (e) => {
+        e.target.style.opacity = '1'
+    }
+
   return (
         <GridItem 
             className='node grid-item' 
             id={props.id}
             onClick={handleClick}
+            onMouseEnter={handleEnter}
+            onMouseLeave={handleLeave}
             >
         </GridItem>)
 

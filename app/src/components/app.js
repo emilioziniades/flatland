@@ -18,7 +18,7 @@ const App = () => {
         totalSupply: 0,
         maxSupply: 0,
         account: '',
-        ownedSquares: [],
+        ownedSquares: {},
         isSquareClicked: false,
         clickedSquare: null,
 

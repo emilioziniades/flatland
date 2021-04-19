@@ -39,7 +39,6 @@ const zip = (obj) => {
     const result = keys.map((e, i) => {
         return [e, values[i]]
     })
-
     return result
 }
 
@@ -52,9 +51,7 @@ const numberToCoords = (squareNumber) => {
         xCoord = squaresAcross
         yCoord = Math.trunc(squareNumber / squaresAcross) 
     }
-    
     return [xCoord, yCoord]
-    
 }	
 
 
