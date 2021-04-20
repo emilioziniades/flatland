@@ -1,5 +1,7 @@
 import React, {useContext} from 'react'
 import { Row, Alert } from 'react-bootstrap'
+import styled from 'styled-components'
+import $ from 'jquery'
 
 import EtherscanLink from '../etherscanLink'
 import { BlockchainContext } from '../BlockchainContext'
@@ -7,10 +9,30 @@ import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
 import MintForm from '../forms/mintForm'
 
+const SquareIcon = styled.div`
+    border: 1px solid #000000;
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    ${squareId => `background: ${squareId.background};`}
+    `
+
+const SquareName = styled.h5`
+    display: inline-block;
+    vertical-align: middle;
+    padding-bottom: 16px;
+    `
+
+const unchosenSquare = {
+    'border': 'none',
+}
 
 const SidePanel = () => {
 
-    const { state } = useContext(BlockchainContext)
+    const { state, dispatch } = useContext(BlockchainContext)
     const { squares, ownedSquares, isSquareClicked , clickedSquare } = state
 
     const FlatlandStats = () => {
@@ -39,11 +61,25 @@ const SidePanel = () => {
 
         const squareId = clickedSquare.split('-')[1]
         const coords = coordToString(squareId)
+        
         return (
             <Alert
                 className = 'm-4'
-                variant={ squares[squareId -1] ? ownedSquares[squareId] ? 'success' : 'danger' :'primary' }>
-                <h5> Square # {squareId} </h5>
+                variant={squares[squareId - 1] ? ownedSquares[squareId] ? 'success' : 'danger' : 'primary'}
+                dismissible
+                onClose={e => {
+                    $('#' + clickedSquare).css(unchosenSquare)
+                    dispatch({ type: 'UNCLICK-SQUARE' })
+                }}>
+                <span>
+                    {
+                        squares[squareId - 1] ? 
+                        <SquareIcon background={decimalToHexColour(squares[squareId - 1])} /> 
+                        : <SquareIcon background='ffffff' />
+                    }
+                    
+                    <SquareName> Square # {squareId} </SquareName>
+                </span>
                 <h6> Co-ordinates : {coords} </h6>
                 <p> <i>{ squares[squareId -1] ? 'Claimed' : 'Unclaimed' } </i></p>
                 { 

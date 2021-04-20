@@ -90,16 +90,20 @@ const getSquareColumn = (id) => {
 
 const getSquareRow = (id) => {
     let result = []
-
+    let yCoord = numberToCoords(id)[1]
+    
     for (let i = 1; i < 16 ; i ++) {
 
         let left = id - i
         let right = id + i
 
-        if (Math.floor( (left - 1) / 16) === Math.floor( id / 16)) {
+        let leftY = numberToCoords(left)[1]
+        let rightY = numberToCoords(right)[1]
+
+        if (leftY === yCoord) {
             result.push(left)
         }
-        if (Math.floor( (right - 1) / 16) === Math.floor( id / 16)) {
+        if (rightY === yCoord) {
             result.push(right)
         }
     }
