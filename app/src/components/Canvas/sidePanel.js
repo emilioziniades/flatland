@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
-import { Row, Alert } from 'react-bootstrap'
+import { Row, Alert, Button } from 'react-bootstrap'
 import styled from 'styled-components'
+import $ from 'jQuery'
 
 import EtherscanLink from '../etherscanLink'
 import { BlockchainContext } from '../BlockchainContext'
@@ -25,9 +26,13 @@ const SquareName = styled.h5`
     padding-bottom: 16px;
     `
 
+const unchosenSquare = {
+    'border': 'none',
+}
+
 const SidePanel = () => {
 
-    const { state } = useContext(BlockchainContext)
+    const { state, dispatch } = useContext(BlockchainContext)
     const { squares, ownedSquares, isSquareClicked , clickedSquare } = state
 
     const FlatlandStats = () => {
@@ -60,7 +65,12 @@ const SidePanel = () => {
         return (
             <Alert
                 className = 'm-4'
-                variant={squares[squareId - 1] ? ownedSquares[squareId] ? 'success' : 'danger' : 'primary'}>
+                variant={squares[squareId - 1] ? ownedSquares[squareId] ? 'success' : 'danger' : 'primary'}
+                dismissible
+                onClose={e => {
+                    $('#' + clickedSquare).css(unchosenSquare)
+                    dispatch({ type: 'UNCLICK-SQUARE' })
+                }}>
                 <span>
                     {
                         squares[squareId - 1] ? 
