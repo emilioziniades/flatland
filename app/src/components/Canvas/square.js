@@ -41,8 +41,8 @@ const Square = (props) => {
         console.log(e)
         console.log(chosenSquare)
 
-        if (isSquareClicked && clickedSquare === props.id ) {
-            $('#'+ props.id).css(unchosenSquare)
+        if (isSquareClicked && clickedSquare === props.id) {
+            $('#' + props.id).css(unchosenSquare)
             dispatch({type: 'UNCLICK-SQUARE'})
         }
 
