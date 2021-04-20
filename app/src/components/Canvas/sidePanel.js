@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import { Row, Alert } from 'react-bootstrap'
 import styled from 'styled-components'
-import $ from 'jQuery'
+import $ from 'jquery'
 
 import EtherscanLink from '../etherscanLink'
 import { BlockchainContext } from '../BlockchainContext'
