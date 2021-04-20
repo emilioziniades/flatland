@@ -22,7 +22,7 @@ const HandleSquares  = (props) => {
                     <thead>
                     <tr>
                     <TableHead> Square # </TableHead>
-                    <TableHead> Coords </TableHead>
+                    <TableHead> Co-ordinates </TableHead>
                     <TableHead> Square </TableHead>
                     <TableHead> Current colour </TableHead>
                     <TableHead> Change colour </TableHead>
