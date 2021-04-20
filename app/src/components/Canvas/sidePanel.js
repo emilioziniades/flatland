@@ -1,6 +1,5 @@
 import React, {useContext} from 'react'
 import { Row, Alert } from 'react-bootstrap'
-import styled from 'styled-components'
 
 import EtherscanLink from '../etherscanLink'
 import { BlockchainContext } from '../BlockchainContext'
@@ -8,22 +7,6 @@ import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
 import MintForm from '../forms/mintForm'
 
-const SquareIcon = styled.div`
-    border: 1px solid #000000;
-    height: 32px;
-    width: 32px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    ${squareId => `background: ${squareId.background};`}
-    `
-
-const SquareName = styled.h5`
-    display: inline-block;
-    vertical-align: middle;
-    padding-bottom: 16px;
-    `
 
 const SidePanel = () => {
 
@@ -56,20 +39,11 @@ const SidePanel = () => {
 
         const squareId = clickedSquare.split('-')[1]
         const coords = coordToString(squareId)
-        console.log(squares)
         return (
             <Alert
                 className = 'm-4'
-                variant={squares[squareId - 1] ? ownedSquares[squareId] ? 'success' : 'danger' : 'primary'}>
-                <span>
-                    {
-                        squares[squareId - 1] ? 
-                        <SquareIcon background={decimalToHexColour(squares[squareId - 1])} /> 
-                        : <SquareIcon background='ffffff' />
-                    }
-                    
-                    <SquareName> Square # {squareId} </SquareName>
-                </span>
+                variant={ squares[squareId -1] ? ownedSquares[squareId] ? 'success' : 'danger' :'primary' }>
+                <h5> Square # {squareId} </h5>
                 <h6> Co-ordinates : {coords} </h6>
                 <p> <i>{ squares[squareId -1] ? 'Claimed' : 'Unclaimed' } </i></p>
                 { 
