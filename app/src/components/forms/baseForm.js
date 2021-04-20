@@ -1,20 +1,29 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
 import { ChromePicker } from 'react-color'
 
-import { useBlockchainForm } from '../customHooks/useBlockchainForm'
-import { BlockchainContext } from '../BlockchainContext'
-import { hexColourToDecimal } from '../../utils/utilityFunctions'
-
 const BaseForm = ({ callback, message }) => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
-    const [loading, setLoading] = useState(false)
+    const [input, setInput] = useState('')
+    const [loading, changeLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
 
     const onTogglePicker = () => setPickerVisible(!pickerVisible)
-    const { input, handleSubmit, handleChange } = useBlockchainForm(callback)
+
+    const handleChange = (event) => setInput(event.hex)
+
+    const handleSubmit = async (event) => {
+        changeLoading(!loading)
+        if (event) {
+          event.preventDefault()
+          setInput('')
+        }
+        if (callback) {
+            await callback(input)
+        }
+        changeLoading(!loading)
+    }
 
     return(
         <Form onSubmit={handleSubmit}>
@@ -24,12 +33,13 @@ const BaseForm = ({ callback, message }) => {
                 readOnly
                 type='text'
                 name='colour'
-                placeholder= '↓'
+                placeholder= 'choose a colour'
                 value={input}
             />
             <Button
                 onClick={onTogglePicker}
-                variant='light' >
+                variant='outline-primary'
+                className='m-2' >
                     { pickerVisible ? 'hide colour picker' : 'show colour picker' }
             </Button>
             { pickerVisible && (
@@ -45,10 +55,11 @@ const BaseForm = ({ callback, message }) => {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
+                className='mr-5'
             > 
             { loading ? 'awaiting confirmation' : message }
             </Button>
-            <HashLoader loading={loading} color='FFC145' className='m-4' /> 
+            <HashLoader loading={loading} color='FFC145' /> 
             </Col>
             </Row>
         </Form>
