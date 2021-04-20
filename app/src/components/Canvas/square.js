@@ -7,7 +7,7 @@ import { getSquareColumn, getSquareRow, invertColour } from '../../utils/utility
 const Square = (props) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const {squares, isSquareClicked, clickedSquare} = state
+    const { squares, isSquareClicked, clickedSquare } = state
     const squareId = parseInt(props.id.split('-')[1])
     const squareColour = squares[squareId - 1]
     const invertedColour = invertColour(squareColour)
@@ -36,28 +36,27 @@ const Square = (props) => {
         'opacity': '1',
     }
 
+    //In future we can use this if we want to change behaviours from users who are logged in vs not
+    //This is instead handled on the Side Panel level now (Not logged in > Cannot claim square)
+    const routeClickEvent = (e) => {
+        { state.account ? handleClick(e) : handleClick(e) }       
+    }
+
     const handleClick = (e) => {
-
-        console.log(e)
-        console.log(chosenSquare)
-
         if (isSquareClicked && clickedSquare === props.id) {
             $('#' + props.id).css(unchosenSquare)
-            dispatch({type: 'UNCLICK-SQUARE'})
+            dispatch({ type: 'UNCLICK-SQUARE' })
         }
-
         else if (isSquareClicked && clickedSquare !== props.id) {
-            $('#'+ clickedSquare).css('border', 'none')
-            $('#'+ props.id).css(chosenSquare)
-            dispatch({type: 'CLICK-SQUARE', clickedSquare: props.id})
+            $('#' + clickedSquare).css('border', 'none')
+            $('#' + props.id).css(chosenSquare)
+            dispatch({ type: 'CLICK-SQUARE', clickedSquare: props.id })
         }
         else {
             //No square is clicked
-            $('#'+ props.id).css(chosenSquare)
-            dispatch({type: 'CLICK-SQUARE', clickedSquare: props.id})
- 
+            $('#' + props.id).css(chosenSquare)
+            dispatch({ type: 'CLICK-SQUARE', clickedSquare: props.id })
         }
-
     }
 
     const handleEnter = (e) => {
@@ -85,7 +84,7 @@ const Square = (props) => {
         for (let columnSquare of column) {
             let nodeId = '#node-' + columnSquare
             $(nodeId).css(unhoveredSquareColumn)
-            
+
         }
         for (let rowSquare of row) {
             let nodeId = '#node-' + rowSquare
@@ -93,16 +92,16 @@ const Square = (props) => {
         }
     }
 
-  return (
-        <GridItem 
-            className='node grid-item' 
+    return (
+        <GridItem
+            className='node grid-item'
             id={props.id}
-            onClick={handleClick}
+            onClick={routeClickEvent}
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}
-            >
-        </GridItem>)
-
+        >
+        </GridItem>
+    )
 }
 
 export default Square
