@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\components",
+    "\\src\\components\\Canvas",
+    "\\src\\components\\forms",
+    "\\src\\components\\Header",
+    "\\src\\components\\SquareManager",
+    "\\src\\utils"
+  ],
+  "SelectedNode": "\\src\\components\\Canvas\\sidePanel.js",
+  "PreviewInSolutionExplorer": false
+}
