@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
+import { ChromePicker } from 'react-color'
 
 import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
@@ -41,7 +42,9 @@ const MintForm = () => {
 
     }
 
-    const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, mintSquare);
+    const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, mintSquare)
+    const [colour, setColour] = useState()
+    const handlePickerChange = (colour) => setColour(colour)
     return(
         <Form onSubmit={handleSubmit}>
             <Row className='m-5'>
@@ -53,6 +56,7 @@ const MintForm = () => {
                 value={inputs.colour}
                 onChange={handleChange}
             />
+            <ChromePicker color={colour} onChangeonChangeComplete={handlePickerChange} onChange={handlePickerChange}/>
             </Col>
             <Col>
             <Button 
