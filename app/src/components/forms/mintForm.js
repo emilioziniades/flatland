@@ -12,7 +12,6 @@ const MintForm = () => {
     const { state, dispatch } = useContext(BlockchainContext)
     const [loading, setLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
-    const [colour, setColour] = useState('#FFF111')
 
     // Callback function, called by handleSubmit when form is submitted
     const mintSquare = async () => {
@@ -20,13 +19,11 @@ const MintForm = () => {
         try {
 
             setLoading(true)
-            
-            console.log(inputs)
+            console.log(input)
 
-            const square = inputs.colour.trim()
-            const squareDec = hexColourToDecimal(square)
+            const squareDecimal = hexColourToDecimal(input)
 
-            let tx = await state.contract.mint(squareDec)
+            let tx = await state.contract.mint(squareDecimal)
             await tx.wait(1)
             const squareId = state.squares.length + 1
             
@@ -34,7 +31,7 @@ const MintForm = () => {
 
             dispatch({
               type: 'MINT',
-              colour: squareDec,
+              colour: squareDecimal,
               id: squareId
             })
         }
@@ -47,21 +44,18 @@ const MintForm = () => {
     }
 
     const onTogglePicker = () => setPickerVisible(!pickerVisible)
-    const handlePickerChange = (colour) => setColour(colour)
-    const handlePickerChangeComplete = (colour) => setColour(colour)
-
-    const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, mintSquare)
+    const { input, handleSubmit, handleChange } = useBlockchainForm(mintSquare)
 
     return(
         <Form onSubmit={handleSubmit}>
-            <Row className='m-5'>
+            <Row className='p-2 justify-content-center'>
             <Col>
             <Form.Control 
                 readOnly
                 type='text'
                 name='colour'
-                placeholder= 'e.g. #FFFFFF'
-                value={inputs.colour}
+                placeholder= '↓'
+                value={input}
             />
             <Button
                 onClick={onTogglePicker}
@@ -70,7 +64,7 @@ const MintForm = () => {
             </Button>
             { pickerVisible && (
             <ChromePicker 
-                color={inputs.colour} 
+                color={input} 
                 disableAlpha={true}
                 onChange={handleChange}
                 onChangeChangeComplete={handleChange} 
@@ -81,15 +75,11 @@ const MintForm = () => {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
-                className = 'ml-2 mr-5 pl-2 pr-2 mint-button'
             > 
             {loading ? 'awaiting confirmation' : 'claim square'}
             </Button>
-            <HashLoader loading={loading} color='FFC145' /> 
+            <HashLoader loading={loading} color='FFC145' className='m-4' /> 
             </Col>
-            </Row>
-            <Row className='mint-notif-row'>
-                {/* { tx ? <EtherscanLink address={tx.hash} type='tx' /> : <div /> } */}
             </Row>
         </Form>
         )

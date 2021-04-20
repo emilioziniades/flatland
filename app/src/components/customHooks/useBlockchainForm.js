@@ -1,12 +1,12 @@
 import {useState} from 'react'
 
-export const useBlockchainForm = (initialValues, callback) => {
-    const [inputs, setInputs] = useState(initialValues)
+export const useBlockchainForm = (callback) => {
+    const [input, setInput] = useState('')
 
     const handleSubmit = (event) => {
         if (event) {
           event.preventDefault()
-          setInputs(initialValues)
+          setInput('')
           // window.alert('Mint button clicked')
         }
         if (callback) {
@@ -18,11 +18,11 @@ export const useBlockchainForm = (initialValues, callback) => {
         // event.persist()
         console.log(event)
 
-        setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
+        setInput(event.hex)
 
     }
     return {
-        inputs,
+        input,
         handleSubmit,
         handleChange,
   };

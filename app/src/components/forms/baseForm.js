@@ -7,28 +7,25 @@ import { useBlockchainForm } from '../customHooks/useBlockchainForm'
 import { BlockchainContext } from '../BlockchainContext'
 import { hexColourToDecimal } from '../../utils/utilityFunctions'
 
-const BaseForm = ({ callback }) => {
+const BaseForm = ({ callback, message }) => {
 
+    const { state, dispatch } = useContext(BlockchainContext)
     const [loading, setLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
-    const [colour, setColour] = useState('#FFF111')
 
     const onTogglePicker = () => setPickerVisible(!pickerVisible)
-    const handlePickerChange = (colour) => setColour(colour)
-    const handlePickerChangeComplete = (colour) => setColour(colour)
-
-    const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, callback)
+    const { input, handleSubmit, handleChange } = useBlockchainForm(callback)
 
     return(
         <Form onSubmit={handleSubmit}>
-            <Row className='m-5'>
+            <Row className='p-2 justify-content-center'>
             <Col>
             <Form.Control 
                 readOnly
                 type='text'
                 name='colour'
-                placeholder= 'e.g. #FFFFFF'
-                value={colour.hex}
+                placeholder= '↓'
+                value={input}
             />
             <Button
                 onClick={onTogglePicker}
@@ -37,10 +34,10 @@ const BaseForm = ({ callback }) => {
             </Button>
             { pickerVisible && (
             <ChromePicker 
-                color={colour} 
+                color={input} 
                 disableAlpha={true}
-                onChange={handlePickerChange}
-                onChangeChangeComplete={handlePickerChangeComplete} 
+                onChange={handleChange}
+                onChangeChangeComplete={handleChange} 
             />
             )}
             </Col>
@@ -48,15 +45,11 @@ const BaseForm = ({ callback }) => {
             <Button 
                 type='submit'
                 variant={ loading ? 'warning' : 'primary'}
-                className = 'ml-2 mr-5 pl-2 pr-2 mint-button'
             > 
-            {loading ? 'awaiting confirmation' : 'claim square'}
+            { loading ? 'awaiting confirmation' : message }
             </Button>
-            <HashLoader loading={loading} color='FFC145' /> 
+            <HashLoader loading={loading} color='FFC145' className='m-4' /> 
             </Col>
-            </Row>
-            <Row className='mint-notif-row'>
-                {/* { tx ? <EtherscanLink address={tx.hash} type='tx' /> : <div /> } */}
             </Row>
         </Form>
         )
