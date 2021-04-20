@@ -61,7 +61,7 @@ const SidePanel = () => {
 
         const squareId = clickedSquare.split('-')[1]
         const coords = coordToString(squareId)
-        console.log(squares)
+        
         return (
             <Alert
                 className = 'm-4'
