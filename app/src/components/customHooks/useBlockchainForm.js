@@ -15,7 +15,8 @@ export const useBlockchainForm = (initialValues, callback) => {
     }
 
     const handleChange = (event) => {
-        event.persist();
+        // event.persist()
+        console.log(event)
 
         setInputs(inputs => ({...inputs, [event.target.name]: event.target.value}));
 

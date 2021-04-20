@@ -11,6 +11,8 @@ const MintForm = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const [loading, setLoading] = useState(false)
+    const [pickerVisible, setPickerVisible] = useState(false)
+    const [colour, setColour] = useState('#FFF111')
 
     // Callback function, called by handleSubmit when form is submitted
     const mintSquare = async () => {
@@ -18,6 +20,8 @@ const MintForm = () => {
         try {
 
             setLoading(true)
+            
+            console.log(inputs)
 
             const square = inputs.colour.trim()
             const squareDec = hexColourToDecimal(square)
@@ -42,21 +46,36 @@ const MintForm = () => {
 
     }
 
-    const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, mintSquare)
-    const [colour, setColour] = useState()
+    const onTogglePicker = () => setPickerVisible(!pickerVisible)
     const handlePickerChange = (colour) => setColour(colour)
+    const handlePickerChangeComplete = (colour) => setColour(colour)
+
+    const { inputs, handleSubmit, handleChange } = useBlockchainForm({colour: ''}, mintSquare)
+
     return(
         <Form onSubmit={handleSubmit}>
             <Row className='m-5'>
             <Col>
             <Form.Control 
+                readOnly
                 type='text'
                 name='colour'
                 placeholder= 'e.g. #FFFFFF'
                 value={inputs.colour}
-                onChange={handleChange}
             />
-            <ChromePicker color={colour} onChangeonChangeComplete={handlePickerChange} onChange={handlePickerChange}/>
+            <Button
+                onClick={onTogglePicker}
+                variant='light' >
+                    { pickerVisible ? 'hide colour picker' : 'show colour picker' }
+            </Button>
+            { pickerVisible && (
+            <ChromePicker 
+                color={inputs.colour} 
+                disableAlpha={true}
+                onChange={handleChange}
+                onChangeChangeComplete={handleChange} 
+            />
+            )}
             </Col>
             <Col>
             <Button 
@@ -67,7 +86,6 @@ const MintForm = () => {
             {loading ? 'awaiting confirmation' : 'claim square'}
             </Button>
             <HashLoader loading={loading} color='FFC145' /> 
-
             </Col>
             </Row>
             <Row className='mint-notif-row'>
