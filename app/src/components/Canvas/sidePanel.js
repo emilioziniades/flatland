@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { Row, Alert, Button } from 'react-bootstrap'
+import { Row, Alert } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jQuery'
 
