@@ -1,4 +1,5 @@
 /app/.cache
+/app/.vs
 /app/node_modules
 /app/public
 /node_modules
