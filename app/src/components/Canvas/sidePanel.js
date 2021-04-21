@@ -80,10 +80,10 @@ const SidePanel = () => {
                         <div>
                             <span>
                                 <SquareIcon background={decimalToHexColour(squares[squareId - 1])} />
-                                <SquareName> Square # {squareId} </SquareName>
+                                <SquareName> Square # {squareId} <Badge pill variant='info'>Claimed</Badge> </SquareName>
                             </span>
                             <br />
-                            <Badge pill variant='info'>Claimed</Badge>
+                            
                             <h6> Co-ordinates : {coords} </h6>
                             <h6> Owner : {ownedSquares[squareId] ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[squareId - 1])} </h6>
                             <Row className='justify-content-center'>
@@ -94,10 +94,10 @@ const SidePanel = () => {
                         <div>
                             <span>
                                 <SquareIcon background='ffffff' />
-                                <SquareName> Square # {squareId} </SquareName>
+                                <SquareName> Square # {squareId} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
                             </span>
                             <br />
-                            <Badge pill variant='warning'><i>Unclaimed</i></Badge>
+                            
                             <h6> Co-ordinates : {coords} </h6>
                             <h6> Claim it </h6>
                             <Row className='justify-content-center'>

@@ -16,7 +16,7 @@ const HandleSquares  = () => {
         <Row>
             <h3 className='p-2'> Looks like you own {ownedSquares.length === 1 ? 'a square' : 'squares'}! Manage here </h3>
         </Row>
-        <Table>
+        <Table hover>
                     <TableHead>
                     <TableRow>
                     <Head> Square # </Head>
