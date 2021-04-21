@@ -34,7 +34,7 @@ const unchosenSquare = {
 const SidePanel = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const { squares, ownedSquares, isSquareClicked , clickedSquare } = state
+    const { connected, account, contract, squares, maxSupply, ownedSquares, isSquareClicked , clickedSquare } = state
 
     const FlatlandStats = () => {
         return(
@@ -45,13 +45,13 @@ const SidePanel = () => {
                     Flatland Smart Contract
                 </h5>
                 <h6>
-                    Source: { state.contract ? <EtherscanLink address={state.contract.address} type='address' /> : 'random colours' }
+                    Source: { contract ? <EtherscanLink address={contract.address} type='address' /> : 'random colours' }
                 </h6>
-                { state.connected ?
+                { connected ?
                 <p>
-                    # claimed squares : {state.squares.length}
+                    # claimed squares : {squares.length}
                     <br/>
-                    # unclaimed squares : {state.maxSupply - state.squares.length }
+                    # unclaimed squares : {maxSupply - squares.length }
                     <br/>
                     Recent activity: 
                 </p>
@@ -87,7 +87,7 @@ const SidePanel = () => {
                             <h6> Co-ordinates : {coords} </h6>
                             <h6> Owner : {ownedSquares[squareId] ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[squareId - 1])} </h6>
                             <Row className='justify-content-center'>
-                                {state.account ? ownedSquares[squareId] ? <ManageForm squareId={squareId} /> : <div /> : <ConnectButton />}
+                                {account ? ownedSquares[squareId] ? <ManageForm squareId={squareId} /> : <div /> : <ConnectButton />}
                                 </Row>
                         </div>
 	                    :
@@ -101,7 +101,7 @@ const SidePanel = () => {
                             <h6> Co-ordinates : {coords} </h6>
                             <h6> Claim it </h6>
                             <Row className='justify-content-center'>
-                                {state.account ? <MintForm /> : <ConnectButton />}
+                                {account ? <MintForm /> : <ConnectButton />}
                             </Row>
                         </div>
                 }

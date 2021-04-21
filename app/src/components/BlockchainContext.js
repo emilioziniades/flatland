@@ -1,5 +1,5 @@
-import { createContext } from 'react';
+import { createContext } from 'react'
 
-const BlockchainContext = createContext(null);
+const BlockchainContext = createContext(null)
 
-export { BlockchainContext };
+export { BlockchainContext }

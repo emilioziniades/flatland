@@ -3,18 +3,19 @@ import { useInterval } from 'ahooks'
 import { Container, Row, Col } from 'react-bootstrap'
 import $ from 'jquery'
 
-import { BlockchainContext } from '../BlockchainContext'
 import Square from './square'
 import Grid from './grid'
 import CanvasAlert from './canvasAlert'
 import SidePanel from './sidePanel'
+import { BlockchainContext } from '../BlockchainContext'
 
 const gridLength = 256
 let counter = 1
 
-const Canvas = (props) => {
+const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
+    const {contract, squares, totalSupply, maxSupply } = state
 
     const grid = [];
     for (let row = 0; row < gridLength; row++) {
@@ -26,18 +27,18 @@ const Canvas = (props) => {
     useInterval(() => {
 
         // Paint squares
-        if (state.contract) {
+        if (contract) {
 
             //Clear squares first
-            for (var i = 1; i <= state.maxSupply; i++ ) {
+            for (var i = 1; i <= maxSupply; i++ ) {
                 const nodeId = '#node-'.concat(i)
                 $(nodeId).css('background-color', '')
             } 
 
             //Load colours from blockchain
-            for (var j = 1; j <= state.totalSupply; j++ ) {
+            for (var j = 1; j <= totalSupply; j++ ) {
 
-                const square = state.squares[j-1]
+                const square = squares[j-1]
                 const hexColour = square.toString(16).padStart(6, '0')
                 const nodeId = '#node-'.concat(j)
 
@@ -57,7 +58,7 @@ const Canvas = (props) => {
 
     }, 1000,
     //Only colours canvas if squares have changed
-    [state.squares])
+    [squares])
 
   return (
     <div>

@@ -4,9 +4,10 @@ import BaseForm from './baseForm'
 import { BlockchainContext } from '../BlockchainContext'
 import { hexColourToDecimal } from '../../utils/utilityFunctions'
 
-const ManageForm = (props) => {
+const ManageForm = ({ squareId }) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
+    const { contract, squares, ownedSquares } = state
 
     const changeSquareColour = async (input) => {
 
@@ -16,20 +17,20 @@ const ManageForm = (props) => {
             const squareDecimal = hexColourToDecimal(input)
             console.log(squareDecimal)
 
-            const tx = await state.contract.changeColour(props.squareId, squareDecimal)
+            const tx = await contract.changeColour(squareId, squareDecimal)
             const receipt = await tx.wait(1)
             console.log(tx)
             console.log(receipt)
 
-            const newSquareArray = state.squares
-            newSquareArray[props.squareId - 1] = squareDecimal
+            const newSquares = squares
+            newSquares[squareId - 1] = squareDecimal
 
-            const newOwnedSquares = state.ownedSquares
-            newOwnedSquares[props.squareId] = squareDecimal
+            const newOwnedSquares = ownedSquares
+            newOwnedSquares[squareId] = squareDecimal
 
             dispatch({
                 type: 'CHANGE',
-                squares: newSquareArray,
+                squares: newSquares,
                 mySquares: newOwnedSquares,
             })
         }

@@ -1,14 +1,15 @@
 import React, { useContext } from 'react'
 import $ from 'jquery'
+
 import GridItem from './gridItem'
 import { BlockchainContext } from '../BlockchainContext'
 import { getSquareColumn, getSquareRow, invertColour } from '../../utils/utilityFunctions'
 
-const Square = (props) => {
+const Square = ({ key, id }) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const { squares, isSquareClicked, clickedSquare } = state
-    const squareId = parseInt(props.id.split('-')[1])
+    const { account, squares, isSquareClicked, clickedSquare } = state
+    const squareId = parseInt(id.split('-')[1])
     const squareColour = squares[squareId - 1]
     const invertedColour = invertColour(squareColour)
 
@@ -38,24 +39,22 @@ const Square = (props) => {
 
     //In future we can use this if we want to change behaviours from users who are logged in vs not
     //This is instead handled on the Side Panel level now (Not logged in > Cannot claim square)
-    const routeClickEvent = (e) => {
-        { state.account ? handleClick(e) : handleClick(e) }       
-    }
+    const routeClickEvent = (e) => { account ? handleClick(e) : handleClick(e) }       
 
     const handleClick = (e) => {
-        if (isSquareClicked && clickedSquare === props.id) {
-            $('#' + props.id).css(unchosenSquare)
+        if (isSquareClicked && clickedSquare === id) {
+            $('#' + id).css(unchosenSquare)
             dispatch({ type: 'UNCLICK-SQUARE' })
         }
-        else if (isSquareClicked && clickedSquare !== props.id) {
+        else if (isSquareClicked && clickedSquare !== id) {
             $('#' + clickedSquare).css('border', 'none')
-            $('#' + props.id).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: props.id })
+            $('#' + id).css(chosenSquare)
+            dispatch({ type: 'CLICK-SQUARE', clickedSquare: id })
         }
         else {
             //No square is clicked
-            $('#' + props.id).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: props.id })
+            $('#' + id).css(chosenSquare)
+            dispatch({ type: 'CLICK-SQUARE', clickedSquare: id })
         }
     }
 
@@ -95,7 +94,7 @@ const Square = (props) => {
     return (
         <GridItem
             className='node grid-item'
-            id={props.id}
+            id={id}
             onClick={routeClickEvent}
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}

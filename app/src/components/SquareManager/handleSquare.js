@@ -1,31 +1,16 @@
 import React, {useContext} from 'react'
-import styled from 'styled-components'
 import $ from 'jquery'
 
 import ManageForm from '../forms/manageForm'
 import { decimalToHexColour, coordToString, invertColour } from '../../utils/utilityFunctions'
 import { BlockchainContext } from '../BlockchainContext'
+import { Square, Data, TableRow } from './tableComponents'
 
-
-const Square = styled.button`
-    border: 0.1px solid #000000;
-    text-align: center;
-    height: 20px;
-    width: 20px;
-    margin: auto;
-    ${props => `background: ${props.background};`}
-    `
-const TableData = styled.td`
-    vertical-align: middle !important;
-    text-align: center;
-    
-`
-
-const HandleSquare = (props) => {
+const HandleSquare = ({ key, squareId, squareColour }) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const { squares, isSquareClicked, clickedSquare } = state
-    const invertedColour = invertColour(props.squareColour)
+    const { isSquareClicked, clickedSquare } = state
+    const invertedColour = invertColour(squareColour)
 
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
@@ -33,7 +18,7 @@ const HandleSquare = (props) => {
 
     const handleClick = (e) => {
         
-        const indexSquare = 'node-'.concat(props.squareId)
+        const indexSquare = 'node-'.concat(squareId)
         console.log(indexSquare)
 
         if (isSquareClicked && clickedSquare !== indexSquare) {
@@ -50,32 +35,32 @@ const HandleSquare = (props) => {
     }
 
     return (    
-        <tr>
-            <TableData>
-                <h4 className='m-1'> {props.squareId ? props.squareId : '-'} </h4>
-            </TableData>
+        <TableRow>
+            <Data>
+                <h4 className='m-1'> {squareId ? squareId : '-'} </h4>
+            </Data>
 
-            <TableData>
-                <p> {coordToString(props.squareId) ? coordToString(props.squareId) : '-'} </p>
-            </TableData>
+            <Data>
+                <p> {coordToString(squareId) ? coordToString(squareId) : '-'} </p>
+            </Data>
 
-            <TableData md='auto' >
+            <Data md='auto' >
                 <Square
-                    background={decimalToHexColour(props.squareColour)}
+                    background={decimalToHexColour(squareColour)}
                     onClick={handleClick}
                 />
-            </TableData>
+            </Data>
 
-            <TableData>
-                <p><i> {decimalToHexColour(props.squareColour) ? decimalToHexColour(props.squareColour) : '-'}</i></p>
-            </TableData>
+            <Data>
+                <p><i> {decimalToHexColour(squareColour) ? decimalToHexColour(squareColour) : '-'}</i></p>
+            </Data>
 
-            <TableData>
+            <Data>
                 <ManageForm 
-                    squareId= {props.squareId}
+                    squareId= {squareId}
                 />
-            </TableData>
-        </tr>)
+            </Data>
+        </TableRow>)
 }
 
 export default HandleSquare

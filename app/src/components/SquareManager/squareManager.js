@@ -9,14 +9,15 @@ import MissingData from './missingData'
 const SquareManager = (props) => {
 
     const { state } = useContext(BlockchainContext)
+    const { account, contract, ownedSquares } = state
 
     return(
         <Container> 
-        {state.account ?
+        { account ?
         //Account is connected 
-            state.contract ?
+            contract ?
                 //Contract is deployed on current blockchain
-                Object.keys(state.ownedSquares).length > 0 ?
+                Object.keys(ownedSquares).length > 0 ?
                     //Account owns squares, let them manage
                              <div>
                              <HandleSquares/>

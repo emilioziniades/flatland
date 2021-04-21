@@ -8,6 +8,7 @@ import { loadBlockchain } from '../../utils/blockchainUtils'
 const ConnectButton = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
+    const { account } = state
     const [loading, setLoading] = useState(false)
 
     const handleClick = async () => {
@@ -25,9 +26,9 @@ const ConnectButton = () => {
             <Form inline>
                 <Button
                 className='m-1 mr-4'
-                variant= { loading ? 'warning' : state.account ? 'success' : 'primary' }
+                variant= { loading ? 'warning' : account ? 'success' : 'primary' }
                 onClick={handleClick}>
-                { loading ? 'connecting...' : state.account ? state.account : 'connect account' }
+                { loading ? 'connecting...' : account ? account : 'connect account' }
                 </Button>
                 <HashLoader loading={loading} color='FFC145' />
             </Form>

@@ -4,7 +4,7 @@ import { Nav, Navbar, Container } from 'react-bootstrap'
 
 import pallette from '../../images/gatsby-icon.png'
 
-const HeaderBase = (props) => {
+const HeaderBase = ({ children }) => {
     return (
         <header className='bg-dark'>
             <Helmet>
@@ -34,7 +34,7 @@ const HeaderBase = (props) => {
                 <Nav.Link href="/explainer">Explainer</Nav.Link>
                 </Nav.Item>
                 </Nav>
-                {props.children}
+                {children}
                 </Navbar.Collapse>
                 </Navbar>
             </Container>
