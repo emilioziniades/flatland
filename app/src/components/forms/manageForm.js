@@ -19,6 +19,7 @@ const ManageForm = ({ squareId }) => {
 
             const tx = await contract.changeColour(squareId, squareDecimal)
             const receipt = await tx.wait(1)
+
             console.log(tx)
             console.log(receipt)
 
@@ -33,6 +34,8 @@ const ManageForm = ({ squareId }) => {
                 squares: newSquares,
                 mySquares: newOwnedSquares,
             })
+
+            return tx.hash
         }
         catch (e) {
             console.log(e)
@@ -43,7 +46,9 @@ const ManageForm = ({ squareId }) => {
     return(
         <BaseForm
             callback={changeSquareColour}
-            message= 'change colour' />
+            message= 'change colour'
+             />
+
         )
 }
 

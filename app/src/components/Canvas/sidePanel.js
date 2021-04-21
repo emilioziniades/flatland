@@ -3,7 +3,7 @@ import { Row, Alert, Badge } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jquery'
 
-import EtherscanLink from '../etherscanLink'
+import EtherscanLink from '../forms/etherscanLink'
 import { BlockchainContext } from '../BlockchainContext'
 import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
@@ -45,7 +45,7 @@ const SidePanel = () => {
                     Flatland Smart Contract
                 </h5>
                 <h6>
-                    Source: { contract ? <EtherscanLink address={contract.address} type='address' /> : 'random colours' }
+                    { contract ? <EtherscanLink hash={contract.address} type='address' message='Source: '/> : 'Source: random colours' }
                 </h6>
                 { connected ?
                 <p>

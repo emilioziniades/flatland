@@ -25,7 +25,6 @@ const ConnectButton = () => {
         else {
             window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
         }
-
         setLoading(false)
     }
 

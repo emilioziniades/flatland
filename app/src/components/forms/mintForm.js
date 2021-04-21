@@ -15,6 +15,7 @@ const MintForm = () => {
             const squareDecimal = hexColourToDecimal(input)
 
             let tx = await contract.mint(squareDecimal)
+            console.log(tx)
             await tx.wait(1)
             const squareId = squares.length + 1
             
@@ -25,10 +26,14 @@ const MintForm = () => {
               colour: squareDecimal,
               id: squareId
             })
+
+            return tx.hash
         }
         catch (e) {
             console.log(e)
         }
+
+        
 
     }
 
