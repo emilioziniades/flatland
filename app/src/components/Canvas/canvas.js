@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useInterval } from 'ahooks'
 import { Container, Row, Col } from 'react-bootstrap'
 import $ from 'jquery'
@@ -7,6 +7,7 @@ import Square from './square'
 import Grid from './grid'
 import CanvasAlert from './canvasAlert'
 import SidePanel from './sidePanel'
+import ToggleOwnedSquares from './toggleOwnedSquares'
 import { BlockchainContext } from '../BlockchainContext'
 
 const gridLength = 256
@@ -15,8 +16,8 @@ let counter = 1
 const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
-    const {contract, squares, totalSupply, maxSupply } = state
-
+    const {contract, account, squares, totalSupply, maxSupply } = state
+    
     const grid = [];
     for (let row = 0; row < gridLength; row++) {
         grid.push(counter)
@@ -76,6 +77,12 @@ const Canvas = () => {
                 <Col className='align-items-left'>
                     <SidePanel />
                     
+                </Col>
+            </Row>
+            <Row className='justify-content-center p-3'>
+                <Col lg={5}></Col>              
+                <Col>
+                      {account ? <ToggleOwnedSquares /> : <div />}      
                 </Col>
             </Row>
         </Container>
