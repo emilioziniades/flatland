@@ -14,11 +14,18 @@ const ConnectButton = () => {
     const handleClick = async () => {
 
         setLoading(true)
-        const blockchainState = await loadBlockchain()
-        dispatch({
-            type: 'LOAD',
-            payload: blockchainState
-        })
+
+        if (window.ethereum) {
+            const blockchainState = await loadBlockchain()
+            dispatch({
+                type: 'LOAD',
+                payload: blockchainState
+            })
+        }
+        else {
+            window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+        }
+
         setLoading(false)
     }
 
