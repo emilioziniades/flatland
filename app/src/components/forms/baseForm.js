@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Form, Button, Alert } from 'react-bootstrap'
+import { Row, Col, Form, Button, Alert, InputGroup } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
 import { ChromePicker } from 'react-color'
 
@@ -45,19 +45,23 @@ const BaseForm = ({ callback, message, givenId }) => {
         <Form onSubmit={handleSubmit}>
             <Row className='p-2 justify-content-center'>
                 <Col>
+                <InputGroup>
                     <Form.Control 
                         readOnly
                         type='text'
                         name='colour'
-                        placeholder= 'choose a colour'
+                        placeholder= 'choose colour'
                         value={input}
                     />
+                    <InputGroup.Append>
                     <Button
                         onClick={onTogglePicker}
                         variant='outline-primary'
-                        className='m-2' >
-                    { pickerVisible ? 'hide colour picker' : 'show colour picker' }
+                        >
+                    { pickerVisible ? 'hide picker' : 'show picker' }
                     </Button>
+                    </InputGroup.Append>
+                </InputGroup>
                     { pickerVisible && (
                     <ChromePicker 
                         color={input} 
