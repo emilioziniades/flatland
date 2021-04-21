@@ -10,11 +10,12 @@ const HandleSquares  = () => {
 
     const { state } = useContext(BlockchainContext)
     const { ownedSquares } = state
+    const userSquares = zip(ownedSquares)
 
     return (
         <Row className='justify-content-center mr-auto ml-auto p-2'>
         <Row>
-            <h3 className='p-2'> Looks like you own {ownedSquares.length === 1 ? 'a square' : 'squares'}! Manage here </h3>
+            <h3 className='p-2'> Looks like you own {userSquares.length === 1 ? 'a square' : userSquares.length + ' squares'}! Manage here: </h3>
         </Row>
         <Table hover>
                     <TableHead>
@@ -27,7 +28,7 @@ const HandleSquares  = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {zip(ownedSquares).map((square, i) => <HandleSquare key={i} squareId={square[0]} squareColour={square[1]} /> )}
+                    {userSquares.map((square, i) => <HandleSquare key={i} squareId={square[0]} squareColour={square[1]} /> )}
                     </TableBody>
         </Table>
         </Row>
