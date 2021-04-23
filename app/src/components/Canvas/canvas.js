@@ -79,9 +79,8 @@ const Canvas = () => {
                     
                 </Col>
             </Row>
-            <Row className='justify-content-center p-3'>
-                <Col lg={5}></Col>              
-                <Col>
+            <Row className='justify-content-center p-3'>         
+                <Col lg={{ offset: 1 }}>
                       {account ? <ToggleOwnedSquares /> : <div />}      
                 </Col>
             </Row>

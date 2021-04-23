@@ -11,7 +11,7 @@ import MintForm from '../forms/mintForm'
 import ConnectButton from '../Header/connectButton'
 
 const SquareIcon = styled.div`
-    border: 1px solid #000000;
+    //box-shadow: 1px 1px 1px black ;
     height: 32px;
     width: 32px;
     display: inline-block;
@@ -63,12 +63,13 @@ const SidePanel = () => {
     const SquareStats = () => {
 
         const squareId = clickedSquare.split('-')[1]
+        const squareColour = $('#' + clickedSquare).css('background-color')
         const coords = coordToString(squareId)
-        
+
         return (
             <Alert
                 className = 'm-4'
-                variant={squares[squareId - 1] ? ownedSquares[squareId] ? 'success' : 'danger' : 'primary'}
+                variant={(squares[squareId - 1] > -1) ? (ownedSquares[squareId] > -1) ? 'success' : 'danger' : 'primary'}
                 dismissible
                 onClose={e => {
                     $('#' + clickedSquare).css(unchosenSquare)
@@ -76,24 +77,24 @@ const SidePanel = () => {
                 }}>
 
                 {
-                    squares[squareId - 1] ?
+                    (squares[squareId - 1] > -1) ?
                         <div>
                             <span>
-                                <SquareIcon background={decimalToHexColour(squares[squareId - 1])} />
+                                <SquareIcon background={squareColour} />
                                 <SquareName> Square # {squareId} <Badge pill variant='info'>Claimed</Badge> </SquareName>
                             </span>
                             <br />
                             
                             <h6> Co-ordinates : {coords} </h6>
-                            <h6> Owner : {ownedSquares[squareId] ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[squareId - 1])} </h6>
+                            <h6> Owner : {(ownedSquares[squareId] > -1) ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[squareId - 1])} </h6>
                             <Row className='justify-content-center'>
-                                {account ? ownedSquares[squareId] ? <ManageForm squareId={squareId} /> : <div /> : <ConnectButton />}
+                                {account ? (ownedSquares[squareId] > -1) ? <ManageForm squareId={squareId} /> : <div /> : <ConnectButton />}
                                 </Row>
                         </div>
 	                    :
                         <div>
                             <span>
-                                <SquareIcon background='ffffff' />
+                                <SquareIcon background={squareColour} />
                                 <SquareName> Square # {squareId} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
                             </span>
                             <br />

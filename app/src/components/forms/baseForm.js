@@ -17,12 +17,16 @@ const BaseForm = ({ callback, message, givenId }) => {
 
     const handleClose = () => setShow(false)
 
-    const onTogglePicker = () => setPickerVisible(!pickerVisible)
+    const onTogglePicker = () => {
+        setPickerVisible(!pickerVisible)
+        setInput('#000000')
+    }
 
     const handleChange = (event) => setInput(event.hex)
 
     const handleSubmit = async (event) => {
         setLoading(true)
+        setPickerVisible(false)
         if (event) {
           event.preventDefault()
           setInput('')
