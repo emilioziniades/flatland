@@ -3,7 +3,6 @@ import { Row, Col, Form, Button, Alert, InputGroup } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
 import { ChromePicker } from 'react-color'
 
-import { ropstenLinkMaker } from '../../utils/blockchainUtils'
 import EtherscanLink from './etherscanLink'
 
 
@@ -35,11 +34,21 @@ const BaseForm = ({ callback, message, givenId }) => {
         if (callback) {
             
             const txHash = await callback(input)
-            const txAlert = <EtherscanLink 
-                                type='tx' 
-                                hash={txHash} 
-                                message='Transaction changing square colour confirmed. View transaction details: '/>
-            setAlert(txAlert)
+            if (txHash) {
+
+
+                const txAlert = <EtherscanLink 
+                                    type='tx' 
+                                    hash={txHash} 
+                                    message='Transaction changing square colour confirmed. View transaction details: '/>
+                setAlert(txAlert)
+                }
+            else {
+                const txAlert = <EtherscanLink message='Error processing transaction.' />
+                setAlert(txAlert)
+                }
+
+            
         }
         setShow(true)
         setLoading(false) 
