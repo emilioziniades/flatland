@@ -11,8 +11,8 @@ const BaseForm = ({ callback, message, givenId }) => {
     const [input, setInput] = useState('')
     const [loading, setLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
-    const [ alert, setAlert ] = useState('')
-    const [ show , setShow ] = useState(false)
+    const [ alert, setAlert ] = useState('see meeeee')
+    const [ show , setShow ] = useState(true)
 
     const handleClose = () => setShow(false)
 
@@ -34,23 +34,19 @@ const BaseForm = ({ callback, message, givenId }) => {
         if (callback) {
             
             const txHash = await callback(input)
-            if (txHash) {
 
-
-                const txAlert = <EtherscanLink 
-                                    type='tx' 
-                                    hash={txHash} 
-                                    message='Transaction changing square colour confirmed. View transaction details: '/>
-                setAlert(txAlert)
-                }
-            else {
-                const txAlert = <EtherscanLink message='Error processing transaction.' />
-                setAlert(txAlert)
-                }
+            const txAlert = ( txHash ? 
+                <EtherscanLink 
+                    type='tx' 
+                    hash={txHash} 
+                    message='Transaction changing square colour confirmed. View transaction details: '/> :
+                <EtherscanLink message='Error processing transaction.' /> )
+            setShow(true)
+            setAlert(txAlert) 
+            
 
             
         }
-        setShow(true)
         setLoading(false) 
     }
 

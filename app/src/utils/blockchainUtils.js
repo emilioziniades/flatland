@@ -97,6 +97,18 @@ const loadBlockchain = async () => {
 			result[item] = squares[item - 1]
 		})
 
+		console.log(contract.interface.events)
+
+		const filter = {
+			address: contract.address,
+			fromBlock: 0,
+			toBlock: 10000,
+			topics: [ethers.utils.id("NewSquare(uint256,uint256)")]
+		  };
+		  const logs = await provider.getLogs(filter);
+		  console.log(logs)
+	
+
 	    return {
 	        connected: true,
 	        contract: contract,

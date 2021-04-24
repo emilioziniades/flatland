@@ -63,7 +63,7 @@ const SidePanel = () => {
     const SquareStats = () => {
 
         const squareId = clickedSquare.split('-')[1]
-        const squareColour = decimalToHexColour(squares[squareId - 1])
+        const squareColour = ( squares[squareId - 1] > -1 ? decimalToHexColour(squares[squareId - 1]) : 'none')
         const coords = coordToString(squareId)
 
         return (

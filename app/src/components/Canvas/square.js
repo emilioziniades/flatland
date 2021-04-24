@@ -5,7 +5,7 @@ import GridItem from './gridItem'
 import { BlockchainContext } from '../BlockchainContext'
 import { getSquareColumn, getSquareRow, invertColour } from '../../utils/utilityFunctions'
 
-const Square = ({ key, id }) => {
+const Square = ({ id }) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const { account, squares, isSquareClicked, clickedSquare } = state

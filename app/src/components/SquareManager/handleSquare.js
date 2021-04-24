@@ -6,7 +6,7 @@ import { decimalToHexColour, coordToString, invertColour } from '../../utils/uti
 import { BlockchainContext } from '../BlockchainContext'
 import { Square, Data, TableRow } from './tableComponents'
 
-const HandleSquare = ({ key, squareId, squareColour }) => {
+const HandleSquare = ({ squareId, squareColour }) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const { isSquareClicked, clickedSquare } = state
