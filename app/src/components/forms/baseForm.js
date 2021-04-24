@@ -11,8 +11,8 @@ const BaseForm = ({ callback, message, givenId }) => {
     const [input, setInput] = useState('')
     const [loading, setLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
-    const [ alert, setAlert ] = useState('see meeeee')
-    const [ show , setShow ] = useState(true)
+    const [ alert, setAlert ] = useState('')
+    const [ show , setShow ] = useState(false)
 
     const handleClose = () => setShow(false)
 
