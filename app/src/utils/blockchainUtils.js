@@ -56,9 +56,10 @@ const loadBlockchain = async () => {
 	        throw new Error('Non-Ethereum browser detected. You should consider trying MetaMask!')
 	    }
 	    
-	    // TODO migrate to eth_request_accounts
-	    await window.ethereum.enable();
+		// CONNECT TO METAMASK
+		await window.ethereum.request({ method: 'eth_requestAccounts' })
 
+		// LOAD PROVIDERS AND SIGNERS
 	    const provider = new ethers.providers.Web3Provider(window.ethereum)
 	    const signer = provider.getSigner(0)
 	    const providerRpc = new ethers.providers.JsonRpcProvider('https://ropsten.infura.io/v3/6c1af6d1f94e4ffa9226b0e60b719aa5')
@@ -71,6 +72,7 @@ const loadBlockchain = async () => {
 	        throw new Error('Smart contract not deployed to detected network.')
 	    }
 
+		// CONTRACT DETAILS
 	    const abi = Flatland.abi
 	    const address = networkData.address
 	    const contract = new ethers.Contract(address, abi, signer)
@@ -96,20 +98,7 @@ const loadBlockchain = async () => {
 		ownedSquares.forEach((item, index, array)=>{
 			result[item] = squares[item - 1]
 		})
-
-		// NOTE: this is still rough working, so will keep it commented between commits
-
-		// console.log(contract.interface.events)
-		// const filter = {
-		// 	address: contract.address,
-		// 	fromBlock: 0,
-		// 	toBlock: 10000,
-		// 	topics: [ethers.utils.id("NewSquare(uint256,uint256)")]
-		//   };
-		//   const logs = await provider.getLogs(filter);
-		//   console.log(logs)
-	
-
+		
 	    return {
 	        connected: true,
 	        contract: contract,

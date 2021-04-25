@@ -3,7 +3,7 @@ import { CoordinateContext } from '../CoordinateContext'
 
 
 const CoordinateViewer = () => {
-
+    
     const { currentCoord } = useContext(CoordinateContext)
     return (
         <h6> { currentCoord } </h6>
