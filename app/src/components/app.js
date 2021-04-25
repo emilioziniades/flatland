@@ -34,9 +34,8 @@ const App = () => {
                 <Hero />
             </Container>
                 <Canvas/>
-                {/* <CanvasHistory /> */}
             <Container>
-                <UserTabs />
+                { state.connected && <UserTabs /> }
             </Container>
 
             </BlockchainContext.Provider>

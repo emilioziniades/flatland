@@ -4,6 +4,7 @@ import { ethers } from 'ethers'
 import HashLoader from 'react-spinners/HashLoader'
 
 import { BlockchainContext } from '../BlockchainContext'
+import EventToast from './eventToast'
 
 
 const CanvasHistory = () => {
@@ -68,6 +69,7 @@ const CanvasHistory = () => {
         }
         setLoading(false)
     }
+    
 
     useEffect(() => {
         if (connected) {
@@ -94,17 +96,8 @@ if (connected) {
             </Row>
             <Row className = 'm-1'>
         {history.map((element, index) => {
-
-            const [date, id, colour] = element
             return(
-                <Toast key={element} className='m-1'>
-                    <Toast.Header>
-                        <b> Flatland Square Claim</b>
-                    </Toast.Header>
-                    <Toast.Body>
-                    Square  <b>#{id}</b> claimed on <b>{date}</b> with colour <b>{colour}</b>
-                    </Toast.Body>
-                </Toast>
+                <EventToast data={element} toastKey={index} />
             )
         })}
     </Row>
