@@ -35,6 +35,7 @@ const CanvasHistory = () => {
 
             console.log('but this is pretty slow')
 
+            let counter = 1
             for (log of logs) {
                 const innerResult = []
                 const blockData = await provider.getBlock(log.blockNumber)
@@ -51,7 +52,11 @@ const CanvasHistory = () => {
                 console.log(innerResult)
 
                 result.push(innerResult)
-                setHistory(result)
+
+                if (counter == 6) {
+                    setHistory(result)
+                }
+                counter++
             }
             console.log(result)
             // setHistory(result)
