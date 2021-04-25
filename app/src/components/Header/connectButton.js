@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import {Form, Button } from 'react-bootstrap'
+import {Form, Button, Modal } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
 
 import { BlockchainContext } from '../BlockchainContext'
@@ -10,6 +10,8 @@ const ConnectButton = () => {
     const { state, dispatch } = useContext(BlockchainContext)
     const { account } = state
     const [loading, setLoading] = useState(false)
+    const [loadingLogout, setLoadingLogout] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const handleClick = async () => {
 
@@ -28,15 +30,69 @@ const ConnectButton = () => {
         setLoading(false)
     }
 
+    const handleLogout = async () => {
+
+        setLoadingLogout(true)
+
+        handleCloseConfirm()
+        dispatch({
+            type: 'LOGOUT'
+        })
+
+        setLoadingLogout(false)
+    }
+
+    const handleCloseConfirm = () => setShowConfirm(false);
+    const handleShowConfirm = () => setShowConfirm(true);
+
     return(
             <Form inline>
                 <Button
                 className='m-1 mr-4'
                 variant= { loading ? 'warning' : account ? 'success' : 'primary' }
-                onClick={handleClick}>
-                { loading ? 'connecting...' : account ? account : 'connect account' }
+                onClick={handleClick}
+                disabled = {account ? true : false}>
+                {loading ? 'connecting...' : account ? account : 'connect account'}
                 </Button>
                 <HashLoader loading={loading} color='FFC145' />
+
+                {account ?
+                <div>
+                    <Button
+                        variant='secondary'
+                        onClick={handleShowConfirm}
+                    >
+                        Logout
+                    </Button>
+
+                    <Modal
+                        show={showConfirm}
+                        onHide={handleCloseConfirm}
+                    >
+
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirm Logout</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Are you sure you want to logout?
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleCloseConfirm}>
+                                Cancel
+                            </Button>
+                            <Button variant="primary" onClick={handleLogout}>
+                                Logout
+                            </Button>
+                        </Modal.Footer>
+
+                    </Modal>
+
+                    <HashLoader loading={loadingLogout} color='FFC145' />
+                </div>
+                :
+                <div />
+                }
+                
             </Form>
     )
 }
