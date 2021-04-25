@@ -4,9 +4,11 @@ import { bigNumberToNumber } from '../utils/utilityFunctions'
 
 const blockchainReducer = (state, action) => {
     switch(action.type) {
-        case 'LOAD': {
-            return action.payload
-        }
+
+    case 'LOAD': {
+        return action.payload
+    }
+
     case 'MINT': {
 
 		let newOwnedSquares = state.ownedSquares
@@ -42,7 +44,23 @@ const blockchainReducer = (state, action) => {
 			isSquareClicked: false,
 			clickedSquare: null
 		}
-	}
+    }
+
+    case 'LOGOUT': {
+        return {
+            connected: false,
+            contract: null,
+            provider: null,
+            squares: [],
+            totalSupply: 0,
+            maxSupply: 0,
+            account: '',
+            ownedSquares: {},
+            isSquareClicked: false,
+            clickedSquare: null,
+        }
+    }
+
 	default:
 		return state;
   }
