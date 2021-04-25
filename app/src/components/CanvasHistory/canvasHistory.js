@@ -10,6 +10,7 @@ const CanvasHistory = () => {
 
     const { state } = useContext(BlockchainContext)
     const { provider, contract, connected } = state
+
     const [ history, setHistory ] = useState([])
     const [ loading, setLoading ] = useState(false)
 
@@ -88,7 +89,7 @@ if (connected) {
 
     return(<div>
     <Row className='justify-content-center'>
-            <h3> {'Recent Activity \n'} </h3> 
+            <h3 className='p-2'> {'Recent Activity \n'} </h3> 
             <HashLoader loading={loading} />
             </Row>
             <Row className = 'm-1'>

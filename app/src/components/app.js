@@ -4,8 +4,7 @@ import { Container } from 'react-bootstrap'
 import Header from './Header/header'
 import Hero from './hero'
 import Canvas from './Canvas/canvas'
-import CanvasHistory from  './CanvasHistory/canvasHistory'
-import SquareManager from './SquareManager/squareManager'
+import UserTabs from './userTabs'
 import { BlockchainContext } from './BlockchainContext'
 import { blockchainReducer } from '../utils/blockchainUtils'
 
@@ -35,10 +34,9 @@ const App = () => {
                 <Hero />
             </Container>
                 <Canvas/>
-                <CanvasHistory />
+                {/* <CanvasHistory /> */}
             <Container>
-                <hr/>
-                <SquareManager />
+                <UserTabs />
             </Container>
 
             </BlockchainContext.Provider>
