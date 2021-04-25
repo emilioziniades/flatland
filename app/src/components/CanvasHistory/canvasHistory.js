@@ -13,19 +13,20 @@ const CanvasHistory = () => {
     const [ history, setHistory ] = useState([])
     const [ loading, setLoading ] = useState(false)
 
+    let claimTopic = ethers.utils.id("NewSquare(uint256,uint256)")
+
     const getSquareClaimHistory = async () => {
         
         setLoading(true)
         if (contract) {
 
             console.log('this is pretty fast')
-            let topic = ethers.utils.id("NewSquare(uint256,uint256)")
-            const filter = {
+            const filterHistorical = {
                 address: contract.address,
                 fromBlock: 0,
-                topics: [ topic ]
+                topics: [ claimTopic ]
             }
-            const logs = await provider.getLogs(filter)
+            const logs = await provider.getLogs(filterHistorical)
             console.log(logs)
             console.log(logs.reverse())
             const result = []
@@ -37,20 +38,22 @@ const CanvasHistory = () => {
 
             let counter = 1
             for (log of logs) {
-                const innerResult = []
-                const blockData = await provider.getBlock(log.blockNumber)
 
+                const innerResult = []
+
+                const blockData = await provider.getBlock(log.blockNumber)
                 const date = new Date(blockData.timestamp * 1000)
-                innerResult.push(date.toDateString())
+                innerResult.push(date.toLocaleDateString() + ' at ' + date.toLocaleTimeString())
+                
                 const data = log.data.slice(2,)
                 const squareId = data.substring(0, (data.length/2))
                 innerResult.push(parseInt(squareId, 16))
+
                 let firstColour = data.substring((data.length/2))
                 firstColour = '#' + firstColour.substring(firstColour.length - 6)
                 innerResult.push(firstColour)
 
                 console.log(innerResult)
-
                 result.push(innerResult)
 
                 if (counter == 6) {
@@ -59,7 +62,7 @@ const CanvasHistory = () => {
                 counter++
             }
             console.log(result)
-            // setHistory(result)
+            setHistory(result)
 
         }
         setLoading(false)
@@ -70,6 +73,18 @@ const CanvasHistory = () => {
         getSquareClaimHistory()
         }
     }, [connected]) //runs only if connection changes 
+
+if (connected) {
+    const filter = {
+            address: contract.address,
+            topics: [ claimTopic ]
+        }
+        provider.on(filter, (e) => {
+            console.log(e)
+            getSquareClaimHistory()
+        })
+    }
+
 
     return(<div>
     <Row className='justify-content-center'>
