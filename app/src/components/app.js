@@ -6,6 +6,7 @@ import Hero from './hero'
 import Canvas from './Canvas/canvas'
 import SquareManager from './SquareManager/squareManager'
 import { BlockchainContext } from './BlockchainContext'
+
 import { blockchainReducer } from '../utils/blockchainUtils'
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
 
         return(
             <BlockchainContext.Provider value={{ state, dispatch }}>
+
             <Header />                    
             <Container>
                 <Hero />
@@ -37,7 +39,7 @@ const App = () => {
                 <hr/>
                 <SquareManager />
             </Container>
-            
+
             </BlockchainContext.Provider>
         )   
 }

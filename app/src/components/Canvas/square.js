@@ -3,7 +3,8 @@ import $ from 'jquery'
 
 import GridItem from './gridItem'
 import { BlockchainContext } from '../BlockchainContext'
-import { getSquareColumn, getSquareRow, invertColour } from '../../utils/utilityFunctions'
+import { CoordinateContext } from '../CoordinateContext'
+import { getSquareColumn, getSquareRow, invertColour, coordToString } from '../../utils/utilityFunctions'
 
 const Square = ({ id }) => {
 
@@ -12,7 +13,8 @@ const Square = ({ id }) => {
     const squareId = parseInt(id.split('-')[1])
     const squareColour = squares[squareId - 1]
     const invertedColour = invertColour(squareColour)
-
+    const { setCoord } = useContext(CoordinateContext)
+   
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
     }
@@ -72,6 +74,8 @@ const Square = ({ id }) => {
             let nodeId = '#node-' + rowSquare
             $(nodeId).css(hoveredSquareRow)
         }
+
+        setCoord(coordToString(squareId))
     }
 
     const handleLeave = (e) => {
@@ -89,6 +93,8 @@ const Square = ({ id }) => {
             let nodeId = '#node-' + rowSquare
             $(nodeId).css(unhoveredSquareRow)
         }
+
+        setCoord('')
     }
 
     return (

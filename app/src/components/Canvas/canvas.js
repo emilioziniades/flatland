@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useInterval } from 'ahooks'
 import { Container, Row, Col } from 'react-bootstrap'
 import $ from 'jquery'
@@ -7,8 +7,10 @@ import Square from './square'
 import Grid from './grid'
 import CanvasAlert from './canvasAlert'
 import SidePanel from './sidePanel'
+import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
 import { BlockchainContext } from '../BlockchainContext'
+import { CoordinateContext } from '../CoordinateContext'
 
 const gridLength = 256
 let counter = 1
@@ -17,7 +19,8 @@ const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
     const {contract, account, squares, totalSupply, maxSupply } = state
-    
+    const [currentCoord, setCoord] = useState('')
+
     const grid = [];
     for (let row = 0; row < gridLength; row++) {
         grid.push(counter)
@@ -62,10 +65,11 @@ const Canvas = () => {
     [squares])
 
   return (
-    <div>
-        <Container >
+      <CoordinateContext.Provider value={{ currentCoord, setCoord }}>
+      <div>
+          <Container >
             <Row className='justify-content-center p-3'>
-                <Col lg={5}>
+                <Col lg={5}> 
                     <Grid className='mx-auto mr-auto ml-auto'> 
                     {grid.map((node, nodeId) => {
                     return (
@@ -76,22 +80,25 @@ const Canvas = () => {
                 </Col>
                 <Col className='align-items-left'>
                     <SidePanel />
-                    
                 </Col>
             </Row>
             <Row className='justify-content-center p-3'>         
                 <Col lg={{ offset: 1 }}>
+                    <CoordinateViewer />
+                </Col>
+                <Col>
                       {account ? <ToggleOwnedSquares /> : <div />}      
                 </Col>
             </Row>
         </Container>
+
         <Container >
             <Row className='justify-content-center p-3'>
                 <CanvasAlert />
             </Row>
         </Container>
-        
-    </div>
+      </div>
+      </CoordinateContext.Provider>
     )}
 
   export default Canvas;
