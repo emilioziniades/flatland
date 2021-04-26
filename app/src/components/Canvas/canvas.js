@@ -11,6 +11,7 @@ import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
 import { BlockchainContext } from '../BlockchainContext'
 import { CoordinateContext } from '../CoordinateContext'
+import EventToast from '../CanvasHistory/eventToast'
 
 const gridLength = 256
 let counter = 1
@@ -18,7 +19,7 @@ let counter = 1
 const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
-    const {contract, account, squares, totalSupply, maxSupply } = state
+    const {contract, account, squares, totalSupply, maxSupply, history } = state
     const [currentCoord, setCoord] = useState('')
 
     const grid = [];
@@ -64,26 +65,37 @@ const Canvas = () => {
     //Only colours canvas if squares have changed
     [squares])
 
+    let canvas = grid.map((node, nodeId) => {
+        return (
+                <Square key={nodeId} id={'node-'.concat(nodeId + 1)}> {node} </Square>
+                )
+            })
+
+    let recentEvents = history.map((element, index) => {
+        return(
+            <EventToast data={element} key={element.txId} />
+        )
+    })
   return (
       <CoordinateContext.Provider value={{ currentCoord, setCoord }}>
       <div>
           <Container >
             <Row className='justify-content-center p-3'>
-                <Col lg={5}> 
+                <Col> 
                     <Grid className='mx-auto mr-auto ml-auto'> 
-                    {grid.map((node, nodeId) => {
-                    return (
-                            <Square key={nodeId} id={'node-'.concat(nodeId + 1)}> {node} </Square>
-                            )
-                        })}
+                    { canvas }
                     </Grid>
                 </Col>
                 <Col className='align-items-left'>
                     <SidePanel />
                 </Col>
+                <Col>
+                    <h5> Recent Activity </h5>
+                    {recentEvents.length ? recentEvents.slice(0,6) : <p> Not connected </p> }
+                </Col>
             </Row>
             <Row className='justify-content-center p-3'>         
-                <Col lg={{ offset: 1 }}>
+                <Col>
                     <CoordinateViewer />
                 </Col>
                 <Col>

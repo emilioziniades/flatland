@@ -53,7 +53,6 @@ const SidePanel = () => {
                     <br/>
                     # unclaimed squares : {maxSupply - squares.length }
                     <br/>
-                    Recent activity: 
                 </p>
                 : <div/> }
             </Alert>

@@ -61,6 +61,13 @@ const blockchainReducer = (state, action) => {
         }
     }
 
+	case 'UPDATE-LOGS': {
+		return {
+			...state,
+			history: action.payload
+		}
+	}
+
 	default:
 		return state;
   }
@@ -116,7 +123,50 @@ const loadBlockchain = async () => {
 		ownedSquares.forEach((item, index, array)=>{
 			result[item] = squares[item - 1]
 		})
-		
+
+		// FETCH LOGS
+
+		let claimTopic = ethers.utils.id('NewSquare(uint256,uint256)')
+		let changeTopic = ethers.utils.id('ColourChange(uint256,uint256')
+
+		const filterHistorical = {
+			address: contract.address,
+			fromBlock: 0,
+			topics: [ claimTopic ]
+		}
+		const logs = await provider.getLogs(filterHistorical)
+		logs.reverse()
+		console.log(logs)
+
+		// PARSE LOGS
+
+		const logsCleaned = []
+
+		for (let log of logs) {
+
+			const eventObj = {}
+
+			// note, after full load, app will replace block heights with actual dates
+			eventObj['date'] = log.blockNumber
+
+			const data = log.data.slice(2,)
+			const id = data.substring(0, (data.length/2))
+			eventObj['id'] = parseInt(id, 16)
+
+			let colour = data.substring((data.length/2))
+			colour = '#' + colour.substring(colour.length - 6)
+			eventObj['colour'] = colour
+
+			eventObj['txId'] = log.transactionHash
+
+			// console.log(eventObj)
+			logsCleaned.push(eventObj)
+
+		}
+
+		console.log(logsCleaned)
+
+
 	    return {
 	        connected: true,
 	        contract: contract,
@@ -125,7 +175,8 @@ const loadBlockchain = async () => {
 	        totalSupply: totalSupply,
 	        maxSupply: maxSupply,
 	        account: account,
-	        ownedSquares: result   
+	        ownedSquares: result,
+			history: logsCleaned,
 	    }
 
 	}

@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Row, Toast } from 'react-bootstrap'
-import { ethers } from 'ethers'
-import HashLoader from 'react-spinners/HashLoader'
+import React, { useContext, useEffect } from 'react'
+import { Row } from 'react-bootstrap'
 
 import { BlockchainContext } from '../BlockchainContext'
 import EventToast from './eventToast'
@@ -9,97 +7,62 @@ import EventToast from './eventToast'
 
 const CanvasHistory = () => {
 
-    const { state } = useContext(BlockchainContext)
-    const { provider, contract, connected } = state
+    const { state, dispatch } = useContext(BlockchainContext)
+    const { provider, connected, history } = state
 
-    const [ history, setHistory ] = useState([])
-    const [ loading, setLoading ] = useState(false)
+    const replaceBlockHeightWithDate = async () => {
 
-    let claimTopic = ethers.utils.id("NewSquare(uint256,uint256)")
+        console.log('Starting date replacement')
+        let newHistory = history
 
-    const getSquareClaimHistory = async () => {
-        
-        setLoading(true)
-        if (contract) {
+        for (let i = 0; i < newHistory.length; i++) {
 
-            console.log('this is pretty fast')
-            const filterHistorical = {
-                address: contract.address,
-                fromBlock: 0,
-                topics: [ claimTopic ]
-            }
-            const logs = await provider.getLogs(filterHistorical)
-            console.log(logs)
-            console.log(logs.reverse())
-            const result = []
-            let log 
+            const blockHeight = newHistory[i].date
+            const blockData = await provider.getBlock(blockHeight)
+            let date = new Date(blockData.timestamp * 1000)
+            date = date.toLocaleDateString() + ' at ' + date.toLocaleTimeString()
 
-            console.log('this is pretty fast')
-
-            console.log('but this is pretty slow')
-
-            let counter = 1
-            for (log of logs) {
-
-                const innerResult = []
-
-                const blockData = await provider.getBlock(log.blockNumber)
-                const date = new Date(blockData.timestamp * 1000)
-                innerResult.push(date.toLocaleDateString() + ' at ' + date.toLocaleTimeString())
-                
-                const data = log.data.slice(2,)
-                const squareId = data.substring(0, (data.length/2))
-                innerResult.push(parseInt(squareId, 16))
-
-                let firstColour = data.substring((data.length/2))
-                firstColour = '#' + firstColour.substring(firstColour.length - 6)
-                innerResult.push(firstColour)
-
-                console.log(innerResult)
-                result.push(innerResult)
-
-                if (counter == 6) {
-                    setHistory(result)
-                }
-                counter++
-            }
-            console.log(result)
-            setHistory(result)
-
+            newHistory[i].date = date
         }
-        setLoading(false)
+
+        console.log(newHistory)
+
+        dispatch({type: 'UPDATE-LOGS', payload: newHistory})
+
+        console.log('finished date replacement')
     }
-    
 
     useEffect(() => {
         if (connected) {
-        getSquareClaimHistory()
-        }
-    }, [connected]) //runs only if connection changes 
+            replaceBlockHeightWithDate()
+        } 
+    }, [])
 
-if (connected) {
-    const filter = {
-            address: contract.address,
-            topics: [ claimTopic ]
-        }
-        provider.on(filter, (e) => {
-            console.log(e)
-            getSquareClaimHistory()
-        })
-    }
 
+    //Listener
+// if (connected) {
+//     const filter = {
+//             address: contract.address,
+//             topics: [ claimTopic ]
+//         }
+//         provider.on(filter, (e) => {
+//             console.log(e)
+//             getSquareClaimHistory()
+//         })
+//     }
+
+    let events = history.map((element, index) => {
+        return(
+            <EventToast data={element} key={element.txId} />
+        )
+    })
 
     return(<div>
-    <Row className='justify-content-center'>
+    <Row className='justify-content-center' >
             <h3 className='p-2'> {'Recent Activity \n'} </h3> 
-            <HashLoader loading={loading} />
-            </Row>
-            <Row className = 'm-1'>
-        {history.map((element, index) => {
-            return(
-                <EventToast data={element} toastKey={index} />
-            )
-        })}
+    </Row>
+    <Row className = 'm-1'>
+        { events }
     </Row>
     </div>)
 }

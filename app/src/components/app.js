@@ -21,6 +21,7 @@ const App = () => {
         ownedSquares: {},
         isSquareClicked: false,
         clickedSquare: null,
+        history: [],
 
     }
 
