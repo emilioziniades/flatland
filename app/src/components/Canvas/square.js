@@ -11,8 +11,9 @@ const Square = ({ id }) => {
     const { state, dispatch } = useContext(BlockchainContext)
     const { account, squares, isSquareClicked, clickedSquare } = state
     const squareId = parseInt(id.split('-')[1])
-    const buttonId = '#'+id
-    const squareColour = (squares[squareId - 1] > -1 ? squares[squareId - 1] : $(buttonId).css('background-color'))
+    //const buttonId = '#'+id
+    // Wanted to use $(buttonId).css('background-color') to get colour of unclaimed squares but running into some errors when commiting
+    const squareColour = (squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff')
     // Need to create a function to handle inverting colours when given in RGB format
     const invertedColour = (squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000')
     const { setCoord } = useContext(CoordinateContext)
