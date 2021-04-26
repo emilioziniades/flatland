@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Row } from 'react-bootstrap'
-import { ethers } from 'ethers'
-import HashLoader from 'react-spinners/HashLoader'
 
 import { BlockchainContext } from '../BlockchainContext'
 import EventToast from './eventToast'
@@ -38,7 +36,7 @@ const CanvasHistory = () => {
         if (connected) {
             replaceBlockHeightWithDate()
         } 
-    }, [])
+    }, [connected, history])
 
 
     //Listener

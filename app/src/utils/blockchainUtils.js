@@ -126,21 +126,79 @@ const loadBlockchain = async () => {
 
 		// FETCH LOGS
 
-		let claimTopic = ethers.utils.id('NewSquare(uint256,uint256)')
-		let changeTopic = ethers.utils.id('ColourChange(uint256,uint256')
 
-		const filterHistorical = {
+		const claimsFilter = {
 			address: contract.address,
 			fromBlock: 0,
 			topics: [ claimTopic ]
 		}
-		const logs = await provider.getLogs(filterHistorical)
-		logs.reverse()
-		console.log(logs)
+
+		const changeFilter = {
+			address: contract.address,
+			fromBlock: 0,
+			topics: [ changeTopic ]
+		}
+		
+		const claimLogs = await provider.getLogs(claimsFilter)
+		claimLogs.reverse()
+		// console.log(claimLogs)
+
+		const changeLogs = await provider.getLogs(changeFilter)
+		changeLogs.reverse()
+		// console.log(changeLogs)
+
+		const fullLogs = claimLogs.concat(changeLogs)
+		console.log(fullLogs)
+
+		// Ensure that fullLogs correctly sorted by date
+		fullLogs.sort((a,b) => {
+			const blockA = a.blockNumber
+			const blockB = b.blockNumber
+
+			if (blockA > blockB) {
+				return -1
+			}
+			if (blockA < blockB) {
+				return 1
+			}
+			return 0
+		})
+
+		console.log(fullLogs)
+
 
 		// PARSE LOGS
 
-		const logsCleaned = []
+		const cleanLogs = parseLogs(fullLogs)
+		console.log(cleanLogs)
+
+	    return {
+	        connected: true,
+	        contract: contract,
+	        provider: provider,
+	        squares: squares,
+	        totalSupply: totalSupply,
+	        maxSupply: maxSupply,
+	        account: account,
+	        ownedSquares: result,
+			history: cleanLogs,
+	    }
+
+	}
+	catch (e) {
+	    console.log(e)
+	    window.alert(e)
+	}   
+
+}
+
+const ropstenLinkMaker = (address, type) => {
+    const baseSlug = 'https://ropsten.etherscan.io/' + type + '/'
+    return baseSlug + address
+}
+
+const parseLogs = (logs) => {
+	const logsCleaned = []
 
 		for (let log of logs) {
 
@@ -159,38 +217,24 @@ const loadBlockchain = async () => {
 
 			eventObj['txId'] = log.transactionHash
 
+			if (log.topics[0] == claimTopic) {
+				eventObj['topic'] = 'NewSquare'
+			}
+			else if (log.topics[0] == changeTopic) {
+				eventObj['topic'] = 'ColourChange'
+			}
+
 			// console.log(eventObj)
 			logsCleaned.push(eventObj)
 
 		}
 
 		console.log(logsCleaned)
-
-
-	    return {
-	        connected: true,
-	        contract: contract,
-	        provider: provider,
-	        squares: squares,
-	        totalSupply: totalSupply,
-	        maxSupply: maxSupply,
-	        account: account,
-	        ownedSquares: result,
-			history: logsCleaned,
-	    }
-
-	}
-	catch (e) {
-	    console.log(e)
-	    window.alert(e)
-	}   
-
+		return logsCleaned
 }
 
-const ropstenLinkMaker = (address, type) => {
-    const baseSlug = 'https://ropsten.etherscan.io/' + type + '/'
-    return baseSlug + address
-}
+const claimTopic = ethers.utils.id('NewSquare(uint256,uint256)')
+const changeTopic = ethers.utils.id('ColourChange(uint256,uint256)')
 
 
 export { blockchainReducer, loadBlockchain, ropstenLinkMaker }

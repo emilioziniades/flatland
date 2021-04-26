@@ -16,7 +16,7 @@ const SquareIcon = styled.div`
     `
 
 const EventToast = ({ data }) => {
-    const { date, id, colour } = data
+    const { date, id, colour, topic } = data
 
     const [show, setShow] = useState(true)
     const toggleShow = () => setShow(!show)
@@ -57,7 +57,7 @@ const EventToast = ({ data }) => {
             onClose={toggleShow}>
             <Toast.Header>
             <SquareIcon background={colour} className="mr-2" />    
-            <b className="mr-auto"> Flatland Square Claim</b>
+            <b className="mr-auto"> {topic === 'NewSquare' ? 'Square Claim' : 'Colour Change'}</b>
         </Toast.Header>
         <Toast.Body>
             <Button
@@ -67,7 +67,7 @@ const EventToast = ({ data }) => {
             >
                 Square  <b>#{id}</b>
             </Button>
-            claimed on <b>{date}</b> with colour <b>{colour}</b>
+            {topic === 'NewSquare' ? 'claimed' : 'changed'} on <b>{date}</b> {topic === 'NewSquare' ? 'with' : 'to'} colour <b>{colour}</b>
         </Toast.Body>
     </Toast>
     )
