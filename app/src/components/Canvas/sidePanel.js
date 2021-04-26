@@ -62,7 +62,8 @@ const SidePanel = () => {
     const SquareStats = () => {
 
         const squareId = clickedSquare.split('-')[1]
-        const squareColour = ( squares[squareId - 1] > -1 ? decimalToHexColour(squares[squareId - 1]) : 'none')
+        const buttonId = '#' + clickedSquare
+        const squareColour = (squares[squareId - 1] > -1 ? decimalToHexColour(squares[squareId - 1]) : $(buttonId).css('background-color'))
         const coords = coordToString(squareId)
 
         return (
@@ -79,8 +80,8 @@ const SidePanel = () => {
                     (squares[squareId - 1] > -1) ?
                         <div>
                             <span>
-                                <SquareIcon background={squareColour} />
-                                <SquareName> Square # {squareId} <Badge pill variant='info'>Claimed</Badge> </SquareName>
+                                <SquareIcon background={squareColour} className='mr-2' />
+                                <SquareName className='mr-auto'> Square # {squareId} <Badge pill variant='info'>Claimed</Badge> </SquareName>
                             </span>
                             <br />
                             
@@ -93,8 +94,8 @@ const SidePanel = () => {
 	                    :
                         <div>
                             <span>
-                                <SquareIcon background={squareColour} />
-                                <SquareName> Square # {squareId} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
+                                <SquareIcon background={squareColour} className='mr-2'/>
+                                <SquareName className='mr-auto'> Square # {squareId} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
                             </span>
                             <br />
                             
