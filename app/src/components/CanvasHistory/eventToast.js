@@ -54,17 +54,10 @@ const EventToast = ({ data }) => {
         <Toast 
             className='m-1'
             show={show}
-<<<<<<< HEAD
-            onClose={toggleShow}
-            >
-        <Toast.Header>
-            <b> Flatland Square Claim</b>
-=======
             onClose={toggleShow}>
             <Toast.Header>
             <SquareIcon background={colour} className="mr-2" />    
             <b className="mr-auto"> Flatland Square Claim</b>
->>>>>>> refs/remotes/origin/main
         </Toast.Header>
         <Toast.Body>
             <Button
