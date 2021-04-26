@@ -11,8 +11,10 @@ const Square = ({ id }) => {
     const { state, dispatch } = useContext(BlockchainContext)
     const { account, squares, isSquareClicked, clickedSquare } = state
     const squareId = parseInt(id.split('-')[1])
-    const squareColour = squares[squareId - 1]
-    const invertedColour = invertColour(squareColour)
+    const buttonId = '#'+id
+    const squareColour = (squares[squareId - 1] > -1 ? squares[squareId - 1] : $(buttonId).css('background-color'))
+    // Need to create a function to handle inverting colours when given in RGB format
+    const invertedColour = (squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000')
     const { setCoord } = useContext(CoordinateContext)
    
     const chosenSquare = {
