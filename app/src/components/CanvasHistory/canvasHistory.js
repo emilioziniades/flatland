@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Row } from 'react-bootstrap'
+import { blockHeightToDate } from '../../utils/blockchainUtils'
 
 import { BlockchainContext } from '../BlockchainContext'
 import EventToast from './eventToast'
@@ -16,13 +17,14 @@ const CanvasHistory = () => {
         let newHistory = history
 
         for (let i = 0; i < newHistory.length; i++) {
+            try {
+                const blockHeight = newHistory[i].date
+                const date = await blockHeightToDate(blockHeight, provider)
+                newHistory[i].date = date
+            }
+            catch (e) {
 
-            const blockHeight = newHistory[i].date
-            const blockData = await provider.getBlock(blockHeight)
-            let date = new Date(blockData.timestamp * 1000)
-            date = date.toLocaleDateString() + ' at ' + date.toLocaleTimeString()
-
-            newHistory[i].date = date
+            }
         }
 
         console.log(newHistory)
@@ -36,20 +38,7 @@ const CanvasHistory = () => {
         if (connected) {
             replaceBlockHeightWithDate()
         } 
-    }, [connected, history])
-
-
-    //Listener
-// if (connected) {
-//     const filter = {
-//             address: contract.address,
-//             topics: [ claimTopic ]
-//         }
-//         provider.on(filter, (e) => {
-//             console.log(e)
-//             getSquareClaimHistory()
-//         })
-//     }
+    }, [connected])
 
     let events = history.map((element, index) => {
         return(

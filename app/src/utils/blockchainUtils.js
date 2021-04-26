@@ -58,6 +58,7 @@ const blockchainReducer = (state, action) => {
             ownedSquares: {},
             isSquareClicked: false,
             clickedSquare: null,
+			history: [],
         }
     }
 
@@ -127,7 +128,7 @@ const loadBlockchain = async () => {
 		// FETCH LOGS
 
 
-		const claimsFilter = {
+		const claimFilter = {
 			address: contract.address,
 			fromBlock: 0,
 			topics: [ claimTopic ]
@@ -139,7 +140,7 @@ const loadBlockchain = async () => {
 			topics: [ changeTopic ]
 		}
 		
-		const claimLogs = await provider.getLogs(claimsFilter)
+		const claimLogs = await provider.getLogs(claimFilter)
 		claimLogs.reverse()
 		// console.log(claimLogs)
 
@@ -217,10 +218,10 @@ const parseLogs = (logs) => {
 
 			eventObj['txId'] = log.transactionHash
 
-			if (log.topics[0] == claimTopic) {
+			if (log.topics[0] === claimTopic) {
 				eventObj['topic'] = 'NewSquare'
 			}
-			else if (log.topics[0] == changeTopic) {
+			else if (log.topics[0] === changeTopic) {
 				eventObj['topic'] = 'ColourChange'
 			}
 
@@ -233,8 +234,16 @@ const parseLogs = (logs) => {
 		return logsCleaned
 }
 
+const blockHeightToDate = async (blockHeight, provider) => {
+
+	const blockData = await provider.getBlock(blockHeight)
+	let date = new Date(blockData.timestamp * 1000)
+	date = date.toLocaleDateString() + ' at ' + date.toLocaleTimeString()
+	return date
+}
+
 const claimTopic = ethers.utils.id('NewSquare(uint256,uint256)')
 const changeTopic = ethers.utils.id('ColourChange(uint256,uint256)')
 
 
-export { blockchainReducer, loadBlockchain, ropstenLinkMaker }
+export { blockchainReducer, loadBlockchain, ropstenLinkMaker, parseLogs, blockHeightToDate, claimTopic, changeTopic }
