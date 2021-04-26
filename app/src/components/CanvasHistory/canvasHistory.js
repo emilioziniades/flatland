@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Row, Toast } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import { ethers } from 'ethers'
 import HashLoader from 'react-spinners/HashLoader'
 
