@@ -43,7 +43,7 @@ const App = () => {
             console.log(newLog)
             blockHeightToDate(e.blockNumber, provider).then( data => {
                 console.log(data)
-                newLog['date'] = data
+                newLog[0]['date'] = data
                 console.log(newLog)
                 const newHistory = newLog.concat(history)
                 dispatch({type: 'UPDATE-LOGS', payload: newHistory})
@@ -63,7 +63,7 @@ const App = () => {
             console.log(newLog)
             blockHeightToDate(e.blockNumber, provider).then(data => {
                 console.log(data)
-                newLog['date'] = data
+                newLog[0]['date'] = data
                 console.log(newLog)
                 const newHistory = newLog.concat(history)
                 dispatch({type: 'UPDATE-LOGS', payload: newHistory})
@@ -81,7 +81,7 @@ const App = () => {
             </Container>
                 <Canvas/>
             <Container>
-                { state.connected && <UserTabs /> }
+                { connected && <UserTabs /> }
             </Container>
 
             </BlockchainContext.Provider>
