@@ -30,6 +30,19 @@ const App = () => {
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
     const { connected, contract, provider } = state
     
+    // Listens for account change
+    useEffect(() => {
+        window.ethereum.on('accountsChanged', () => {
+            window.ethereum.request({ method: 'eth_requestAccounts' }).then(
+                data => {
+                    dispatch({type: 'CHANGE-ACCOUNT', payload: data[0]})
+                }
+            )
+        })
+
+
+    })
+
     // Event listener
     useEffect(() => {
         if (connected) {
@@ -45,18 +58,18 @@ const App = () => {
     }
     })  
 
-        const listener = (e) => {
-            console.log(e)
-            let newLog = parseLogs([e])
-            console.log(newLog)
-            blockHeightToDate(e.blockNumber, provider).then(data => {
-                            console.log(data)
-                            newLog[0]['date'] = data
-                            console.log(newLog)
-                            dispatch({type: 'APPEND-LOGS', payload: newLog[0]})
-                    
-                                }
-                )} 
+    const listener = (e) => {
+        console.log(e)
+        let newLog = parseLogs([e])
+        console.log(newLog)
+        blockHeightToDate(e.blockNumber, provider).then(data => {
+                        console.log(data)
+                        newLog[0]['date'] = data
+                        console.log(newLog)
+                        dispatch({type: 'APPEND-LOGS', payload: newLog[0]})
+                
+                            }
+            )} 
 
         return(
             <BlockchainContext.Provider value={{ state, dispatch }}>

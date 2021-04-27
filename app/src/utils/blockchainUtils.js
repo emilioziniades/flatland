@@ -76,6 +76,13 @@ const blockchainReducer = (state, action) => {
 		}
 	}
 
+	case 'CHANGE-ACCOUNT': {
+		return {
+			...state,
+			account: action.payload
+		}
+	}
+
 	default:
 		return state;
   }
@@ -90,14 +97,15 @@ const loadBlockchain = async () => {
 	    }
 	    
 		// CONNECT TO METAMASK
-		await window.ethereum.request({ method: 'eth_requestAccounts' })
+		const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+		const account = accounts[0]
 
 		// LOAD PROVIDERS AND SIGNERS
 	    const provider = new ethers.providers.Web3Provider(window.ethereum)
 	    const signer = provider.getSigner(0)
 	    const providerRpc = new ethers.providers.JsonRpcProvider('https://ropsten.infura.io/v3/6c1af6d1f94e4ffa9226b0e60b719aa5')
 	    // const signerRpc = providerRpc.getSigner()
-	    const account = await signer.getAddress()
+	    // const account = await signer.getAddress()
 	    const networkId = await providerRpc.send('net_version', [])
 	    const networkData = Flatland.networks[networkId]
 
