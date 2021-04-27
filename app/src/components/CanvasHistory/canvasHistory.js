@@ -46,14 +46,15 @@ const CanvasHistory = () => {
         )
     })
 
-    return(<div>
-    <Row className='justify-content-center' >
-            <h3 className='p-2'> {'Recent Activity \n'} </h3> 
-    </Row>
-    <Row className = 'm-1'>
-        { events }
-    </Row>
-    </div>)
-}
+    return(
+        <div>
+            <Row className='justify-content-center' >
+                    <h3 className='p-2'> {'Recent Activity \n'} </h3> 
+            </Row>
+            <Row className = 'm-1'>
+                { events }
+            </Row>
+        </div>
+        )}
 
 export default CanvasHistory

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { Container } from 'react-bootstrap'
 
 import Header from './Header/header'
@@ -30,47 +30,30 @@ const App = () => {
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
     const { connected, contract, provider, history } = state
     
-    // Listeners (should probably be refactored somewhere else, but unsure where)
-    if (connected) {
-        const claimFilter = {
+    // Event listener
+    useEffect(() => {
+        if (connected) {
+            const filter = {
                 address: contract.address,
-                topics: [ claimTopic ]
+                topics: [[ claimTopic, changeTopic ]] //claims OR colour changes
             }
 
-        provider.on(claimFilter, (e) => {
-            console.log(e)
-            let newLog = parseLogs([e])
-            console.log(newLog)
-            blockHeightToDate(e.blockNumber, provider).then( data => {
-                console.log(data)
-                newLog[0]['date'] = data
+            provider.on(filter, (e) => {
+
+                console.log(e)
+                let newLog = parseLogs([e])
                 console.log(newLog)
-                const newHistory = newLog.concat(history)
-                dispatch({type: 'UPDATE-LOGS', payload: newHistory})
-
+                blockHeightToDate(e.blockNumber, provider).then(data => {
+                                console.log(data)
+                                newLog[0]['date'] = data
+                                console.log(newLog)
+                                const newHistory = newLog.concat(history)
+                                dispatch({type: 'UPDATE-LOGS', payload: newHistory})
+                
+                            })
             })
-
-        })
-        
-        const changeFilter =  {
-            address: contract.address,
-            topics: [ changeTopic ]
         }
-
-        provider.on(changeFilter, (e) => {
-            console.log(e)
-            let newLog = parseLogs([e])
-            console.log(newLog)
-            blockHeightToDate(e.blockNumber, provider).then(data => {
-                console.log(data)
-                newLog[0]['date'] = data
-                console.log(newLog)
-                const newHistory = newLog.concat(history)
-                dispatch({type: 'UPDATE-LOGS', payload: newHistory})
-
-            })
-        })
-        }
+    })
 
         return(
             <BlockchainContext.Provider value={{ state, dispatch }}>

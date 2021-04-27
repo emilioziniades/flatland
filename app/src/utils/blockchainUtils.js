@@ -127,50 +127,20 @@ const loadBlockchain = async () => {
 
 		// FETCH LOGS
 
-
-		const claimFilter = {
+		const filter = {
 			address: contract.address,
 			fromBlock: 0,
-			topics: [ claimTopic ]
-		}
-
-		const changeFilter = {
-			address: contract.address,
-			fromBlock: 0,
-			topics: [ changeTopic ]
+			topics: [[ claimTopic, changeTopic ]] //claims OR colour changes
 		}
 		
-		const claimLogs = await provider.getLogs(claimFilter)
-		claimLogs.reverse()
-		// console.log(claimLogs)
-
-		const changeLogs = await provider.getLogs(changeFilter)
-		changeLogs.reverse()
-		// console.log(changeLogs)
-
-		const fullLogs = claimLogs.concat(changeLogs)
-		console.log(fullLogs)
-
-		// Ensure that fullLogs correctly sorted by date
-		fullLogs.sort((a,b) => {
-			const blockA = a.blockNumber
-			const blockB = b.blockNumber
-
-			if (blockA > blockB) {
-				return -1
-			}
-			if (blockA < blockB) {
-				return 1
-			}
-			return 0
-		})
-
-		console.log(fullLogs)
+		const logs = await provider.getLogs(filter)
+		logs.reverse()
+		console.log(logs)
 
 
 		// PARSE LOGS
 
-		const cleanLogs = parseLogs(fullLogs)
+		const cleanLogs = parseLogs(logs)
 		console.log(cleanLogs)
 
 	    return {
@@ -230,7 +200,6 @@ const parseLogs = (logs) => {
 
 		}
 
-		console.log(logsCleaned)
 		return logsCleaned
 }
 
