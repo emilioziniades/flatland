@@ -69,6 +69,13 @@ const blockchainReducer = (state, action) => {
 		}
 	}
 
+	case 'APPEND-LOGS': {
+		return {
+			...state,
+			history: [action.payload, ...state.history]
+		}
+	}
+
 	default:
 		return state;
   }

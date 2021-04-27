@@ -6,7 +6,7 @@ import Hero from './hero'
 import Canvas from './Canvas/canvas'
 import UserTabs from './userTabs'
 import { BlockchainContext } from './BlockchainContext'
-import { blockchainReducer, claimTopic, changeTopic, parseLogs, blockHeightToDate  } from '../utils/blockchainUtils'
+import { blockchainReducer, claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
 
 
 
@@ -14,7 +14,7 @@ const App = () => {
 
     const initialState = {
         connected: false,
-        contract: null,
+        contract: {},
         provider: null,
         squares: [],
         totalSupply: 0,
@@ -28,7 +28,7 @@ const App = () => {
     }
 
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
-    const { connected, contract, provider, history } = state
+    const { connected, contract, provider } = state
     
     // Event listener
     useEffect(() => {
@@ -37,23 +37,26 @@ const App = () => {
                 address: contract.address,
                 topics: [[ claimTopic, changeTopic ]] //claims OR colour changes
             }
+            contract.on(filter, listener)
 
-            provider.on(filter, (e) => {
+            return () => {
+                contract.off(filter, listener)
+            }
+    }
+    })  
 
-                console.log(e)
-                let newLog = parseLogs([e])
-                console.log(newLog)
-                blockHeightToDate(e.blockNumber, provider).then(data => {
-                                console.log(data)
-                                newLog[0]['date'] = data
-                                console.log(newLog)
-                                const newHistory = newLog.concat(history)
-                                dispatch({type: 'UPDATE-LOGS', payload: newHistory})
-                
-                            })
-            })
-        }
-    })
+        const listener = (e) => {
+            console.log(e)
+            let newLog = parseLogs([e])
+            console.log(newLog)
+            blockHeightToDate(e.blockNumber, provider).then(data => {
+                            console.log(data)
+                            newLog[0]['date'] = data
+                            console.log(newLog)
+                            dispatch({type: 'APPEND-LOGS', payload: newLog[0]})
+                    
+                                }
+                )} 
 
         return(
             <BlockchainContext.Provider value={{ state, dispatch }}>
