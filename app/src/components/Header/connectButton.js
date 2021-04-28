@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react'
 import {Form, Button, Modal } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
+import $ from 'jquery'
 
 import { BlockchainContext } from '../BlockchainContext'
+import { SquareContext } from '../SquareContext'
 import { loadBlockchain } from '../../utils/blockchainUtils'
 
 const ConnectButton = () => {
@@ -12,6 +14,7 @@ const ConnectButton = () => {
     const [loading, setLoading] = useState(false)
     const [loadingLogout, setLoadingLogout] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
+    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
 
     const handleClick = async () => {
 
@@ -27,6 +30,9 @@ const ConnectButton = () => {
         else {
             window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
         }
+
+        $('#node-' + selectedSquare).css('border', 'none')
+        setSelectedSquare(null)
         setLoading(false)
     }
 
@@ -39,6 +45,8 @@ const ConnectButton = () => {
             type: 'LOGOUT'
         })
 
+        $('#node-' + selectedSquare).css('border', 'none')
+        setSelectedSquare(null)
         setLoadingLogout(false)
     }
 

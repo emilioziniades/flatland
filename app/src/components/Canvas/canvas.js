@@ -19,7 +19,7 @@ let counter = 1
 const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
-    const {contract, account, squares, totalSupply, maxSupply, history } = state
+    const { account, squares, totalSupply, maxSupply, history } = state
     const [currentCoord, setCoord] = useState('')
 
     const grid = [];
@@ -32,7 +32,7 @@ const Canvas = () => {
     useInterval(() => {
 
         // Paint squares
-        if (contract) {
+        if (account) {
 
             //Clear squares first
             for (var i = 1; i <= maxSupply; i++ ) {
