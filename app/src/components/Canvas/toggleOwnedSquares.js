@@ -40,7 +40,6 @@ const ToggleOwnedSquares = () => {
     const unHighlightSquares = (e) => {
         setChecked(e.currentTarget.checked)
 
-        console.log(selectedSquare)
         for (let ownedSquare of userSquares) {
             let nodeId = '#node-' + ownedSquare[0]
             
