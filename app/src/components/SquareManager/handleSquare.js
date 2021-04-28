@@ -3,13 +3,12 @@ import $ from 'jquery'
 
 import ManageForm from '../forms/manageForm'
 import { decimalToHexColour, coordToString, invertColour } from '../../utils/utilityFunctions'
-import { BlockchainContext } from '../BlockchainContext'
+import { SquareContext } from '../SquareContext'
 import { Square, Data, TableRow } from './tableComponents'
 
 const HandleSquare = ({ squareId, squareColour }) => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
-    const { isSquareClicked, clickedSquare } = state
+    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
     const invertedColour = invertColour(squareColour)
 
     const chosenSquare = {
@@ -17,21 +16,9 @@ const HandleSquare = ({ squareId, squareColour }) => {
     }
 
     const handleClick = (e) => {
-        
-        const indexSquare = 'node-'.concat(squareId)
-        console.log(indexSquare)
-
-        if (isSquareClicked && clickedSquare !== indexSquare) {
-            $('#' + clickedSquare).css('border', 'none')
-            $('#' + indexSquare).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: indexSquare })
-        }
-        else {
-            //No square is clicked
-            $('#' + indexSquare).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: indexSquare })
-
-        }
+        $('#node-' + selectedSquare).css('border', 'none')
+        $('#node-' + squareId).css(chosenSquare)
+        setSelectedSquare(squareId)
     }
 
     return (    

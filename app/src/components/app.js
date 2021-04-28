@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { Container } from 'react-bootstrap'
 
 import Header from './Header/header'
@@ -6,6 +6,7 @@ import Hero from './hero'
 import Canvas from './Canvas/canvas'
 import UserTabs from './userTabs'
 import { BlockchainContext } from './BlockchainContext'
+import { SquareContext } from './SquareContext'
 import { blockchainReducer, claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
 
 
@@ -21,8 +22,6 @@ const App = () => {
         maxSupply: 0,
         account: '',
         ownedSquares: {},
-        isSquareClicked: false,
-        clickedSquare: null,
         history: [],
 
     }
@@ -30,6 +29,8 @@ const App = () => {
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
     const { connected, contract, provider } = state
     
+    const [ selectedSquare, setSelectedSquare ] = useState(null)
+
     // Listens for account change
     useEffect(() => {
         window.ethereum.on('accountsChanged', () => {
@@ -72,8 +73,9 @@ const App = () => {
             )} 
 
         return(
+            <SquareContext.Provider value={[ selectedSquare, setSelectedSquare ]}>
             <BlockchainContext.Provider value={{ state, dispatch }}>
-
+            
             <Header />                    
             <Container>
                 <Hero />
@@ -84,6 +86,7 @@ const App = () => {
             </Container>
 
             </BlockchainContext.Provider>
+            </SquareContext.Provider>
         )   
 }
 

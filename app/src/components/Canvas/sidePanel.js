@@ -5,6 +5,7 @@ import $ from 'jquery'
 
 import EtherscanLink from '../forms/etherscanLink'
 import { BlockchainContext } from '../BlockchainContext'
+import { SquareContext } from '../SquareContext'
 import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
 import MintForm from '../forms/mintForm'
@@ -33,8 +34,9 @@ const unchosenSquare = {
 
 const SidePanel = () => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
-    const { connected, account, contract, squares, maxSupply, ownedSquares, isSquareClicked , clickedSquare } = state
+    const { state } = useContext(BlockchainContext)
+    const { connected, account, contract, squares, maxSupply, ownedSquares } = state
+    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
 
     const FlatlandStats = () => {
         return(
@@ -45,7 +47,7 @@ const SidePanel = () => {
                     Flatland Smart Contract
                 </h5>
                 <h6>
-                    { contract ? <EtherscanLink hash={contract.address} type='address' message='Source: '/> : 'Source: random colours' }
+                    { account ? <EtherscanLink hash={contract.address} type='address' message='Source: '/> : 'Source: random colours' }
                 </h6>
                 { connected ?
                 <p>
@@ -61,41 +63,40 @@ const SidePanel = () => {
 
     const SquareStats = () => {
 
-        const squareId = clickedSquare.split('-')[1]
-        const buttonId = '#' + clickedSquare
-        const squareColour = (squares[squareId - 1] > -1 ? decimalToHexColour(squares[squareId - 1]) : $(buttonId).css('background-color'))
-        const coords = coordToString(squareId)
+        const buttonId = '#node-' + selectedSquare
+        const squareColour = (squares[selectedSquare - 1] > -1 ? decimalToHexColour(squares[selectedSquare - 1]) : $(buttonId).css('background-color'))
+        const coords = coordToString(selectedSquare)
 
         return (
             <Alert
                 className = 'm-4'
-                variant={(squares[squareId - 1] > -1) ? (ownedSquares[squareId] > -1) ? 'success' : 'danger' : 'primary'}
+                variant={(squares[selectedSquare - 1] > -1) ? (ownedSquares[selectedSquare] > -1) ? 'success' : 'danger' : 'primary'}
                 dismissible
                 onClose={e => {
-                    $('#' + clickedSquare).css(unchosenSquare)
-                    dispatch({ type: 'UNCLICK-SQUARE' })
+                    $(buttonId).css(unchosenSquare)
+                    setSelectedSquare(null)
                 }}>
 
                 {
-                    (squares[squareId - 1] > -1) ?
+                    (squares[selectedSquare - 1] > -1) ?
                         <div>
                             <span>
                                 <SquareIcon background={squareColour} className='mr-2' />
-                                <SquareName className='mr-auto'> Square # {squareId} <Badge pill variant='info'>Claimed</Badge> </SquareName>
+                                <SquareName className='mr-auto'> Square # {selectedSquare} <Badge pill variant='info'>Claimed</Badge> </SquareName>
                             </span>
                             <br />
                             
                             <h6> Co-ordinates : {coords} </h6>
-                            <h6> Owner : {(ownedSquares[squareId] > -1) ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[squareId - 1])} </h6>
+                            <h6> Owner : {(ownedSquares[selectedSquare] > -1) ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[selectedSquare - 1])} </h6>
                             <Row className='justify-content-center'>
-                                {account ? (ownedSquares[squareId] > -1) ? <ManageForm squareId={squareId} /> : <div /> : <ConnectButton />}
+                                {account ? (ownedSquares[selectedSquare] > -1) ? <ManageForm squareId={selectedSquare} /> : <div /> : <ConnectButton />}
                                 </Row>
                         </div>
 	                    :
                         <div>
                             <span>
                                 <SquareIcon background={squareColour} className='mr-2'/>
-                                <SquareName className='mr-auto'> Square # {squareId} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
+                                <SquareName className='mr-auto'> Square # {selectedSquare} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
                             </span>
                             <br />
                             
@@ -113,7 +114,7 @@ const SidePanel = () => {
     }
     return (
         <span>
-            { isSquareClicked ? <SquareStats /> : <FlatlandStats />}
+            { selectedSquare ? <SquareStats /> : <FlatlandStats />}
         </span>
     )
 }

@@ -3,17 +3,23 @@ import { ToggleButton } from 'react-bootstrap'
 import $ from 'jquery'
 
 import { BlockchainContext } from '../BlockchainContext'
-import { zip } from '../../utils/utilityFunctions'
-
+import { SquareContext } from '../SquareContext'
+import { zip, invertColour } from '../../utils/utilityFunctions'
 
 const ToggleOwnedSquares = () => {
 
     const { state } = useContext(BlockchainContext)
-    const { ownedSquares } = state
+    const { ownedSquares, squares } = state
     const userSquares = zip(ownedSquares)
     const [checked, setChecked] = useState(false)
+    const [selectedSquare] = useContext(SquareContext)
+    const squareColour = (squares[selectedSquare - 1] > -1 ? squares[selectedSquare - 1] : '#ffffff')
+    const invertedColour = (squares[selectedSquare - 1] > -1 ? invertColour(squareColour) : '#000000')
 
-    //I have not used inverted colours for this but it is something to consider
+    const chosenSquare = {
+        'border': '2px solid ' + invertedColour,
+    }
+    
     const highlightedSquare = {
         'border': '2px solid #FFD700',
     }
@@ -24,7 +30,7 @@ const ToggleOwnedSquares = () => {
 
     const highlightSquares = (e) => {
         setChecked(e.currentTarget.checked)
-        
+
         for (let ownedSquare of userSquares) {
             let nodeId = '#node-' + ownedSquare[0]
             $(nodeId).css(highlightedSquare)
@@ -34,9 +40,15 @@ const ToggleOwnedSquares = () => {
     const unHighlightSquares = (e) => {
         setChecked(e.currentTarget.checked)
 
+        console.log(selectedSquare)
         for (let ownedSquare of userSquares) {
             let nodeId = '#node-' + ownedSquare[0]
-            $(nodeId).css(unHighlightedSquare)
+            
+            if (selectedSquare == ownedSquare[0]) {
+                $(nodeId).css(chosenSquare)
+            } else {
+                $(nodeId).css(unHighlightedSquare)
+            }
         }
     }
 

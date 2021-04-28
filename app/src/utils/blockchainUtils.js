@@ -30,21 +30,6 @@ const blockchainReducer = (state, action) => {
         	ownedSquares: action.mySquares,
         }
     }
-	case 'CLICK-SQUARE': {
-		return {
-			...state,
-			isSquareClicked: true,
-			clickedSquare: action.clickedSquare
-		}
-	}
-
-	case 'UNCLICK-SQUARE': {
-		return {
-			...state,
-			isSquareClicked: false,
-			clickedSquare: null
-		}
-    }
 
     case 'LOGOUT': {
         return {
@@ -56,8 +41,6 @@ const blockchainReducer = (state, action) => {
             maxSupply: 0,
             account: '',
             ownedSquares: {},
-            isSquareClicked: false,
-            clickedSquare: null,
 			history: [],
         }
     }

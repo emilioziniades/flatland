@@ -3,20 +3,23 @@ import $ from 'jquery'
 
 import GridItem from './gridItem'
 import { BlockchainContext } from '../BlockchainContext'
+import { SquareContext } from '../SquareContext'
 import { CoordinateContext } from '../CoordinateContext'
 import { getSquareColumn, getSquareRow, invertColour, coordToString } from '../../utils/utilityFunctions'
 
 const Square = ({ id }) => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
-    const { account, squares, isSquareClicked, clickedSquare } = state
-    const squareId = parseInt(id.split('-')[1])
-    //const buttonId = '#'+id
-    // Wanted to use $(buttonId).css('background-color') to get colour of unclaimed squares but running into some errors when commiting
-    const squareColour = (squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff')
-    // Need to create a function to handle inverting colours when given in RGB format
-    const invertedColour = (squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000')
+    const { state } = useContext(BlockchainContext)
+    const { account, squares } = state
+    const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
     const { setCoord } = useContext(CoordinateContext)
+
+    const squareId = parseInt(id.split('-')[1])
+    //Using white and black as placeholder colours for unclaimed squares, in future we should change that
+    //this would require changing invertedColour function to handle RGB conversion too
+    const squareColour = (squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff')
+    const invertedColour = (squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000')
+    
    
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
@@ -47,19 +50,14 @@ const Square = ({ id }) => {
     const routeClickEvent = (e) => { account ? handleClick(e) : handleClick(e) }       
 
     const handleClick = (e) => {
-        if (isSquareClicked && clickedSquare === id) {
-            $('#' + id).css(unchosenSquare)
-            dispatch({ type: 'UNCLICK-SQUARE' })
-        }
-        else if (isSquareClicked && clickedSquare !== id) {
-            $('#' + clickedSquare).css('border', 'none')
-            $('#' + id).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: id })
+        if (selectedSquare === squareId) {
+            $('#node-' + selectedSquare).css(unchosenSquare)
+            setSelectedSquare(null)
         }
         else {
-            //No square is clicked
-            $('#' + id).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: id })
+            $('#node-' + selectedSquare).css('border', 'none')
+            $('#node-' + squareId).css(chosenSquare)
+            setSelectedSquare(squareId)
         }
     }
 

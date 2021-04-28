@@ -3,7 +3,8 @@ import { Button, Toast } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jquery'
 
-import { hexColourToDecimal, invertColour } from '../../utils/utilityFunctions'
+import { invertColour } from '../../utils/utilityFunctions'
+import { SquareContext } from '../SquareContext'
 import { BlockchainContext } from '../BlockchainContext'
 
 const SquareIcon = styled.div`
@@ -21,32 +22,21 @@ const EventToast = ({ data }) => {
     const [show, setShow] = useState(true)
     const toggleShow = () => setShow(!show)
 
-    const { state, dispatch } = useContext(BlockchainContext)
-    const { isSquareClicked, clickedSquare } = state
-    const invertedColour = invertColour(hexColourToDecimal(colour))
+    const { state } = useContext(BlockchainContext)
+    const { squares } = state
+    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
+
+    const squareColour = (squares[id - 1] > -1 ? squares[id - 1] : '#ffffff')
+    const invertedColour = (squares[id - 1] > -1 ? invertColour(squareColour) : '#000000')
 
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
     }
 
     const handleClick = (e) => {
-
-        const indexSquare = 'node-'.concat(id)
-        console.log(indexSquare)
-        console.log(colour)
-        console.log(invertedColour)
-
-        if (isSquareClicked && clickedSquare !== indexSquare) {
-            $('#' + clickedSquare).css('border', 'none')
-            $('#' + indexSquare).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: indexSquare })
-        }
-        else {
-            //No square is clicked
-            $('#' + indexSquare).css(chosenSquare)
-            dispatch({ type: 'CLICK-SQUARE', clickedSquare: indexSquare })
-
-        }
+        $('#node-' + selectedSquare).css('border', 'none')       
+        $('#node-' + id).css(chosenSquare)
+        setSelectedSquare(id)
     }
 
 
