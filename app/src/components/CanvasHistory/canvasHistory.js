@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react'
-import { Row } from 'react-bootstrap'
+import { Row, Table } from 'react-bootstrap'
 import { blockHeightToDate } from '../../utils/blockchainUtils'
 
 import { BlockchainContext } from '../BlockchainContext'
-import EventToast from './eventToast'
+import EventRow from './eventRow'
+import { TableHead, Head, TableBody, TableRow } from '../SquareManager/tableComponents'
 
 
 const CanvasHistory = () => {
@@ -42,19 +43,30 @@ const CanvasHistory = () => {
 
     let events = history.map((element, index) => {
         return(
-            <EventToast data={element} key={element.txId} />
+            <EventRow data={element} key={element.txId} />
         )
     })
 
     return(
-        <div>
-            <Row className='justify-content-center' >
-                    <h3 className='p-2'> {'Recent Activity \n'} </h3> 
-            </Row>
-            <Row className = 'm-1'>
+        <Row className='justify-content-center mr-auto ml-auto p-2'>
+        <Row>
+            <h3 className='p-2'> Flatland History </h3>
+        </Row>
+        <Table hover>
+            <TableHead>
+                <TableRow>
+                <Head> Event </Head>
+                <Head> Square # </Head>
+                <Head> Colour </Head>
+                <Head> Date </Head>
+                </TableRow>
+            </TableHead>
+            <TableBody>
                 { events }
-            </Row>
-        </div>
-        )}
+            </TableBody>
+        </Table>
+        </Row>
+        )
+}
 
 export default CanvasHistory
