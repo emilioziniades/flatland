@@ -57,7 +57,7 @@ const EventToast = ({ data }) => {
             >
                 Square  <b>#{id}</b>
             </Button>
-            {topic === 'NewSquare' ? 'claimed' : 'changed'} on <b>{date}</b> {topic === 'NewSquare' ? 'with' : 'to'} colour <b>{colour}</b>
+            {topic === 'NewSquare' ? 'claimed with' : 'changed to'} colour <b>{colour}</b> on <b>{date}</b>
         </Toast.Body>
     </Toast>
     )

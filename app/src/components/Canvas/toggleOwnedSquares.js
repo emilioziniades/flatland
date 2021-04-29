@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { ToggleButton } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import $ from 'jquery'
 
 import { BlockchainContext } from '../BlockchainContext'
@@ -40,10 +40,15 @@ const ToggleOwnedSquares = () => {
     const unHighlightSquares = (e) => {
         setChecked(e.currentTarget.checked)
 
+        let selectedSquareString = ''
+        if (selectedSquare) {
+            selectedSquareString = selectedSquare.toString()
+        }
+
         for (let ownedSquare of userSquares) {
             let nodeId = '#node-' + ownedSquare[0]
-            
-            if (selectedSquare === ownedSquare[0]) {
+
+            if (selectedSquareString === ownedSquare[0]) {
                 $(nodeId).css(chosenSquare)
             } else {
                 $(nodeId).css(unHighlightedSquare)
@@ -52,18 +57,19 @@ const ToggleOwnedSquares = () => {
     }
 
     return (
-        <ToggleButton
-            type="checkbox"
-            variant="secondary"
-            checked={checked}
-            value="1"
-            onChange={checked ? unHighlightSquares : highlightSquares}
-        >
-            {checked ?
-                ' Hide Owned Squares'
-                :
-                ' Highlight Owned Squares (' + userSquares.length + ')'}
-        </ToggleButton>
+        <Form>
+            <Form.Check 
+                type="switch"
+                id='toggleOwnedSquares'
+                checked = {checked}
+                value="1"
+                onChange={checked ? unHighlightSquares : highlightSquares}
+                label={checked ?
+                        'Hide Owned Squares'
+                        :
+                        'Highlight Owned Squares (' + userSquares.length + ')'}
+            />
+        </Form>
     )
 }
 

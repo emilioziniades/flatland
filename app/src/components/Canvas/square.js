@@ -98,7 +98,7 @@ const Square = ({ id }) => {
             $(nodeId).css(unhoveredSquareRow)
         }
 
-        setCoord('')
+        setCoord('.')
     }
 
     return (
