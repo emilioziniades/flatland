@@ -84,7 +84,7 @@ const getSquareColumn = (id) => {
         result.push(below)
     }
 
-    result = result.filter((item) => { return item > 0 && item < 256 })
+    result = result.filter((item) => { return item > 0 && item < 257 })
     return result
 }
 
