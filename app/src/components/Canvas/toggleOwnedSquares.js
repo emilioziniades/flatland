@@ -60,9 +60,9 @@ const ToggleOwnedSquares = () => {
             onChange={checked ? unHighlightSquares : highlightSquares}
         >
             {checked ?
-                'Hide Owned Squares'
+                ' Hide Owned Squares'
                 :
-                'Highlight Owned Squares (' + userSquares.length + ')'}
+                ' Highlight Owned Squares (' + userSquares.length + ')'}
         </ToggleButton>
     )
 }

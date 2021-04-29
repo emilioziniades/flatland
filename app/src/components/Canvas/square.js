@@ -22,13 +22,8 @@ const Square = ({ id }) => {
 
     // First checks if squares array present, because that is necessary to check if square exists
     const squareColour = (squares ? squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff': '#ffffff' )
-<<<<<<< HEAD
-    const invertedColour = (squares ? squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000' : '#ffffff')
-    
-=======
     const invertedColour = (squares ? squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000' : '#000000' )
 
->>>>>>> bf3f8b70bb37c307588669fc38731cd521221c14
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
     }

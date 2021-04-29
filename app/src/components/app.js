@@ -1,5 +1,7 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import { Container } from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import Header from './Header/header'
 import Hero from './hero'
@@ -28,7 +30,6 @@ const App = () => {
 
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
     const { connected, contract, provider } = state || {} //allows app to render even without blockchain connection
-    
     const [ selectedSquare, setSelectedSquare ] = useState(null)
 
     // Listens for account change
@@ -82,12 +83,20 @@ const App = () => {
             dispatch({type: 'CHANGE-REMOTE', id: newLog.id, colour: colourInteger})
         }
     } 
-
         return(
             <SquareContext.Provider value={[ selectedSquare, setSelectedSquare ]}>
             <BlockchainContext.Provider value={{ state, dispatch }}>
-            
-            <Header />                    
+            <Header /> 
+            <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable={false}
+                pauseOnHover />                   
             <Container>
                 <Hero />
             </Container>
@@ -95,7 +104,6 @@ const App = () => {
             <Container>
                 { connected && <UserTabs /> }
             </Container>
-
             </BlockchainContext.Provider>
             </SquareContext.Provider>
         )   

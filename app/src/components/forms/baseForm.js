@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
-import { Col, Form, Button, Alert, InputGroup } from 'react-bootstrap'
-import HashLoader from 'react-spinners/HashLoader'
+import { Col, Form, Button, InputGroup, Spinner } from 'react-bootstrap'
 import { ChromePicker } from 'react-color'
+import { toast } from 'react-toastify'
 
 import EtherscanLink from './etherscanLink'
 
 
 const BaseForm = ({ callback, message, givenId }) => {
-
+    
+    const toastOptions = {
+        position: "bottom-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+    }
     const [input, setInput] = useState('')
     const [loading, setLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
-    const [ alert, setAlert ] = useState('')
-    const [ show , setShow ] = useState(true)
-
-    const handleClose = () => setShow(false)
 
     const onTogglePicker = () => {
         setPickerVisible(!pickerVisible)
@@ -25,26 +30,25 @@ const BaseForm = ({ callback, message, givenId }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+
         setLoading(true)
         setPickerVisible(false) 
         setInput('')
-    
 
         const txHash = await callback(input)
 
-        const txAlert = ( txHash ? 
-            <EtherscanLink 
+        if (txHash) {
+            toast.success(<EtherscanLink 
                 type='tx' 
-                hash={txHash} 
-                message='Transaction changing square colour confirmed. View transaction details: '/> :
-            <EtherscanLink message='Error processing transaction.' /> )
-        
-        setLoading(false) 
-        setShow(true)
-        setAlert(txAlert) 
-        
-
-        
+                hash={txHash}
+                abbreviate={true}
+                message='🚀 Transaction confirmed! View details: '/> 
+                , toastOptions)
+        }
+        else {
+            toast.error('😢 Error processing transaction.', toastOptions)
+        }
+        setLoading(false)
     }
 
     return(
@@ -84,21 +88,10 @@ const BaseForm = ({ callback, message, givenId }) => {
                         className='mr-5'
                         disabled={ loading || !input }
                     > 
-                        { loading ? 'awaiting confirmation' : message }
+                        { loading ? 'awaiting confirmation...' : message }
+                    {loading && <Spinner animation="border" as="span" variant="dark" size="sm" /> }
                     </Button>
-                    <HashLoader loading={loading} color='FFC145' /> 
                 </Form.Group>
-            </Form.Row>
-            <Form.Row className='justify-content-center'>
-            <Alert
-                dismissible
-                show={show}
-                onClose={handleClose}
-                variant='light' 
-                className='ml-5 mr-5'
-                    >
-                {alert}
-            </Alert>
             </Form.Row>
         </Form>
         )

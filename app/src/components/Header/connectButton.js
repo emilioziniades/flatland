@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import {Form, Button, Modal } from 'react-bootstrap'
-import HashLoader from 'react-spinners/HashLoader'
+import {Form, Button, Modal, Spinner } from 'react-bootstrap'
 import $ from 'jquery'
 
 import { BlockchainContext } from '../BlockchainContext'
@@ -56,13 +55,13 @@ const ConnectButton = () => {
     return(
             <Form inline>
                 <Button
-                className='m-1 mr-4'
-                variant= { loading ? 'warning' : account ? 'success' : 'primary' }
-                onClick={handleClick}
-                disabled = {account ? true : false}>
-                {loading ? 'connecting...' : account ? account : 'connect account'}
+                    className='m-1 mr-4'
+                    variant= { loading ? 'warning' : account ? 'success' : 'primary' }
+                    onClick={handleClick}
+                    disabled = {account ? true : false}>
+                        {loading ? 'connecting...' : account ? account : 'connect account'}
+                        {loading && <Spinner animation="border" as="span" variant="dark" size="sm" /> }
                 </Button>
-                <HashLoader loading={loading} color='FFC145' />
 
                 {account ?
                 <div>
@@ -95,7 +94,8 @@ const ConnectButton = () => {
 
                     </Modal>
 
-                    <HashLoader loading={loadingLogout} color='FFC145' />
+                    {loadingLogout && <Spinner animation="border" as="span" variant="dark" size="sm" /> }
+
                 </div>
                 :
                 <div />

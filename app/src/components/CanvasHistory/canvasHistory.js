@@ -15,22 +15,20 @@ const CanvasHistory = () => {
     const replaceBlockHeightWithDate = async () => {
 
         console.log('Starting date replacement')
-        let newHistory = history
-
-        for (let i = 0; i < newHistory.length; i++) {
+        
+        for (let i = 0; i < history.length; i++) {
             try {
+                let newHistory = history
                 const blockHeight = newHistory[i].date
                 const date = await blockHeightToDate(blockHeight, provider)
                 newHistory[i].date = date
+                dispatch({type: 'UPDATE-LOGS', payload: newHistory})
+
             }
             catch (e) {
 
             }
         }
-
-        console.log(newHistory)
-
-        dispatch({type: 'UPDATE-LOGS', payload: newHistory})
 
         console.log('finished date replacement')
     }
