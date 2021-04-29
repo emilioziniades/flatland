@@ -16,9 +16,13 @@ const BaseForm = ({ callback, message, givenId }) => {
 
     const handleClose = () => setShow(false)
 
-    const onTogglePicker = () => {
-        setPickerVisible(!pickerVisible)
-        setInput('#000000')
+    const handlePickerOpen = () => {
+        setPickerVisible(true)
+        input === '' ? setInput('#000000') : setInput(input)
+    }
+
+    const handlePickerClose = () => {
+        setPickerVisible(false)
     }
 
     const handleChange = (event) => setInput(event.hex)
@@ -61,7 +65,7 @@ const BaseForm = ({ callback, message, givenId }) => {
                     />
                     <InputGroup.Append>
                     <Button
-                        onClick={onTogglePicker}
+                        onClick={ pickerVisible ? handlePickerClose : handlePickerOpen}
                         variant='outline-primary'
                         >
                     { pickerVisible ? 'hide picker' : 'show picker' }
