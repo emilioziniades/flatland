@@ -68,9 +68,9 @@ const App = () => {
                         newLog[0]['date'] = data
                         console.log(newLog)
                         dispatch({type: 'APPEND-LOGS', payload: newLog[0]})
-                
-                            }
-            )} 
+                        }
+        )
+    } 
 
         return(
             <SquareContext.Provider value={[ selectedSquare, setSelectedSquare ]}>

@@ -85,6 +85,7 @@ const BaseForm = ({ callback, message, givenId }) => {
                         type='submit'
                         variant={ loading ? 'warning' : 'primary'}
                         className='mr-5'
+                        disabled={ loading || !input }
                     > 
                         { loading ? 'awaiting confirmation' : message }
                     </Button>
