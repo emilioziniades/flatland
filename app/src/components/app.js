@@ -62,6 +62,7 @@ const App = () => {
     })  
 
     const listener = (e) => {
+        console.log(e)
         let newLog = parseLogs([e])
         newLog = newLog[0]
 

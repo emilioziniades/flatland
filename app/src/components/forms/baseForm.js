@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Form, Button, Alert, InputGroup } from 'react-bootstrap'
+import { Col, Form, Button, Alert, InputGroup } from 'react-bootstrap'
 import HashLoader from 'react-spinners/HashLoader'
 import { ChromePicker } from 'react-color'
 
@@ -11,8 +11,8 @@ const BaseForm = ({ callback, message, givenId }) => {
     const [input, setInput] = useState('')
     const [loading, setLoading] = useState(false)
     const [pickerVisible, setPickerVisible] = useState(false)
-    const [ alert, setAlert ] = useState('')
-    const [ show , setShow ] = useState(false)
+    const [ alert, setAlert ] = useState('ALlll')
+    const [ show , setShow ] = useState(true)
 
     const handleClose = () => setShow(false)
 
@@ -31,29 +31,27 @@ const BaseForm = ({ callback, message, givenId }) => {
           setInput('')
         }
 
-        if (callback) {
-            
-            const txHash = await callback(input)
+        const txHash = await callback(input)
 
-            const txAlert = ( txHash ? 
-                <EtherscanLink 
-                    type='tx' 
-                    hash={txHash} 
-                    message='Transaction changing square colour confirmed. View transaction details: '/> :
-                <EtherscanLink message='Error processing transaction.' /> )
-            setShow(true)
-            setAlert(txAlert) 
-            
+        const txAlert = ( txHash ? 
+            <EtherscanLink 
+                type='tx' 
+                hash={txHash} 
+                message='Transaction changing square colour confirmed. View transaction details: '/> :
+            <EtherscanLink message='Error processing transaction.' /> )
+        
+            setLoading(false) 
+        setShow(true)
+        setAlert('eeeeet woooorks') 
+        
 
-            
-        }
-        setLoading(false) 
+        
     }
 
     return(
         <Form onSubmit={handleSubmit}>
-            <Row className='p-2 justify-content-center'>
-                <Col>
+            <Form.Row className='p-2 justify-content-center'>
+                <Form.Group as={Col}>
                 <InputGroup>
                     <Form.Control 
                         readOnly
@@ -79,8 +77,8 @@ const BaseForm = ({ callback, message, givenId }) => {
                         onChangeChangeComplete={handleChange} 
                     />
                     )}
-                </Col>
-                <Col>
+                </Form.Group>
+                <Form.Group as={Col}>
                     <Button 
                         type='submit'
                         variant={ loading ? 'warning' : 'primary'}
@@ -90,9 +88,9 @@ const BaseForm = ({ callback, message, givenId }) => {
                         { loading ? 'awaiting confirmation' : message }
                     </Button>
                     <HashLoader loading={loading} color='FFC145' /> 
-                </Col>
-            </Row>
-            <Row className='justify-content-center'>
+                </Form.Group>
+            </Form.Row>
+            <Form.Row className='justify-content-center'>
             <Alert
                 dismissible
                 show={show}
@@ -102,7 +100,7 @@ const BaseForm = ({ callback, message, givenId }) => {
                     >
                 {alert}
             </Alert>
-            </Row>
+            </Form.Row>
         </Form>
         )
 }

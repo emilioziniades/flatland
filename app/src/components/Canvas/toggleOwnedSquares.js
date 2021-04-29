@@ -43,7 +43,7 @@ const ToggleOwnedSquares = () => {
         for (let ownedSquare of userSquares) {
             let nodeId = '#node-' + ownedSquare[0]
             
-            if (selectedSquare == ownedSquare[0]) {
+            if (selectedSquare === ownedSquare[0]) {
                 $(nodeId).css(chosenSquare)
             } else {
                 $(nodeId).css(unHighlightedSquare)

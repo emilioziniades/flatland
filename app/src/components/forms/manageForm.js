@@ -47,6 +47,7 @@ const ManageForm = ({ squareId }) => {
         <BaseForm
             callback={changeSquareColour}
             message= 'change colour'
+            key={squareId}
              />
 
         )
