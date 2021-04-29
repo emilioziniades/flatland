@@ -8,7 +8,7 @@ import UserTabs from './userTabs'
 import { BlockchainContext } from './BlockchainContext'
 import { SquareContext } from './SquareContext'
 import { blockchainReducer, claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
-
+import { hexColourToDecimal } from '../utils/utilityFunctions' 
 
 
 const App = () => {
@@ -62,16 +62,24 @@ const App = () => {
     })  
 
     const listener = (e) => {
-        console.log(e)
         let newLog = parseLogs([e])
-        console.log(newLog)
+        newLog = newLog[0]
+
+        // Update history
         blockHeightToDate(e.blockNumber, provider).then(data => {
-                        console.log(data)
-                        newLog[0]['date'] = data
-                        console.log(newLog)
-                        dispatch({type: 'APPEND-LOGS', payload: newLog[0]})
+                        newLog['date'] = data
+                        dispatch({type: 'APPEND-LOGS', payload: newLog})
                         }
         )
+        // Update squares
+        let colourInteger = hexColourToDecimal(newLog.colour)
+
+        if (newLog.topic === 'NewSquare' ) {
+            dispatch({type: 'MINT-REMOTE', colour: colourInteger})
+        }
+        else if (newLog.topic === 'ColourChange') {
+            dispatch({type: 'CHANGE-REMOTE', id: newLog.id, colour: colourInteger})
+        }
     } 
 
         return(

@@ -23,6 +23,14 @@ const blockchainReducer = (state, action) => {
         }
     }
 
+	case 'MINT-REMOTE': {
+		return {
+			...state,
+			totalSupply: state.totalSupply + 1,
+			squares: [ ...state.squares, action.colour ],
+		}
+	}
+
     case 'CHANGE': {
         return {
         	...state,
@@ -30,6 +38,17 @@ const blockchainReducer = (state, action) => {
         	ownedSquares: action.mySquares,
         }
     }
+
+	case 'CHANGE-REMOTE': {
+
+		let newSquares = state.squares
+		newSquares[action.id - 1 ] = action.colour
+
+		return {
+			...state,
+			squares: newSquares,
+		}
+	}
 
     case 'LOGOUT': {
         return {
@@ -123,7 +142,7 @@ const loadBlockchain = async () => {
 			result[item] = squares[item - 1]
 		})
 
-		// FETCH LOGS
+		// FETCH AND PARSE LOGS
 
 		const filter = {
 			address: contract.address,
@@ -133,13 +152,7 @@ const loadBlockchain = async () => {
 		
 		const logs = await provider.getLogs(filter)
 		logs.reverse()
-		console.log(logs)
-
-
-		// PARSE LOGS
-
 		const cleanLogs = parseLogs(logs)
-		console.log(cleanLogs)
 
 	    return {
 	        connected: true,
