@@ -20,11 +20,12 @@ const Square = ({ id }) => {
     //Using white as placeholder colours for unclaimed squares, in future we should change that
     //this would require changing invertedColour function to handle RGB conversion too
 
-    // First checks if squares array present, because that is necessary to check if square exists 
+    // First checks if squares array present, because that is necessary to check if square exists
     const squareColour = (squares ? squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff': '#ffffff' )
+    const invertedColour = (squares ? squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000' : '#000000' )
 
     const chosenSquare = {
-        'border': '2px solid ' + invertColour(squareColour),
+        'border': '2px solid ' + invertedColour,
     }
 
     const unchosenSquare = {
