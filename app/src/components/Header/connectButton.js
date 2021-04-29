@@ -10,7 +10,7 @@ import { loadBlockchain } from '../../utils/blockchainUtils'
 const ConnectButton = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const { account } = state
+    const { account } = state || {}
     const [loading, setLoading] = useState(false)
     const [loadingLogout, setLoadingLogout] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)

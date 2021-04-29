@@ -86,14 +86,13 @@ const loadBlockchain = async () => {
 		// LOAD PROVIDERS AND SIGNERS
 	    const provider = new ethers.providers.Web3Provider(window.ethereum)
 	    const signer = provider.getSigner(0)
-	    const providerRpc = new ethers.providers.JsonRpcProvider('https://ropsten.infura.io/v3/6c1af6d1f94e4ffa9226b0e60b719aa5')
-	    // const signerRpc = providerRpc.getSigner()
-	    // const account = await signer.getAddress()
-	    const networkId = await providerRpc.send('net_version', [])
-	    const networkData = Flatland.networks[networkId]
+
+		// CHECK NETWORK AND EXISTENCE OF SMART CONTRACT ON NETWORK
+		const networkInfo = await provider.getNetwork()
+	    const networkData = Flatland.networks[networkInfo.chainId]
 
 	    if (!networkData) {
-	        throw new Error('Smart contract not deployed to detected network.')
+	        throw new Error('Smart contract not deployed to detected network. Connect to Ropsten Test Network')
 	    }
 
 		// CONTRACT DETAILS

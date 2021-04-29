@@ -19,7 +19,7 @@ let counter = 1
 const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
-    const { account, squares, totalSupply, maxSupply, history } = state
+    const { account, squares, totalSupply, maxSupply, history } = state || {}
     const [currentCoord, setCoord] = useState('')
 
     const grid = [];
@@ -70,12 +70,15 @@ const Canvas = () => {
                 <Square key={nodeId} id={'node-'.concat(nodeId + 1)}> {node} </Square>
                 )
             })
+    
 
-    let recentEvents = history.slice(0,5).map((element, index) => {
-        return(
-            <EventToast data={element} key={element.txId} />
-        )
-    })
+    let recentEvents = (history) ?
+        history.slice(0,5).map((element, index) => {
+            return(
+                <EventToast data={element} key={element.txId} />
+            )
+        })
+        : ''
 
   return (
       <CoordinateContext.Provider value={{ currentCoord, setCoord }}>

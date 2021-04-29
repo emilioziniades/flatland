@@ -27,19 +27,21 @@ const App = () => {
     }
 
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
-    const { connected, contract, provider } = state
+    const { connected, contract, provider } = state || {} //allows app to render even without blockchain connection
     
     const [ selectedSquare, setSelectedSquare ] = useState(null)
 
     // Listens for account change
     useEffect(() => {
-        window.ethereum.on('accountsChanged', () => {
-            window.ethereum.request({ method: 'eth_requestAccounts' }).then(
-                data => {
-                    dispatch({type: 'CHANGE-ACCOUNT', payload: data[0]})
-                }
-            )
-        })
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', () => {
+                window.ethereum.request({ method: 'eth_requestAccounts' }).then(
+                    data => {
+                        dispatch({type: 'CHANGE-ACCOUNT', payload: data[0]})
+                    }
+                )
+            })
+        }
 
 
     })

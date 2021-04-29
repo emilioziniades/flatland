@@ -10,19 +10,21 @@ import { getSquareColumn, getSquareRow, invertColour, coordToString } from '../.
 const Square = ({ id }) => {
 
     const { state } = useContext(BlockchainContext)
-    const { account, squares } = state
+    const { account, squares } = state || {}
     const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
     const { setCoord } = useContext(CoordinateContext)
 
     const squareId = parseInt(id.split('-')[1])
-    //Using white and black as placeholder colours for unclaimed squares, in future we should change that
+
+
+    //Using white as placeholder colours for unclaimed squares, in future we should change that
     //this would require changing invertedColour function to handle RGB conversion too
-    const squareColour = (squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff')
-    const invertedColour = (squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000')
-    
-   
+
+    // First checks if squares array present, because that is necessary to check if square exists 
+    const squareColour = (squares ? squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff': '#ffffff' )
+
     const chosenSquare = {
-        'border': '2px solid ' + invertedColour,
+        'border': '2px solid ' + invertColour(squareColour),
     }
 
     const unchosenSquare = {
