@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { Row, Alert, Badge } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jquery'
@@ -66,6 +66,14 @@ const SidePanel = () => {
         const buttonId = '#node-' + selectedSquare
         const squareColour = (squares[selectedSquare - 1] > -1 ? decimalToHexColour(squares[selectedSquare - 1]) : $(buttonId).css('background-color'))
         const coords = coordToString(selectedSquare)
+
+        const mounted = useRef(false)
+        console.log(mounted)
+
+        useEffect(() => {
+            mounted.current = true
+            return () => {mounted.current = false}
+        })
 
         return (
             <Alert
