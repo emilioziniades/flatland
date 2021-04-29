@@ -52,7 +52,7 @@ const CanvasHistory = () => {
         <Row>
             <h3 className='p-2'> Flatland History </h3>
         </Row>
-        <Table hover>
+        <Table hover responsive>
             <TableHead>
                 <TableRow>
                 <Head> Event </Head>

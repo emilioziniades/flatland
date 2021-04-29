@@ -73,12 +73,12 @@ const Canvas = () => {
     
 
     let recentEvents = (history) ?
-        history.slice(0,5).map((element, index) => {
+    history.slice(0,5).map((element, index) => {
             return(
                 <EventToast data={element} key={element.txId} />
             )
         })
-        : ''
+    : ''
 
   return (
       <CoordinateContext.Provider value={{ currentCoord, setCoord }}>

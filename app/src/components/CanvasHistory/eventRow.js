@@ -10,7 +10,7 @@ import { BlockchainContext } from '../BlockchainContext'
 import { Data, TableRow } from '../SquareManager/tableComponents'
 
 const SquareIcon = styled.div`
-    //box-shadow: 1px 1px 1px black ;
+    border: 1px solid #E2E2E2;
     height: 16px;
     width: 16px;
     display: inline-block;

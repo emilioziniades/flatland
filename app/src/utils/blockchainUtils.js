@@ -104,7 +104,8 @@ const loadBlockchain = async () => {
 	        throw new Error('No contract found!')
 	    }
 
-	    const maxSupply = await contract.getMaxSupply()
+	    let maxSupply = await contract.getMaxSupply()
+		maxSupply = bigNumberToNumber(maxSupply)
 	    
 	    let totalSupply = await contract.totalSupply()
 	    totalSupply = bigNumberToNumber(totalSupply)

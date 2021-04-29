@@ -17,7 +17,7 @@ const HandleSquares  = () => {
         <Row>
             <h3 className='p-2'> Looks like you own {userSquares.length === 1 ? 'a square' : userSquares.length + ' squares'}! Manage here: </h3>
         </Row>
-        <Table hover>
+        <Table hover responsive>
                     <TableHead>
                     <TableRow>
                     <Head> Square # </Head>

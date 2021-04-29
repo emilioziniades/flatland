@@ -35,7 +35,7 @@ const unchosenSquare = {
 const SidePanel = () => {
 
     const { state } = useContext(BlockchainContext)
-    const { connected, account, contract, squares, maxSupply, ownedSquares } = state || {}
+    const { connected, account, contract, squares, maxSupply, totalSupply, ownedSquares } = state || {}
     const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
 
     const FlatlandStats = () => {
@@ -51,9 +51,9 @@ const SidePanel = () => {
                 </h6>
                 { connected ?
                 <p>
-                    # claimed squares : {squares.length}
+                    # claimed squares : { totalSupply }
                     <br/>
-                    # unclaimed squares : {maxSupply - squares.length }
+                    # unclaimed squares : {maxSupply - totalSupply }
                     <br/>
                 </p>
                 : <div/> }
