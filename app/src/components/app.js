@@ -42,7 +42,12 @@ const App = () => {
                     }
                 )
             })
+
+            return () => {
+                window.ethereum.off('accountsChanged')
+            }
         }
+
 
 
     })

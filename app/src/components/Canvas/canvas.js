@@ -11,7 +11,7 @@ import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
 import { BlockchainContext } from '../BlockchainContext'
 import { CoordinateContext } from '../CoordinateContext'
-import EventToast from '../CanvasHistory/eventToast'
+import RecentActivity from './recentActivity'
 
 const gridLength = 256
 let counter = 1
@@ -19,7 +19,7 @@ let counter = 1
 const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
-    const { account, squares, totalSupply, maxSupply, history } = state || {}
+    const { account, squares, totalSupply, maxSupply } = state || {}
     const [currentCoord, setCoord] = useState('.')
 
     const grid = [];
@@ -71,56 +71,44 @@ const Canvas = () => {
                 )
             })
     
-
-    let recentEvents = (history) ?
-    history.slice(0,5).map((element, index) => {
-            return(
-                <EventToast data={element} key={element.txId} />
-            )
-        })
-    : ''
-
   return (
     <CoordinateContext.Provider value={{ currentCoord, setCoord }}>
-    <div>
-        <Container >
-            <Row className='justify-content-center p-3'>
-                <Col md={{span:8}}>
-                    <Row>
-                        <Col>
-                            {account ? <ToggleOwnedSquares /> : <div />}      
-                        </Col>
-                        <Col>
-                            <CoordinateViewer />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Grid  className='mx-auto mr-auto ml-auto'> 
-                                { canvas }
-                            </Grid>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className='align-items-left'>
-                            <SidePanel />
-                        </Col>
-                    </Row>
-                </Col>
-                <Col>
-                    <h5> Recent Activity </h5>
-                    {account ? recentEvents : <p> Not connected </p> }
-                </Col>
-            </Row> 
-        </Container>
+    <Container >
+        <Row className='justify-content-center p-3'>
+            <Col md={{span:8}}>
+                <Row>
+                    <Col>
+                        {account ? <ToggleOwnedSquares /> : <div />}      
+                    </Col>
+                    <Col>
+                        <CoordinateViewer />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Grid  className='mx-auto mr-auto ml-auto'> 
+                            { canvas }
+                        </Grid>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='align-items-left'>
+                        <SidePanel />
+                    </Col>
+                </Row>
+            </Col>
+            <Col>
+                <RecentActivity />
+            </Col>
+        </Row> 
+    </Container>
 
-        <Container >
-            <Row className='justify-content-center p-3'>
-                <CanvasAlert />
-            </Row>
-        </Container>
-      </div>
-      </CoordinateContext.Provider>
+    <Container >
+        <Row className='justify-content-center p-3'>
+            <CanvasAlert />
+        </Row>
+    </Container>
+    </CoordinateContext.Provider>
     )}
 
   export default Canvas;
