@@ -57,6 +57,7 @@ const CanvasHistory = () => {
                 <Head> Square # </Head>
                 <Head> Colour </Head>
                 <Head> Date </Head>
+                <Head> Receipt </Head>
                 </TableRow>
             </TableHead>
             <TableBody>

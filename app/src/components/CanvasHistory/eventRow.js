@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jquery'
 
 import { invertColour } from '../../utils/utilityFunctions'
+import EtherscanLink from '../forms/etherscanLink'
 import { SquareContext } from '../SquareContext'
 import { BlockchainContext } from '../BlockchainContext'
 
@@ -19,7 +20,7 @@ const SquareIcon = styled.div`
     `
 
 const EventRow = ({ data }) => {
-    const { date, id, colour, topic } = data
+    const { date, id, colour, topic, txId } = data
 
     const { state } = useContext(BlockchainContext)
     const { squares } = state
@@ -37,6 +38,12 @@ const EventRow = ({ data }) => {
         $('#node-' + id).css(chosenSquare)
         setSelectedSquare(id)
     }
+
+    const renderTooltip = (props) => (
+        <Tooltip {...props}>
+            {txId}
+        </Tooltip>
+    )
 
 
     return(
@@ -62,6 +69,15 @@ const EventRow = ({ data }) => {
 
             <Data>
                 <b>{date}</b>
+            </Data>
+            <Data>
+                <OverlayTrigger
+                    placement='right'
+                    overlay={renderTooltip}>
+                        <Button variant='link'>
+                            <EtherscanLink hash={txId} type='tx' message='' abbreviate={true} />
+                        </Button>
+                </OverlayTrigger>
             </Data>
         </TableRow>
     )

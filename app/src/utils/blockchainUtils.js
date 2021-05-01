@@ -205,6 +205,8 @@ const parseLogs = (logs) => {
 			else if (log.topics[0] === changeTopic) {
 				eventObj['topic'] = 'ColourChange'
 			}
+			
+			console.log(eventObj)
 
 			// console.log(eventObj)
 			logsCleaned.push(eventObj)
