@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Row, Table } from 'react-bootstrap'
 import { blockHeightToDate } from '../../utils/blockchainUtils'
 
-import { BlockchainContext } from '../../context/BlockchainContext'
+import { BlockchainContext } from '../stateProvider'
 import EventRow from './eventRow'
 import { TableHead, Head, TableBody, TableRow } from '../SquareManager/tableComponents'
 

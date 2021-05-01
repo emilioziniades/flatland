@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { Container, Row } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import HeaderBase from '../components/Header/headerBase'
+import Header from '../components/Header/header'
 
 
 
@@ -18,20 +18,20 @@ const ExplainerPage = ({ data, }) => {
 
 
     return (
-        <div>
-            <HeaderBase />
-            <Container >
-                <Row className='justify-content-center p-3'>
-                <h1 className='m-2'>{frontmatter.title}</h1>  
-                </Row>
-                <Row className='justify-content-left p-3'>
-                <div
-                className="blog-post-content"
-                dangerouslySetInnerHTML={{ __html: html }}
-                />
-                </Row>
-            </ Container>
-        </div>
+        <>
+          <Header />
+          <Container >
+              <Row className='justify-content-center p-3'>
+              <h1 className='m-2'>{frontmatter.title}</h1>  
+              </Row>
+              <Row className='justify-content-left p-3'>
+              <div
+              className="blog-post-content"
+              dangerouslySetInnerHTML={{ __html: html }}
+              />
+              </Row>
+          </ Container>
+        </>
     )
 }
 

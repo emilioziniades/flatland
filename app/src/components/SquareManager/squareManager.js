@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Container } from 'react-bootstrap'
 
-import { BlockchainContext } from '../../context/BlockchainContext'
+import { BlockchainContext } from '../stateProvider'
 import HandleSquares from './handleSquares'
 import MintSquares from './mintSquares'
 import MissingData from './missingData'

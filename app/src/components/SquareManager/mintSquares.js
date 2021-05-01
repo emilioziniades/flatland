@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Row } from 'react-bootstrap'
 
 import MintForm from '../forms/mintForm'
-import { BlockchainContext } from '../../context/BlockchainContext'
+import { BlockchainContext } from '../stateProvider'
 
 const MintSquares = () => {
 

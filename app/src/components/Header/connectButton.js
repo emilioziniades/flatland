@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react'
 import {Form, Button, Modal, Spinner } from 'react-bootstrap'
 import $ from 'jquery'
 
-import { BlockchainContext } from '../../context/BlockchainContext'
-import { SquareContext } from '../../context/SquareContext'
+import { BlockchainContext, SquareContext } from '../stateProvider'
 import { loadBlockchain } from '../../utils/blockchainUtils'
 
 const ConnectButton = () => {

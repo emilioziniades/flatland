@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Nav, Navbar, Container } from 'react-bootstrap'
+import { Link } from 'gatsby'
 
 import pallette from '../../images/gatsby-icon.png'
 
@@ -14,7 +15,8 @@ const HeaderBase = ({ children }) => {
             </Helmet>
             <Container>
                 <Navbar variant='dark' expand='md'>
-                <Navbar.Brand href='/' className='m-1'>
+                <Link to="/">
+                <Navbar.Brand className='m-1'>
                 <img
                   alt=''
                   src={pallette}
@@ -24,14 +26,19 @@ const HeaderBase = ({ children }) => {
                 /> 
                 {' '}Flatland
                 </Navbar.Brand>
+                </Link>
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='mr-auto'>
                 <Nav.Item>
-                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link>
+                    <Link to="/">Home</Link>
+                    </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                <Nav.Link href="/explainer">Explainer</Nav.Link>
+                    <Nav.Link>
+                        <Link to="/explainer">Explainer</Link>
+                    </Nav.Link>
                 </Nav.Item>
                 </Nav>
                 {children}

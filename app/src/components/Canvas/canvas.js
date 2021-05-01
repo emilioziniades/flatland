@@ -9,7 +9,7 @@ import CanvasAlert from './canvasAlert'
 import SidePanel from './sidePanel'
 import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
-import { BlockchainContext } from '../../context/BlockchainContext'
+import { BlockchainContext } from '../stateProvider'
 import { CoordinateContext } from '../../context/CoordinateContext'
 import RecentActivity from './recentActivity'
 

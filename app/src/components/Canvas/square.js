@@ -2,8 +2,7 @@ import React, { useContext } from 'react'
 import $ from 'jquery'
 
 import GridItem from './gridItem'
-import { BlockchainContext } from '../../context/BlockchainContext'
-import { SquareContext } from '../../context/SquareContext'
+import { BlockchainContext, SquareContext } from '../stateProvider'
 import { CoordinateContext } from '../../context/CoordinateContext'
 import { getSquareColumn, getSquareRow, invertColour, coordToString } from '../../utils/utilityFunctions'
 

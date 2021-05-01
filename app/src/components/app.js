@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useContext , useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -7,30 +7,32 @@ import Header from './Header/header'
 import Hero from './hero'
 import Canvas from './Canvas/canvas'
 import UserTabs from './userTabs'
-import { BlockchainContext } from '../context/BlockchainContext'
-import { SquareContext } from '../context/SquareContext'
+import { BlockchainContext, SquareContext } from './stateProvider'
+// import { SquareContext } from '../context/SquareContext'
 import { blockchainReducer, claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
 import { hexColourToDecimal } from '../utils/utilityFunctions' 
 
 
 const App = () => {
 
-    const initialState = {
-        connected: false,
-        contract: {},
-        provider: null,
-        squares: [],
-        totalSupply: 0,
-        maxSupply: 0,
-        account: '',
-        ownedSquares: {},
-        history: [],
+    // const initialState = {
+    //     connected: false,
+    //     contract: {},
+    //     provider: null,
+    //     squares: [],
+    //     totalSupply: 0,
+    //     maxSupply: 0,
+    //     account: '',
+    //     ownedSquares: {},
+    //     history: [],
 
-    }
+    // }
 
-    const [state, dispatch] = useReducer(blockchainReducer, initialState)
+    // const [state, dispatch] = useReducer(blockchainReducer, initialState)
+
+    const { state, dispatch } = useContext(BlockchainContext)
     const { connected, contract, provider } = state || {} //allows app to render even without blockchain connection
-    const [ selectedSquare, setSelectedSquare ] = useState(null)
+    // const [ selectedSquare, setSelectedSquare ] = useState(null)
 
     // Listens for account change
     useEffect(() => {
@@ -43,14 +45,10 @@ const App = () => {
                     }
                 )
             })
-
             return () => {
                 // window.ethereum.off('accountsChanged')
             }
         }
-
-
-
     })
 
     // Event listener
@@ -88,10 +86,9 @@ const App = () => {
         else if (newLog.topic === 'ColourChange') {
             dispatch({type: 'CHANGE-REMOTE', id: newLog.id, colour: colourInteger})
         }
-    } 
+        } 
         return(
-            <SquareContext.Provider value={[ selectedSquare, setSelectedSquare ]}>
-            <BlockchainContext.Provider value={{ state, dispatch }}>
+            <>
             <Header /> 
             <ToastContainer
                 position="bottom-center"
@@ -110,8 +107,7 @@ const App = () => {
             <Container>
                 { connected && <UserTabs /> }
             </Container>
-            </BlockchainContext.Provider>
-            </SquareContext.Provider>
+            </>
         )   
 }
 
