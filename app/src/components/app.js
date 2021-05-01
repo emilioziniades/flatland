@@ -1,4 +1,4 @@
-import React, { useEffect, useContext , useState } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -7,32 +7,14 @@ import Header from './Header/header'
 import Hero from './hero'
 import Canvas from './Canvas/canvas'
 import UserTabs from './userTabs'
-import { BlockchainContext, SquareContext } from './stateProvider'
-// import { SquareContext } from '../context/SquareContext'
-import { blockchainReducer, claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
+import { BlockchainContext } from './stateProvider'
+import { claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
 import { hexColourToDecimal } from '../utils/utilityFunctions' 
-
 
 const App = () => {
 
-    // const initialState = {
-    //     connected: false,
-    //     contract: {},
-    //     provider: null,
-    //     squares: [],
-    //     totalSupply: 0,
-    //     maxSupply: 0,
-    //     account: '',
-    //     ownedSquares: {},
-    //     history: [],
-
-    // }
-
-    // const [state, dispatch] = useReducer(blockchainReducer, initialState)
-
     const { state, dispatch } = useContext(BlockchainContext)
     const { connected, contract, provider } = state || {} //allows app to render even without blockchain connection
-    // const [ selectedSquare, setSelectedSquare ] = useState(null)
 
     // Listens for account change
     useEffect(() => {

@@ -23,14 +23,6 @@ const Square = ({ id }) => {
     const squareColour = (squares ? squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff': '#ffffff' )
     const invertedColour = (squares ? squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000' : '#000000' )
 
-    const chosenSquare = {
-        'border': '2px solid ' + invertedColour,
-    }
-
-    const unchosenSquare = {
-        'border': 'none',
-    }
-
     const hoveredSquareColumn = {
         'opacity': '0.5',
     }
@@ -51,14 +43,13 @@ const Square = ({ id }) => {
     //This is instead handled on the Side Panel level now (Not logged in > Cannot claim square)
     const routeClickEvent = (e) => { account ? handleClick(e) : handleClick(e) }       
 
+    // I have removed the jquery calls here, and replaced them with styled-components props interactions
+    // between square and gridItem
     const handleClick = (e) => {
         if (selectedSquare === squareId) {
-            $('#node-' + selectedSquare).css(unchosenSquare)
             setSelectedSquare(null)
         }
         else {
-            $('#node-' + selectedSquare).css('border', 'none')
-            $('#node-' + squareId).css(chosenSquare)
             setSelectedSquare(squareId)
         }
     }
@@ -107,6 +98,9 @@ const Square = ({ id }) => {
             onClick={routeClickEvent}
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}
+            selected={ selectedSquare === squareId ? true : false }
+            colour={squareColour}
+            inverseColour={invertedColour}
         >
         </GridItem>
     )
