@@ -27,7 +27,7 @@ const SquareManager = (props) => {
                     : <MintSquares/>
                 // Smart contract is NOT deployed to this network
                 : <MissingData 
-                    message='Oh no ... it looks like the Flatland smart contract is not deployed to this network. Try connecting to localhost:8545' />
+                    message='Oh no ... it looks like the Flatland smart contract is not deployed to this network. Try connecting to Ropsten Test Network' />
             // Account isn't connected
             : <MissingData
                 message='Get started by connecting your account!' /> }
