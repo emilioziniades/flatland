@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import $ from 'jquery'
 
 import GridItem from './gridItem'
-import { BlockchainContext } from '../BlockchainContext'
-import { SquareContext } from '../SquareContext'
-import { CoordinateContext } from '../CoordinateContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
+import { SquareContext } from '../../context/SquareContext'
+import { CoordinateContext } from '../../context/CoordinateContext'
 import { getSquareColumn, getSquareRow, invertColour, coordToString } from '../../utils/utilityFunctions'
 
 const Square = ({ id }) => {

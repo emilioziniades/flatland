@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { BlockchainContext } from '../BlockchainContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
 import EventToast from '../CanvasHistory/eventToast'
 
 const RecentActivity = () => {

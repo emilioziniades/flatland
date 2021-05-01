@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import $ from 'jquery'
 
 import { invertColour } from '../../utils/utilityFunctions'
-import { SquareContext } from '../SquareContext'
-import { BlockchainContext } from '../BlockchainContext'
+import { SquareContext } from '../../context/SquareContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
 
 const SquareIcon = styled.div`
     border: 1px solid #E2E2E2;

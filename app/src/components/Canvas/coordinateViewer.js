@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { CoordinateContext } from '../CoordinateContext'
+import { CoordinateContext } from '../../context/CoordinateContext'
 
 
 const CoordinateViewer = () => {

@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 import ManageForm from '../forms/manageForm'
 import { decimalToHexColour, coordToString, invertColour } from '../../utils/utilityFunctions'
-import { SquareContext } from '../SquareContext'
+import { SquareContext } from '../../context/SquareContext'
 import { Square, Data, TableRow } from './tableComponents'
 
 const HandleSquare = ({ squareId, squareColour }) => {

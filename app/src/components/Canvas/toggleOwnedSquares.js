@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import $ from 'jquery'
 
-import { BlockchainContext } from '../BlockchainContext'
-import { SquareContext } from '../SquareContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
+import { SquareContext } from '../../context/SquareContext'
 import { zip, invertColour } from '../../utils/utilityFunctions'
 
 const ToggleOwnedSquares = () => {

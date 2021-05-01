@@ -5,8 +5,8 @@ import $ from 'jquery'
 
 import { invertColour } from '../../utils/utilityFunctions'
 import EtherscanLink from '../forms/etherscanLink'
-import { SquareContext } from '../SquareContext'
-import { BlockchainContext } from '../BlockchainContext'
+import { SquareContext } from '../../context/SquareContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
 
 import { Data, TableRow } from '../SquareManager/tableComponents'
 

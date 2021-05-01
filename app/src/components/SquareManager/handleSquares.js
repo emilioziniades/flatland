@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Row, Table } from 'react-bootstrap'
 
-import { BlockchainContext } from '../BlockchainContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
 import { zip } from '../../utils/utilityFunctions'
 import HandleSquare from './handleSquare'
 import { TableHead, Head, TableBody, TableRow } from './tableComponents'

@@ -9,8 +9,8 @@ import CanvasAlert from './canvasAlert'
 import SidePanel from './sidePanel'
 import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
-import { BlockchainContext } from '../BlockchainContext'
-import { CoordinateContext } from '../CoordinateContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
+import { CoordinateContext } from '../../context/CoordinateContext'
 import RecentActivity from './recentActivity'
 
 const gridLength = 256

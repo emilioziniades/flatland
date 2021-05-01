@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import BaseForm from './baseForm'
-import { BlockchainContext } from '../BlockchainContext'
+import { BlockchainContext } from '../../context/BlockchainContext'
 import { hexColourToDecimal } from '../../utils/utilityFunctions'
 
 const MintForm = () => {
