@@ -206,9 +206,6 @@ const parseLogs = (logs) => {
 				eventObj['topic'] = 'ColourChange'
 			}
 			
-			console.log(eventObj)
-
-			// console.log(eventObj)
 			logsCleaned.push(eventObj)
 
 		}

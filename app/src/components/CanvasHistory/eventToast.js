@@ -33,8 +33,6 @@ const EventToast = ({ data }) => {
     }
 
     const handleClick = (e) => {
-        $('#node-' + selectedSquare).css('border', 'none')       
-        $('#node-' + id).css(chosenSquare)
         setSelectedSquare(id)
     }
 

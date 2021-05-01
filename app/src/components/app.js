@@ -19,7 +19,7 @@ const App = () => {
     // Listens for account change
     useEffect(() => {
         if (window.ethereum) {
-            console.log(window.ethereum)
+            // console.log(window.ethereum)
             window.ethereum.on('accountsChanged', () => {
                 window.ethereum.request({ method: 'eth_requestAccounts' }).then(
                     data => {

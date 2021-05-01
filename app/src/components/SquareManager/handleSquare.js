@@ -11,6 +11,7 @@ const HandleSquare = ({ squareId, squareColour }) => {
     const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
     const invertedColour = invertColour(squareColour)
 
+    //STILL NEED TO FIX THIS INSTANCE OF HANDLECLICK. FROM HERE
     const chosenSquare = {
         'border': '2px solid ' + invertedColour,
     }
@@ -20,6 +21,7 @@ const HandleSquare = ({ squareId, squareColour }) => {
         $('#node-' + squareId).css(chosenSquare)
         setSelectedSquare(squareId)
     }
+    // UNTIL HERE
 
     return (    
         <TableRow>
