@@ -25,6 +25,8 @@ const EventToast = ({ data }) => {
         setSelectedSquare(id)
     }
 
+    let today = new Date().toLocaleDateString('en-GB')
+
     return(
         <Toast 
             className='m-1'
@@ -42,7 +44,10 @@ const EventToast = ({ data }) => {
             >
                 Square  <b>#{id}</b>
             </Button>
-            {topic === 'NewSquare' ? 'claimed with' : 'changed to'} colour <b>{colour}</b> { date !== '' ? 'on' : '' } <b>{date}</b>
+            {topic === 'NewSquare' ? 'claimed with' : 'changed to'} 
+            colour <b>{colour}</b> 
+            { date !== '' ? date.split(' ')[0] == today ? '' : 'on' : '' } 
+            <b>{date.split(' ')[0] == today ? 'today at ' + date.split(' ')[2] : date}</b>
         </Toast.Body>
     </Toast>
     )

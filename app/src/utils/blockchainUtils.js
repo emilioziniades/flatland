@@ -178,7 +178,8 @@ const parseLogs = (logs) => {
 			const eventObj = {}
 
 			eventObj['blockHeight'] = log.blockNumber
-			// note, after full load, app will replace block heights with actual dates
+			
+			// note, after full load, app will replace empty dates with actual dates
 			eventObj['date'] = ''
 
 			const data = log.data.slice(2,)

@@ -31,6 +31,8 @@ const EventRow = ({ data }) => {
         </Tooltip>
     )
 
+    let today = new Date().toLocaleDateString('en-GB')
+
     return(
 
         <TableRow>
@@ -53,7 +55,7 @@ const EventRow = ({ data }) => {
             </Data>
 
             <Data>
-                <b>{date}</b>
+                <b>{date.split(' ')[0] == today ? 'Today at ' + date.split(' ')[2] : date}</b>
             </Data>
             <Data>
                 <OverlayTrigger
