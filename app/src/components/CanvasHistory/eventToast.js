@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react'
 import { Button, Toast } from 'react-bootstrap'
 import styled from 'styled-components'
-import $ from 'jquery'
 
-import { invertColour } from '../../utils/utilityFunctions'
-import { BlockchainContext, SquareContext } from '../stateProvider'
+import { SquareContext } from '../stateProvider'
 
 const SquareIcon = styled.div`
     border: 1px solid #E2E2E2;
@@ -21,21 +19,11 @@ const EventToast = ({ data }) => {
     const [show, setShow] = useState(true)
     const toggleShow = () => setShow(!show)
 
-    const { state } = useContext(BlockchainContext)
-    const { squares } = state
-    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
-
-    const squareColour = (squares[id - 1] > -1 ? squares[id - 1] : '#ffffff')
-    const invertedColour = (squares[id - 1] > -1 ? invertColour(squareColour) : '#000000')
-
-    const chosenSquare = {
-        'border': '2px solid ' + invertedColour,
-    }
+    const [ setSelectedSquare ] = useContext(SquareContext)
 
     const handleClick = (e) => {
         setSelectedSquare(id)
     }
-
 
     return(
         <Toast 

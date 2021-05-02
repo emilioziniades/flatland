@@ -1,25 +1,17 @@
 import React, {useContext} from 'react'
-import $ from 'jquery'
 
 import ManageForm from '../forms/manageForm'
-import { decimalToHexColour, coordToString, invertColour } from '../../utils/utilityFunctions'
+import { decimalToHexColour, coordToString } from '../../utils/utilityFunctions'
 import { SquareContext } from '../../components/stateProvider'
 import { Square, Data, TableRow } from './tableComponents'
 
 const HandleSquare = ({ squareId, squareColour }) => {
 
-    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
-    const invertedColour = invertColour(squareColour)
-
-    //STILL NEED TO FIX THIS INSTANCE OF HANDLECLICK. FROM HERE
-    const chosenSquare = {
-        'border': '2px solid ' + invertedColour,
-    }
+    const [ setSelectedSquare ] = useContext(SquareContext)
 
     const handleClick = (e) => {
         setSelectedSquare(parseInt(squareId))
     }
-    // UNTIL HERE
 
     return (    
         <TableRow>
