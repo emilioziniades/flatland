@@ -19,7 +19,7 @@ const CanvasHistory = () => {
         for (let i = 0; i < history.length; i++) {
             try {
                 let newHistory = history
-                const blockHeight = newHistory[i].date
+                const blockHeight = newHistory[i].blockHeight
                 const date = await blockHeightToDate(blockHeight, provider)
                 newHistory[i].date = date
                 dispatch({type: 'UPDATE-LOGS', payload: newHistory})

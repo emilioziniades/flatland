@@ -13,12 +13,12 @@ const SquareIcon = styled.div`
     width: 16px;
     display: inline-block;
     vertical-align: middle;
-    ${squareId => `background: ${squareId.background};`}
+    ${props => `background: ${props.background};`}
     `
 
 const EventRow = ({ data }) => {
 
-    const { date, id, colour, topic, txId } = data
+    const { blockHeight, date, id, colour, topic, txId } = data
     const [ setSelectedSquare ] = useContext(SquareContext)
 
     const handleClick = (e) => {

@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import Flatland from '../../../build/contracts/Flatland.json'
 import { bigNumberToNumber } from '../utils/utilityFunctions'
+import { initialState } from '../components/stateProvider'
 
 const blockchainReducer = (state, action) => {
     switch(action.type) {
@@ -51,17 +52,7 @@ const blockchainReducer = (state, action) => {
 	}
 
     case 'LOGOUT': {
-        return {
-            connected: false,
-            contract: null,
-            provider: null,
-            squares: [],
-            totalSupply: 0,
-            maxSupply: 0,
-            account: '',
-            ownedSquares: {},
-			history: [],
-        }
+        return initialState
     }
 
 	case 'UPDATE-LOGS': {
@@ -186,8 +177,9 @@ const parseLogs = (logs) => {
 
 			const eventObj = {}
 
+			eventObj['blockHeight'] = log.blockNumber
 			// note, after full load, app will replace block heights with actual dates
-			eventObj['date'] = log.blockNumber
+			eventObj['date'] = ''
 
 			const data = log.data.slice(2,)
 			const id = data.substring(0, (data.length/2))

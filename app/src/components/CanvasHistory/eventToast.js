@@ -10,7 +10,7 @@ const SquareIcon = styled.div`
     width: 16px;
     display: inline-block;
     vertical-align: middle;
-    ${squareId => `background: ${squareId.background};`}
+    ${props => `background: ${props.background};`}
     `
 
 const EventToast = ({ data }) => {
@@ -42,7 +42,7 @@ const EventToast = ({ data }) => {
             >
                 Square  <b>#{id}</b>
             </Button>
-            {topic === 'NewSquare' ? 'claimed with' : 'changed to'} colour <b>{colour}</b> on <b>{date}</b>
+            {topic === 'NewSquare' ? 'claimed with' : 'changed to'} colour <b>{colour}</b> { date !== '' ? 'on' : '' } <b>{date}</b>
         </Toast.Body>
     </Toast>
     )
