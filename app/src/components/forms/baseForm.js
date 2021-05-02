@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import EtherscanLink from './etherscanLink'
 
 
-const BaseForm = ({ callback, message, givenId }) => {
+const BaseForm = ({ callback, message, givenId, currentColour }) => {
     
     const toastOptions = {
         position: "bottom-center",
@@ -23,7 +23,7 @@ const BaseForm = ({ callback, message, givenId }) => {
 
     const handlePickerOpen = () => {
         setPickerVisible(true)
-        input === '' ? setInput('#000000') : setInput(input)
+        input === '' ? setInput(currentColour) : setInput(input)
     }
 
     const handlePickerClose = () => {

@@ -40,7 +40,8 @@ const MintForm = () => {
     return(
         <BaseForm
             callback={mintSquare}
-            message= 'claim square' />
+            message= 'claim square'
+            currentColour='#000000' />
 
         )
 }

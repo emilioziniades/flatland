@@ -2,12 +2,13 @@ import React, { useContext } from 'react'
 
 import BaseForm from './baseForm'
 import { BlockchainContext } from '../stateProvider'
-import { hexColourToDecimal } from '../../utils/utilityFunctions'
+import { hexColourToDecimal, decimalToHexColour } from '../../utils/utilityFunctions'
 
 const ManageForm = ({ squareId }) => {
 
     const { state, dispatch } = useContext(BlockchainContext)
     const { contract, squares, ownedSquares } = state
+    const currentColour = decimalToHexColour(squares[squareId - 1])
 
     const changeSquareColour = async (input) => {
 
@@ -48,6 +49,7 @@ const ManageForm = ({ squareId }) => {
             callback={changeSquareColour}
             message= 'change colour'
             key={squareId}
+            currentColour={currentColour}
              />
 
         )
