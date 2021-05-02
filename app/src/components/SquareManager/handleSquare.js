@@ -17,9 +17,7 @@ const HandleSquare = ({ squareId, squareColour }) => {
     }
 
     const handleClick = (e) => {
-        $('#node-' + selectedSquare).css('border', 'none')
-        $('#node-' + squareId).css(chosenSquare)
-        setSelectedSquare(squareId)
+        setSelectedSquare(parseInt(squareId))
     }
     // UNTIL HERE
 
@@ -37,6 +35,7 @@ const HandleSquare = ({ squareId, squareColour }) => {
                 <Square
                     background={decimalToHexColour(squareColour)}
                     onClick={handleClick}
+                    id={'node-' + squareId}
                 />
             </Data>
 
