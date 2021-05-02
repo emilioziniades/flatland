@@ -44,9 +44,9 @@ const EventToast = ({ data }) => {
             >
                 Square  <b>#{id}</b>
             </Button>
-            {topic === 'NewSquare' ? 'claimed with' : 'changed to'} 
+            {topic === 'NewSquare' ? 'claimed with ' : 'changed to '} 
             colour <b>{colour}</b> 
-            { date !== '' ? date.split(' ')[0] == today ? '' : 'on' : '' } 
+            { date !== '' ? date.split(' ')[0] == today ? ' ' : ' on ' : ' ' } 
             <b>{date.split(' ')[0] == today ? 'today at ' + date.split(' ')[2] : date}</b>
         </Toast.Body>
     </Toast>

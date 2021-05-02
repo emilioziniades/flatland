@@ -14,7 +14,7 @@ import { hexColourToDecimal } from '../utils/utilityFunctions'
 const App = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const { connected, contract, provider } = state || {} //allows app to render even without blockchain connection
+    const { connected, contract, provider, ownedSquares } = state || {} //allows app to render even without blockchain connection
 
     // Listens for account change
     useEffect(() => {
@@ -63,7 +63,12 @@ const App = () => {
         let colourInteger = hexColourToDecimal(newLog.colour)
 
         if (newLog.topic === 'NewSquare' ) {
-            dispatch({type: 'MINT-REMOTE', colour: colourInteger})
+            if (!ownedSquares.hasOwnProperty(newLog.id)) {
+                // not my square, update squares
+                dispatch({type: 'MINT-REMOTE', colour: colourInteger})
+            }
+            // my square, squares already updated, do nothing
+
         }
         else if (newLog.topic === 'ColourChange') {
             dispatch({type: 'CHANGE-REMOTE', id: newLog.id, colour: colourInteger})
