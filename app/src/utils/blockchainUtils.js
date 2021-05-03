@@ -210,7 +210,7 @@ const blockHeightToDate = async (blockHeight, provider) => {
 
 	const blockData = await provider.getBlock(blockHeight)
 	let date = new Date(blockData.timestamp * 1000)
-	date = date.toLocaleDateString() + ' at ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
+	date = date.toLocaleDateString('en-GB') + ' at ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
 	return date
 }
 
