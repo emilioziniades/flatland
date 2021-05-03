@@ -98,6 +98,11 @@ const CanvasHistory = () => {
         )
     })
 
+    const handleToggle = () => {
+        setCurrentPage(1)
+        setChecked(!checked)
+    }
+
     return(
         <Row className='justify-content-center mr-auto ml-auto p-2'>
         <Row>
@@ -108,7 +113,7 @@ const CanvasHistory = () => {
                     id='toggleUserHistory'
                     checked = {checked}
                     value="1"
-                    onChange={() => setChecked(!checked)}
+                    onChange={handleToggle}
                     label={checked ?
                             'Show all transaction history'
                             :

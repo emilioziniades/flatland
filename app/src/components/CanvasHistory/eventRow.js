@@ -18,7 +18,7 @@ const SquareIcon = styled.div`
 
 const EventRow = ({ data }) => {
 
-    const { blockHeight, date, id, colour, topic, txId } = data
+    const { date, id, colour, topic, txId } = data
     const [ setSelectedSquare ] = useContext(SquareContext)
 
     const handleClick = (e) => {
@@ -55,7 +55,7 @@ const EventRow = ({ data }) => {
             </Data>
 
             <Data>
-                <b>{date.split(' ')[0] == today ? 'Today at ' + date.split(' ')[2] : date}</b>
+                <b>{date.split(' ')[0] === today ? 'Today at ' + date.split(' ')[2] : date}</b>
             </Data>
             <Data>
                 <OverlayTrigger
