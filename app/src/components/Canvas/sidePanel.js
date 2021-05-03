@@ -9,7 +9,7 @@ import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
 import MintForm from '../forms/mintForm'
 import ConnectButton from '../Header/connectButton'
-import SquareHistory from './SquareHistory'
+import SquareHistory from './squareHistory'
 
 const SquareIcon = styled.div`
     //box-shadow: 1px 1px 1px black ;
