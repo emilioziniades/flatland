@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { Row, Alert, Badge } from 'react-bootstrap'
+import React, { useContext, useState } from 'react'
+import { Row, Alert, Badge, Button, Modal } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jquery'
 
@@ -9,6 +9,7 @@ import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
 import MintForm from '../forms/mintForm'
 import ConnectButton from '../Header/connectButton'
+import SquareHistory from './squareHistory'
 
 const SquareIcon = styled.div`
     //box-shadow: 1px 1px 1px black ;
@@ -65,6 +66,11 @@ const SidePanel = () => {
         const buttonId = '#node-' + selectedSquare
         const squareColour = (squares[selectedSquare - 1] > -1 ? decimalToHexColour(squares[selectedSquare - 1]) : $(buttonId).css('background-color'))
         const coords = coordToString(selectedSquare)
+        const [showHistory, setShowHistory] = useState(false)
+
+        const handleClose = () => setShowHistory(false);
+        const handleShow = () => setShowHistory(true);
+
 
         return (
             <Alert
@@ -107,7 +113,17 @@ const SidePanel = () => {
                         </div>
                 }
 
-                       
+                <Button onClick={handleShow}>Show Square History</Button>  
+                
+                <Modal size="lg" show={showHistory} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>History of Square # {selectedSquare}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <SquareHistory squareId={selectedSquare} />
+                    </Modal.Body>
+                </Modal>
+
             </Alert>
         )
     }
