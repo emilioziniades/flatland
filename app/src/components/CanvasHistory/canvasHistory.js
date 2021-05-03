@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { Row, Table } from 'react-bootstrap'
+import React, { useContext, useEffect, useState } from 'react'
+import { Row, Table, Pagination, PageItem, Form } from 'react-bootstrap'
 import { blockHeightToDate } from '../../utils/blockchainUtils'
 
 import { BlockchainContext } from '../stateProvider'
@@ -10,7 +10,11 @@ import { TableHead, Head, TableBody, TableRow } from '../SquareManager/tableComp
 const CanvasHistory = () => {
 
     const { state, dispatch } = useContext(BlockchainContext)
-    const { provider, connected, history } = state
+    const { provider, connected, history, ownedSquares } = state
+
+    const [checked, setChecked] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const eventsPerPage = 50
 
     const replaceBlockHeightWithDate = async () => {
 
@@ -37,11 +41,60 @@ const CanvasHistory = () => {
         if (connected) {
             replaceBlockHeightWithDate()
         } 
-    }, [connected])
+    }, [])
 
-    let events = history.map((element, index) => {
+    let listUserEvents = []
+    let events = history.map(element => {
+        if (ownedSquares[element.id] > -1) {
+            listUserEvents.push(element)
+        }
         return(
             <EventRow data={element} key={element.txId} />
+        )
+    })
+
+    console.log(listUserEvents)
+
+    let userEvents = listUserEvents.map(element => {
+        return(
+            <EventRow data={element} key={element.txId} />
+        )    
+    })
+
+    const lastEventOnPage = currentPage * eventsPerPage
+    const firstEventOnPage = lastEventOnPage - eventsPerPage
+    const eventsOnAllPage = events.slice(firstEventOnPage, lastEventOnPage)
+    const eventsOnUserPage = userEvents.slice(firstEventOnPage, lastEventOnPage)
+    const totalAllPages = Math.ceil(events.length/eventsPerPage)
+    const totalUserPages = Math.ceil(userEvents.length/eventsPerPage)
+
+    const allPageNumbers = [];
+    for (let i = 1; i <= totalAllPages; i++) {
+        allPageNumbers.push(i)
+    }
+
+    const userPageNumbers = [];
+    for (let i = 1; i <= totalUserPages; i++) {
+        userPageNumbers.push(i)
+    }
+
+    const handlePageClick = (page) => {
+        setCurrentPage(page)
+    }
+ 
+    let allPages = allPageNumbers.map(page => {
+        return(
+            <PageItem key={page} active={page===currentPage} onClick={() => handlePageClick(page)}>
+                {page}
+            </PageItem>
+        )
+    })
+
+    let userPages = userPageNumbers.map(page => {
+        return(
+            <PageItem key={page} active={page===currentPage} onClick={() => handlePageClick(page)}>
+                {page}
+            </PageItem>
         )
     })
 
@@ -49,6 +102,19 @@ const CanvasHistory = () => {
         <Row className='justify-content-center mr-auto ml-auto p-2'>
         <Row>
             <h3 className='p-2'> Flatland History </h3>
+            <Form>
+                <Form.Check 
+                    type="switch"
+                    id='toggleUserHistory'
+                    checked = {checked}
+                    value="1"
+                    onChange={() => setChecked(!checked)}
+                    label={checked ?
+                            'Show all transaction history'
+                            :
+                            'Only show my transaction history'}
+                />
+            </Form>
         </Row>
         <Table hover responsive>
             <TableHead>
@@ -61,9 +127,12 @@ const CanvasHistory = () => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                { events }
+                { checked ? eventsOnUserPage : eventsOnAllPage }
             </TableBody>
         </Table>
+        <Pagination>
+            { checked ? userPages : allPages }
+        </Pagination>
         </Row>
         )
 }
