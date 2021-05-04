@@ -50,7 +50,7 @@ const SquareStats = () => {
     return (
         <Alert
             className = 'm-4'
-            variant={(squares[selectedSquare - 1]) ? (ownedSquares[selectedSquare] > -1) ? 'success' : 'danger' : 'primary'}
+            variant={(squares[selectedSquare - 1] > -1) ? (ownedSquares[selectedSquare] > -1) ? 'success' : 'danger' : 'primary'}
             dismissible
             onClose={e => {
                 $(buttonId).css(unchosenSquare)
@@ -58,7 +58,7 @@ const SquareStats = () => {
             }}>
 
             {
-                (squares[selectedSquare - 1]) ?
+                (squares[selectedSquare - 1] > -1) ?
                     <div>
                         <span>
                             <SquareIcon background={squareColour} className='mr-2' />

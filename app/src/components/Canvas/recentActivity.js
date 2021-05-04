@@ -8,7 +8,7 @@ const RecentActivity = () => {
     const { account, history } = state || {}
 
     let recentEvents = (history) ?
-    history.slice(0,5).map((element, index) => {
+    history.slice(0,5).map((element) => {
             return(
                 <EventToast data={element} key={element.txId} />
             )

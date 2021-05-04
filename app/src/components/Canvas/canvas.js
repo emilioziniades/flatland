@@ -73,9 +73,6 @@ const Canvas = () => {
     
   return (
     <CoordinateContext.Provider value={{ currentCoord, setCoord }}>
-    <Container >
-        <Row className='justify-content-center p-3'>
-            <Col md={{span:8}}>
                 <Row>
                     <Col>
                         {account ? <ToggleOwnedSquares /> : <div />}      
@@ -96,18 +93,6 @@ const Canvas = () => {
                         <SidePanel />
                     </Col>
                 </Row>
-            </Col>
-            <Col>
-                <RecentActivity />
-            </Col>
-        </Row> 
-    </Container>
-
-    <Container >
-        <Row className='justify-content-center p-3'>
-            <CanvasAlert />
-        </Row>
-    </Container>
     </CoordinateContext.Provider>
     )}
 

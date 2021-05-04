@@ -10,6 +10,7 @@ import UserTabs from './userTabs'
 import { BlockchainContext } from './stateProvider'
 import { claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
 import { hexColourToDecimal } from '../utils/utilityFunctions' 
+import CanvasLayout from './Canvas/canvasLayout'
 
 const App = () => {
 
@@ -90,7 +91,7 @@ const App = () => {
             <Container>
                 <Hero />
             </Container>
-                <Canvas/>
+                <CanvasLayout/>
             <Container>
                 { connected && <UserTabs /> }
             </Container>
