@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import Header from './Header/header'
 import Hero from './hero'
-import Canvas from './Canvas/canvas'
 import UserTabs from './userTabs'
 import { BlockchainContext } from './stateProvider'
 import { claimTopic, changeTopic, parseLogs, blockHeightToDate } from '../utils/blockchainUtils'
@@ -18,21 +17,21 @@ const App = () => {
     const { connected, contract, provider, ownedSquares } = state || {} //allows app to render even without blockchain connection
 
     // Listens for account change
-    useEffect(() => {
-        if (window.ethereum) {
-            // console.log(window.ethereum)
-            window.ethereum.on('accountsChanged', () => {
-                window.ethereum.request({ method: 'eth_requestAccounts' }).then(
-                    data => {
-                        dispatch({type: 'CHANGE-ACCOUNT', payload: data[0]})
-                    }
-                )
-            })
-            return () => {
-                // window.ethereum.off('accountsChanged')
-            }
-        }
-    })
+    // useEffect(() => {
+    //     if (window.ethereum) {
+    //         // console.log(window.ethereum)
+    //         window.ethereum.on('accountsChanged', () => {
+    //             window.ethereum.request({ method: 'eth_requestAccounts' }).then(
+    //                 data => {
+    //                     dispatch({type: 'CHANGE-ACCOUNT', payload: data[0]})
+    //                 }
+    //             )
+    //         })
+    //         return () => {
+    //             // window.ethereum.off('accountsChanged')
+    //         }
+    //     }
+    // })
 
     // Event listener
     useEffect(() => {

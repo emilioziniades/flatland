@@ -16,7 +16,7 @@ const HeaderBase = ({ children }) => {
             <Container>
                 <Navbar variant='dark' expand='md'>
                 <Link to="/">
-                <Navbar.Brand className='m-1'>
+                <Navbar.Brand className='m-1' as='div'>
                 <img
                   alt=''
                   src={pallette}
@@ -31,12 +31,12 @@ const HeaderBase = ({ children }) => {
                 <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='mr-auto'>
                 <Nav.Item>
-                    <Nav.Link>
-                    <Link to="/">Home</Link>
+                    <Nav.Link as='div'>
+                        <Link to="/">Home</Link>
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link>
+                    <Nav.Link as='div'>
                         <Link to="/explainer">Explainer</Link>
                     </Nav.Link>
                 </Nav.Item>

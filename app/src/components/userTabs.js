@@ -3,6 +3,7 @@ import { Tab, Tabs } from 'react-bootstrap'
 
 import CanvasHistory from  './CanvasHistory/canvasHistory'
 import SquareManager from './SquareManager/squareManager'
+import CanvasReplay from './CanvasReplay/canvasReplay'
 
 const UserTabs = () => {
 
@@ -23,6 +24,11 @@ const UserTabs = () => {
                     eventKey='canvasHistory'
                     title='History'>
                         <CanvasHistory />
+                </Tab>
+                <Tab 
+                    eventKey='replay'
+                    title='Replay'>
+                        <CanvasReplay />
                 </Tab>
 
         </Tabs>

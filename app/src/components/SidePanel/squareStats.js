@@ -35,7 +35,7 @@ const unchosenSquare = {
 const SquareStats = () => {
 
     const { state } = useContext(BlockchainContext)
-    const { connected, account, contract, squares, maxSupply, totalSupply, ownedSquares } = state || {}
+    const { account, squares, ownedSquares } = state || {}
     const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
 
     const buttonId = '#node-' + selectedSquare

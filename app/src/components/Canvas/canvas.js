@@ -1,17 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { useInterval } from 'ahooks'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import $ from 'jquery'
 
 import Square from './square'
 import Grid from './grid'
-import CanvasAlert from './canvasAlert'
 import SidePanel from '../SidePanel/sidePanel'
 import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
 import { BlockchainContext } from '../stateProvider'
 import { CoordinateContext } from '../../context/CoordinateContext'
-import RecentActivity from './recentActivity'
 
 const gridLength = 256
 let counter = 1

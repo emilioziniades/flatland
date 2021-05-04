@@ -53,7 +53,7 @@ const CanvasHistory = () => {
         )
     })
 
-    console.log(listUserEvents)
+    // console.log(listUserEvents)
 
     let userEvents = listUserEvents.map(element => {
         return(
@@ -106,7 +106,7 @@ const CanvasHistory = () => {
     let columnTitles = ['Event', 'Square #', 'Colour', 'Date', 'Receipt']
     let headings = columnTitles.map(element => {
         return(
-            <Head>
+            <Head key={element}>
                 {element}
             </Head>
         )
