@@ -19,7 +19,7 @@ const EventToast = ({ data }) => {
     const [show, setShow] = useState(true)
     const toggleShow = () => setShow(!show)
 
-    const [ setSelectedSquare ] = useContext(SquareContext)
+    const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
 
     const handleClick = (e) => {
         setSelectedSquare(id)

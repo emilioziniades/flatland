@@ -18,7 +18,7 @@ const Data = styled.td`
 const TableRow = styled.tr``
 
 const Head = styled.th`
-    text-align: center
+    text-align: center;
 `
 
 const TableHead = styled.thead``
