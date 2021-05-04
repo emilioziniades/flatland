@@ -57,7 +57,7 @@ const CanvasHistory = () => {
 
     let userEvents = listUserEvents.map(element => {
         return(
-            <EventRow data={element} key={element.txId} />
+            <EventRow data={element} key={element.txId} showID={true}/>
         )    
     })
 
@@ -103,6 +103,15 @@ const CanvasHistory = () => {
         setChecked(!checked)
     }
 
+    let columnTitles = ['Event', 'Square #', 'Colour', 'Date', 'Receipt']
+    let headings = columnTitles.map(element => {
+        return(
+            <Head>
+                {element}
+            </Head>
+        )
+    })
+
     return(
         <Row className='justify-content-center mr-auto ml-auto p-2'>
         <Row>
@@ -124,11 +133,7 @@ const CanvasHistory = () => {
         <Table hover responsive>
             <TableHead>
                 <TableRow>
-                <Head> Event </Head>
-                <Head> Square # </Head>
-                <Head> Colour </Head>
-                <Head> Date </Head>
-                <Head> Receipt </Head>
+                    { headings }
                 </TableRow>
             </TableHead>
             <TableBody>

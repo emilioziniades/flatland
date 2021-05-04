@@ -21,6 +21,15 @@ const SquareHistory = () => {
 
     console.log(selectedSquare)
 
+    let columnTitles = ['Event', 'Colour', 'Date', 'Receipt']
+    let headings = columnTitles.map(element => {
+        return(
+            <Head>
+                {element}
+            </Head>
+        )
+    })
+
     let squareEventRows = listSquareEvents.map(element => {
         return(
             <EventRow data={element} key={element.txId} showID={false}/>
@@ -31,10 +40,7 @@ const SquareHistory = () => {
         <Table>
             <TableHead>
                 <TableRow>
-                <Head> Event </Head>
-                <Head> Colour </Head>
-                <Head> Date </Head>
-                <Head> Receipt </Head>
+                { headings }
                 </TableRow>
             </TableHead>
             <TableBody>
