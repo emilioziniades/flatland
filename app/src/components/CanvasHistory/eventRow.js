@@ -16,7 +16,7 @@ const SquareIcon = styled.div`
     ${props => `background: ${props.background};`}
     `
 
-const EventRow = ({ data }) => {
+const EventRow = ({ data, showID }) => {
 
     const { date, id, colour, topic, txId } = data
     const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
@@ -40,7 +40,7 @@ const EventRow = ({ data }) => {
                 <SquareIcon background={colour} className="mr-2" />    
                 <b className="mr-auto"> {topic === 'NewSquare' ? 'Square Claim' : 'Colour Change'}</b>
             </Data>
-
+            { showID &&
             <Data >
                 <Button
                     variant='link'
@@ -49,7 +49,7 @@ const EventRow = ({ data }) => {
                     Square  <b>#{id}</b>
                 </Button>
             </Data>
-
+            }
             <Data>
                 {topic === 'NewSquare' ? 'with' : 'to'} colour <b>{colour}</b>
             </Data>

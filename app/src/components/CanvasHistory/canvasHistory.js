@@ -49,7 +49,7 @@ const CanvasHistory = () => {
             listUserEvents.push(element)
         }
         return(
-            <EventRow data={element} key={element.txId} />
+            <EventRow data={element} key={element.txId} showID={true}/>
         )
     })
 

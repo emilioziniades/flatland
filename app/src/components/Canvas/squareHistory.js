@@ -23,7 +23,7 @@ const SquareHistory = () => {
 
     let squareEventRows = listSquareEvents.map(element => {
         return(
-            <EventRow data={element} key={element.txId} />
+            <EventRow data={element} key={element.txId} showID={false}/>
         )
     }) 
 
@@ -32,7 +32,6 @@ const SquareHistory = () => {
             <TableHead>
                 <TableRow>
                 <Head> Event </Head>
-                <Head> Square # </Head>
                 <Head> Colour </Head>
                 <Head> Date </Head>
                 <Head> Receipt </Head>
