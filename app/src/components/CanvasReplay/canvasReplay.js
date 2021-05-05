@@ -15,35 +15,29 @@ const CanvasReplay = () => {
     const min = history[history.length - 1].blockHeight
 
     const [ range, setRange ] = useState(min)
-
     const [snapshot, setSnapshot] = useState({})
-
     const [ isReplay, setIsReplay ] = useState(false)
 
 
     const handleChange = event => {
 
-        // console.log('Change being handled!')
-        // console.log(event.target.value)
-
         setRange(event.target.value)
         let squaresSnapshot = {}
 
-        // change colours
         for (var i = history.length - 1; i >= 0; i--) {
-            
             let currentEvent = history[i]
             if (currentEvent.blockHeight > range) { break }
             squaresSnapshot[currentEvent.id] = currentEvent.colour
         }
-        // console.log('did we get here')
-        setSnapshot(squaresSnapshot)
-        // console.log(squaresSnapshot)
 
+        setSnapshot(squaresSnapshot)
     }
 
     const handleClick = () => {
-       
+        
+        const replayInterval = 50
+        const replayIncrement = 1000
+
         setIsReplay(true)
         
         var input = document.querySelector(".flatland-replay-input")
@@ -58,15 +52,14 @@ const CanvasReplay = () => {
             nativeInputValueSetter.call(input, x)
             var inputEvent = new Event("input", { bubbles: true })
             input.dispatchEvent(inputEvent)
-            x += 1000
+            x += replayIncrement
 
             if (x > max) {
-                setRange(min)
                 setIsReplay(false)
                 clearInterval(myInterval)
             }
 
-        }, 50)
+        }, replayInterval)
 
     }
 
