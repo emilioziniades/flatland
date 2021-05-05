@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Container, Row, Form } from 'react-bootstrap'
+import { Container, Row, Form, Button  } from 'react-bootstrap'
 
 import { BlockchainContext } from '../stateProvider'
 import Grid from '../Canvas/grid'
@@ -13,10 +13,30 @@ const CanvasReplay = () => {
     const max = history[0].blockHeight
     const min = history[history.length - 1].blockHeight
 
-    const [ range, setRange ] = useState(min + 1000)
-    const handleChange = event => setRange(event.target.value)
+    const [ range, setRange ] = useState(min)
 
-    const [snapshot, setSnapshot ] = useState()
+    const [snapshot, setSnapshot] = useState({})
+
+
+    const handleChange = event => {
+
+        setRange(event.target.value)
+        let squaresSnapshot = {}
+
+        for (var i = history.length - 1; i >= 0; i--) {
+            let currentEvent = history[i]
+            if (currentEvent.blockHeight > range) { break }
+            squaresSnapshot[currentEvent.id] = currentEvent.colour
+        }
+
+        setSnapshot(squaresSnapshot)
+
+    }
+
+    const handleClick = event => {
+        setRange((max + min) / 2 )
+    }
+
 
     const gridLength = 256
     let counter = 1
@@ -27,20 +47,10 @@ const CanvasReplay = () => {
         counter++
     }
 
-    let squaresSnapshot = {}
-    let historyCopy = history
-    // historyCopy = historyCopy.reverse()
-
-    for (let event of historyCopy) {
-        if (event.blockHeight < range) {
-            squaresSnapshot[event.id] = event.colour
-        }
-    }
-    // console.log(squaresSnapshot)
 
     let canvas = grid.map((element, index) => {
         return (
-                <GridItem as='div' key={element} colour={squaresSnapshot[index + 1]} ></GridItem>
+                <GridItem as='div' key={element} colour={snapshot[index + 1]} ></GridItem>
                 )
             })
 
@@ -53,7 +63,7 @@ const CanvasReplay = () => {
                 </Row>
                 <Form className='m-5'>
                 <Form.Group controlId="formBasicRange">
-                    <Form.Label>Range</Form.Label>
+                    <Form.Label>Blockheight: {range}</Form.Label>
                     <Form.Control 
                         type="range"
                         value={range}
@@ -62,9 +72,8 @@ const CanvasReplay = () => {
                         onChange={handleChange} />
                 </Form.Group>
                 </Form>
-            <hr />
-            <Row className='justify-content-center'>
-                <h1>{range}</h1>
+            <Row className='justify-content-center m-5'>
+                <Button variant='success' onClick={handleClick}> Replay! </Button>
             </Row>
             </Container>
             
