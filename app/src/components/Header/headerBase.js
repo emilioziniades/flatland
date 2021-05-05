@@ -4,6 +4,7 @@ import { Nav, Navbar, Container } from 'react-bootstrap'
 import { Link } from 'gatsby'
 
 import pallette from '../../images/gatsby-icon.png'
+import StyledLink from './styledLink'
 
 const HeaderBase = ({ children }) => {
     return (
@@ -30,14 +31,14 @@ const HeaderBase = ({ children }) => {
                 <Navbar.Toggle aria-controls='basic-navbar-nav' />
                 <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='mr-auto'>
-                <Nav.Item>
+                <Nav.Item className='ml-2'>
                     <Nav.Link as='div'>
-                        <Link to="/">Home</Link>
+                        <StyledLink to="/">Home</StyledLink>
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link as='div'>
-                        <Link to="/explainer">Explainer</Link>
+                        <StyledLink to="/explainer">Explainer</StyledLink>
                     </Nav.Link>
                 </Nav.Item>
                 </Nav>

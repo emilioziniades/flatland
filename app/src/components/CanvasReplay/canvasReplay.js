@@ -108,7 +108,12 @@ const CanvasReplay = () => {
                 </Form.Group>
                 </Form>
             <Row className='justify-content-center m-5'>
-                <Button variant={ isReplay ? 'danger' : 'success' } onClick={handleClick}> { isReplay ? 'replaying...' : 'Replay!' }  </Button>
+                <Button 
+                    variant={ isReplay ? 'danger' : 'success' } 
+                    onClick={handleClick}
+                    disabled={ isReplay ? true : false }> 
+                    { isReplay ? 'replaying...' : 'Replay!' }
+                </Button>
             </Row>
             </Container>
             
