@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Container, Row, Form, Button  } from 'react-bootstrap'
+import { useInterval } from 'ahooks'
 
 import { BlockchainContext } from '../stateProvider'
 import Grid from '../Canvas/grid'
@@ -17,24 +18,56 @@ const CanvasReplay = () => {
 
     const [snapshot, setSnapshot] = useState({})
 
+    const [ isReplay, setIsReplay ] = useState(false)
+
 
     const handleChange = event => {
+
+        // console.log('Change being handled!')
+        // console.log(event.target.value)
 
         setRange(event.target.value)
         let squaresSnapshot = {}
 
+        // change colours
         for (var i = history.length - 1; i >= 0; i--) {
+            
             let currentEvent = history[i]
             if (currentEvent.blockHeight > range) { break }
             squaresSnapshot[currentEvent.id] = currentEvent.colour
         }
-
+        // console.log('did we get here')
         setSnapshot(squaresSnapshot)
+        // console.log(squaresSnapshot)
 
     }
 
-    const handleClick = event => {
-        setRange((max + min) / 2 )
+    const handleClick = () => {
+       
+        setIsReplay(true)
+        
+        var input = document.querySelector(".flatland-replay-input")
+        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+            window.HTMLInputElement.prototype,
+            "value"
+          ).set
+        
+        var x = min
+
+        var myInterval = setInterval(() => {
+            nativeInputValueSetter.call(input, x)
+            var inputEvent = new Event("input", { bubbles: true })
+            input.dispatchEvent(inputEvent)
+            x += 1000
+
+            if (x > max) {
+                setRange(min)
+                setIsReplay(false)
+                clearInterval(myInterval)
+            }
+
+        }, 50)
+
     }
 
 
@@ -50,7 +83,7 @@ const CanvasReplay = () => {
 
     let canvas = grid.map((element, index) => {
         return (
-                <GridItem as='div' key={element} colour={snapshot[index + 1]} ></GridItem>
+                <GridItem as='div' key={element} colour={snapshot[index + 1]} />
                 )
             })
 
@@ -62,18 +95,20 @@ const CanvasReplay = () => {
                         </Grid>
                 </Row>
                 <Form className='m-5'>
-                <Form.Group controlId="formBasicRange">
+                <Form.Group controlId='formBasicRange'>
                     <Form.Label>Blockheight: {range}</Form.Label>
                     <Form.Control 
-                        type="range"
+                        type='range'
                         value={range}
                         min={min}
                         max={max}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        className='flatland-replay-input'
+                        disabled={ isReplay ? true : false } />
                 </Form.Group>
                 </Form>
             <Row className='justify-content-center m-5'>
-                <Button variant='success' onClick={handleClick}> Replay! </Button>
+                <Button variant={ isReplay ? 'danger' : 'success' } onClick={handleClick}> { isReplay ? 'replaying...' : 'Replay!' }  </Button>
             </Row>
             </Container>
             
