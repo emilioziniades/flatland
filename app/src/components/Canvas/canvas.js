@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useMemo } from 'react'
 import { useInterval } from 'ahooks'
 import { Row, Col } from 'react-bootstrap'
 import $ from 'jquery'
@@ -9,7 +9,7 @@ import SidePanel from '../SidePanel/sidePanel'
 import CoordinateViewer from './coordinateViewer'
 import ToggleOwnedSquares from './toggleOwnedSquares'
 import { BlockchainContext } from '../stateProvider'
-import { CoordinateContext } from '../../context/CoordinateContext'
+import { CoordinateContext, HighlightContext } from '../canvasContextProvider'
 
 const gridLength = 256
 let counter = 1
@@ -18,8 +18,13 @@ const Canvas = () => {
 
     const { state } = useContext(BlockchainContext)
     const { account, squares, totalSupply, maxSupply } = state || {}
-    const [currentCoord, setCoord] = useState('.')
 
+    const [ currentCoord, setCoord ] = useState('_')
+    const providerSetCoord = useMemo(() => ({currentCoord, setCoord}), [currentCoord, setCoord])
+    
+    const [ highlightSquares, setHighlightSquares ] = useState(false)
+    const providerSetHighlight = useMemo(() => ({highlightSquares, setHighlightSquares}), [highlightSquares, setHighlightSquares])
+        
     const grid = [];
     for (let row = 0; row < gridLength; row++) {
         grid.push(counter)
@@ -70,7 +75,8 @@ const Canvas = () => {
             })
     
   return (
-    <CoordinateContext.Provider value={{ currentCoord, setCoord }}>
+    <CoordinateContext.Provider value={providerSetCoord}>
+        <HighlightContext.Provider value={providerSetHighlight}>
                 <Row>
                     <Col>
                         {account ? <ToggleOwnedSquares /> : <div />}      
@@ -91,6 +97,7 @@ const Canvas = () => {
                         <SidePanel />
                     </Col>
                 </Row>
+        </HighlightContext.Provider>
     </CoordinateContext.Provider>
     )}
 

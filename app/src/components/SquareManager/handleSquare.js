@@ -7,7 +7,7 @@ import { Square, Data, TableRow } from './tableComponents'
 
 const HandleSquare = ({ squareId, squareColour }) => {
 
-    const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
+    const { setSelectedSquare } = useContext(SquareContext)
 
     const handleClick = (e) => {
         setSelectedSquare(parseInt(squareId))

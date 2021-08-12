@@ -6,7 +6,7 @@ import SquareStats from './squareStats'
 
 const SidePanel = () => {
 
-    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
+    const {selectedSquare} = useContext(SquareContext)
 
     return (
         <span>

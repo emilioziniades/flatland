@@ -36,7 +36,7 @@ const SquareStats = () => {
 
     const { state } = useContext(BlockchainContext)
     const { account, squares, ownedSquares } = state || {}
-    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
+    const { selectedSquare, setSelectedSquare } = useContext(SquareContext)
 
     const buttonId = '#node-' + selectedSquare
     const squareColour = (squares[selectedSquare - 1] > -1 ? decimalToHexColour(squares[selectedSquare - 1]) : $(buttonId).css('background-color'))
@@ -88,7 +88,9 @@ const SquareStats = () => {
                     </div>
             }
 
-            <Button onClick={handleShow}>Show Square History</Button>  
+            {account ? <Button onClick={handleShow}>Show Square History</Button> : <div></div>}
+            
+              
             
             <Modal size="lg" show={showHistory} onHide={handleClose}>
                 <Modal.Header closeButton>

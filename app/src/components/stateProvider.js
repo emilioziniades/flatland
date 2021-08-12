@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useMemo } from 'react'
 import { blockchainReducer } from '../utils/blockchainUtils'
 
 export const BlockchainContext = React.createContext(null)
@@ -22,10 +22,12 @@ const StateWrapper = ({ children }) => {
     const [state, dispatch] = useReducer(blockchainReducer, initialState)
     
     const [ selectedSquare, setSelectedSquare ] = useState(null)
+    
+    const providerSelectSquare = useMemo(() => ({selectedSquare, setSelectedSquare}), [selectedSquare, setSelectedSquare])
 
     return(
         <BlockchainContext.Provider value={{ state, dispatch }}>
-            <SquareContext.Provider value={[ selectedSquare, setSelectedSquare ]}>
+            <SquareContext.Provider value={providerSelectSquare}>
             {children}
             </SquareContext.Provider>
         </BlockchainContext.Provider>

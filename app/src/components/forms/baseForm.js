@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Col, Form, Button, InputGroup, Spinner } from 'react-bootstrap'
+import { Form, Button, Modal, Spinner } from 'react-bootstrap'
 import { ChromePicker } from 'react-color'
 import { toast } from 'react-toastify'
 
 import EtherscanLink from './etherscanLink'
 
 
-const BaseForm = ({ callback, message, givenId, currentColour }) => {
+const BaseForm = ({ callback, message, currentColour }) => {
     
     const toastOptions = {
         position: "bottom-center",
@@ -17,18 +17,16 @@ const BaseForm = ({ callback, message, givenId, currentColour }) => {
         draggable: false,
         progress: undefined,
     }
+
     const [input, setInput] = useState('')
     const [loading, setLoading] = useState(false)
-    const [pickerVisible, setPickerVisible] = useState(false)
 
-    const handlePickerOpen = () => {
-        setPickerVisible(true)
+    const [showForm, setShowForm] = useState(false)
+    const handleFormOpen = () => {
+        setShowForm(true)
         input === '' ? setInput(currentColour) : setInput(input)
     }
-
-    const handlePickerClose = () => {
-        setPickerVisible(false)
-    }
+    const handleFormClose = () => setShowForm(false)
 
     const handleChange = (event) => setInput(event.hex)
 
@@ -36,8 +34,21 @@ const BaseForm = ({ callback, message, givenId, currentColour }) => {
         event.preventDefault()
 
         setLoading(true)
-        setPickerVisible(false) 
         setInput('')
+        
+        toast.info(
+            'processing transaction... [To-Do: Add loading animation here]', {
+                position: "bottom-center",
+                autoClose: false,
+                closeButton: false,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                toastId: 'loading_toast',
+            }
+        )
 
         const txHash = await callback(input)
 
@@ -53,13 +64,27 @@ const BaseForm = ({ callback, message, givenId, currentColour }) => {
             toast.error('😢 Error processing transaction.', toastOptions)
         }
         setLoading(false)
+        toast.dismiss('loading_toast')
+        handleFormClose()
     }
 
     return(
-        <Form onSubmit={handleSubmit}>
-            <Form.Row className='p-2 justify-content-center'>
-                <Form.Group as={Col}>
-                <InputGroup>
+        <div>
+            <Button onClick={handleFormOpen}>{message}</Button>
+        
+            <Modal
+                show={showForm}
+                onHide={handleFormClose}
+                //backdrop={loading ? 'static' : true}
+            >
+                <Modal.Header>
+                    <Modal.Title> 
+                        {message === 'change colour' ? 'Change colour of square ' : 'claim this square'}
+                    </Modal.Title>
+                </Modal.Header>
+
+                <Form onSubmit={handleSubmit}>
+                <Modal.Body>   
                     <Form.Control 
                         readOnly
                         type='text'
@@ -67,37 +92,36 @@ const BaseForm = ({ callback, message, givenId, currentColour }) => {
                         placeholder= 'choose colour'
                         value={input}
                     />
-                    <InputGroup.Append>
-                    <Button
-                        onClick={ pickerVisible ? handlePickerClose : handlePickerOpen}
-                        variant='outline-primary'
-                        >
-                    { pickerVisible ? 'hide picker' : 'show picker' }
-                    </Button>
-                    </InputGroup.Append>
-                </InputGroup>
-                    { pickerVisible && (
                     <ChromePicker 
                         color={input} 
                         disableAlpha={true}
                         onChange={handleChange}
                         onChangeChangeComplete={handleChange} 
                     />
-                    )}
-                </Form.Group>
-                <Form.Group as={Col}>
+                    <p><i>*There is a small gas fee associated with changes to the flatland</i></p>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button 
+                        variant="danger"
+                        disabled= {loading}
+                        onClick={handleFormClose}
+                    >
+                        Cancel 
+                    </Button>
+
                     <Button 
                         type='submit'
                         variant={ loading ? 'warning' : 'primary'}
-                        className='mr-5'
                         disabled={ loading || !input }
                     > 
                         { loading ? 'awaiting confirmation...' : message }
-                    {loading && <Spinner animation="border" as="span" variant="dark" size="sm" /> }
+                        {loading && <Spinner animation="border" as="span" variant="dark" size="sm" /> }
                     </Button>
-                </Form.Group>
-            </Form.Row>
-        </Form>
+                </Modal.Footer>
+                </Form>
+            </Modal>
+        </div>
         )
 }
 

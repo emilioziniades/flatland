@@ -3,18 +3,19 @@ import $ from 'jquery'
 
 import GridItem from './gridItem'
 import { BlockchainContext, SquareContext } from '../stateProvider'
-import { CoordinateContext } from '../../context/CoordinateContext'
+import { CoordinateContext, HighlightContext } from '../canvasContextProvider'
 import { getSquareColumn, getSquareRow, invertColour, coordToString } from '../../utils/utilityFunctions'
 
 const Square = ({ id }) => {
 
     const { state } = useContext(BlockchainContext)
-    const { account, squares } = state || {}
-    const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
+    const { squares, ownedSquares } = state || {}
+    const { selectedSquare, setSelectedSquare } = useContext(SquareContext)
     const { setCoord } = useContext(CoordinateContext)
+    const { highlightSquares } = useContext(HighlightContext)
+
 
     const squareId = parseInt(id.split('-')[1])
-
 
     //Using white as placeholder colours for unclaimed squares, in future we should change that
     //this would require changing invertedColour function to handle RGB conversion too
@@ -23,43 +24,19 @@ const Square = ({ id }) => {
     const squareColour = (squares ? squares[squareId - 1] > -1 ? squares[squareId - 1] : '#ffffff': '#ffffff' )
     const invertedColour = (squares ? squares[squareId - 1] > -1 ? invertColour(squareColour) : '#000000' : '#000000' )
 
-    const hoveredSquareColumn = {
-        'opacity': '0.5',
-    }
+    //Hover CSS states
+    const hoveredSquareColumn = {'opacity': '0.5',}
+    const hoveredSquareRow = {'opacity': '0.5',}
+    const unhoveredSquareColumn = {'opacity': '1',}
+    const unhoveredSquareRow = {'opacity': '1',}
 
-    const hoveredSquareRow = {
-        'opacity': '0.5',
-    }
-
-    const unhoveredSquareColumn = {
-        'opacity': '1',
-    }
-
-    const unhoveredSquareRow = {
-        'opacity': '1',
-    }
-
-    //In future we can use this if we want to change behaviours from users who are logged in vs not
-    //This is instead handled on the Side Panel level now (Not logged in > Cannot claim square)
-    const routeClickEvent = (e) => { account ? handleClick(e) : handleClick(e) }       
-
-    // I have removed the jquery calls here, and replaced them with styled-components props interactions
-    // between square and gridItem
-    const handleClick = (e) => {
-        if (selectedSquare === squareId) {
-            setSelectedSquare(null)
-        }
-        else {
-            setSelectedSquare(squareId)
-        }
-    }
+    const handleClick = (e) => {(selectedSquare === squareId) ? setSelectedSquare(null) : setSelectedSquare(squareId)}
 
     const handleEnter = (e) => {
         e.target.style.opacity = '0.5'
 
         const column = getSquareColumn(squareId)
         const row = getSquareRow(squareId)
-
         for (let columnSquare of column) {
             let nodeId = '#node-' + columnSquare
             $(nodeId).css(hoveredSquareColumn)
@@ -88,17 +65,21 @@ const Square = ({ id }) => {
             $(nodeId).css(unhoveredSquareRow)
         }
 
-        setCoord('.')
+        setCoord('_')
     }
 
+    let squareSelected = selectedSquare === squareId
+    let highlightSquare = (ownedSquares[squareId]>0) && highlightSquares
+    
     return (
         <GridItem
             className='node grid-item'
             id={id}
-            onClick={routeClickEvent}
+            onClick={handleClick}
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}
-            selected={ selectedSquare === squareId ? true : false }
+            selected={ squareSelected }
+            highlight= { highlightSquare }
             colour={squareColour}
             inverseColour={invertedColour}
         >
