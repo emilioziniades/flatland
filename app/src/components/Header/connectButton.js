@@ -12,7 +12,7 @@ const ConnectButton = () => {
     const [loading, setLoading] = useState(false)
     const [loadingLogout, setLoadingLogout] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
-    const [selectedSquare, setSelectedSquare] = useContext(SquareContext)
+    const {selectedSquare, setSelectedSquare} = useContext(SquareContext)
 
     const handleClick = async () => {
 

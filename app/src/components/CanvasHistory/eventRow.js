@@ -19,7 +19,7 @@ const SquareIcon = styled.div`
 const EventRow = ({ data, showID }) => {
 
     const { date, id, colour, topic, txId } = data
-    const [ selectedSquare, setSelectedSquare ] = useContext(SquareContext)
+    const { setSelectedSquare } = useContext(SquareContext)
 
     const handleClick = (e) => {
         setSelectedSquare(id)

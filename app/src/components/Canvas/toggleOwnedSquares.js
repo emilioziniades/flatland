@@ -1,58 +1,23 @@
 import React, { useContext, useState } from 'react'
 import { Form } from 'react-bootstrap'
-import $ from 'jquery'
 
-import { BlockchainContext, SquareContext } from '../stateProvider'
-import { zip, invertColour } from '../../utils/utilityFunctions'
+import { BlockchainContext } from '../stateProvider'
+import { HighlightContext } from '../canvasContextProvider'
+import { zip } from '../../utils/utilityFunctions'
 
 const ToggleOwnedSquares = () => {
 
     const { state } = useContext(BlockchainContext)
-    const { ownedSquares, squares } = state
+    const { ownedSquares } = state
     const userSquares = zip(ownedSquares)
     const [checked, setChecked] = useState(false)
-    const [selectedSquare] = useContext(SquareContext)
-    const squareColour = (squares[selectedSquare - 1] > -1 ? squares[selectedSquare - 1] : '#ffffff')
-    const invertedColour = (squares[selectedSquare - 1] > -1 ? invertColour(squareColour) : '#000000')
 
-    const chosenSquare = {
-        'border': '2px solid ' + invertedColour,
-    }
-    
-    const highlightedSquare = {
-        'border': '2px solid #FFD700',
-    }
+    const { highlightSquares, setHighlightSquares } = useContext(HighlightContext)
 
-    const unHighlightedSquare = {
-        'border': 'none',
-    }
 
-    const highlightSquares = (e) => {
-        setChecked(e.currentTarget.checked)
-
-        for (let ownedSquare of userSquares) {
-            let nodeId = '#node-' + ownedSquare[0]
-            $(nodeId).css(highlightedSquare)
-        }
-    }
-
-    const unHighlightSquares = (e) => {
-        setChecked(e.currentTarget.checked)
-
-        let selectedSquareString = ''
-        if (selectedSquare) {
-            selectedSquareString = selectedSquare.toString()
-        }
-
-        for (let ownedSquare of userSquares) {
-            let nodeId = '#node-' + ownedSquare[0]
-
-            if (selectedSquareString === ownedSquare[0]) {
-                $(nodeId).css(chosenSquare)
-            } else {
-                $(nodeId).css(unHighlightedSquare)
-            }
-        }
+    const toggleHighlight = (e) => {
+        setChecked(!checked)
+        setHighlightSquares(!highlightSquares)
     }
 
     return (
@@ -62,7 +27,7 @@ const ToggleOwnedSquares = () => {
                 id='toggleOwnedSquares'
                 checked = {checked}
                 value="1"
-                onChange={checked ? unHighlightSquares : highlightSquares}
+                onChange={toggleHighlight}
                 label={checked ?
                         'Hide Owned Squares'
                         :
