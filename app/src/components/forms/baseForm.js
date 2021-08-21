@@ -4,9 +4,11 @@ import { ChromePicker } from 'react-color'
 import { toast } from 'react-toastify'
 
 import EtherscanLink from './etherscanLink'
+import SquareHistoryButton from '../Canvas/squareHistoryButton'
+import { coordToString } from '../../utils/utilityFunctions'
 
 
-const BaseForm = ({ callback, message, currentColour }) => {
+const BaseForm = ({ callback, message, currentColour, indexSquare }) => {
     
     const toastOptions = {
         position: "bottom-center",
@@ -17,6 +19,8 @@ const BaseForm = ({ callback, message, currentColour }) => {
         draggable: false,
         progress: undefined,
     }
+
+    const squareCoords = coordToString(indexSquare)
 
     const [input, setInput] = useState('')
     const [loading, setLoading] = useState(false)
@@ -68,6 +72,14 @@ const BaseForm = ({ callback, message, currentColour }) => {
         handleFormClose()
     }
 
+    let modalHeaderText = ''
+    
+    if (message === 'change colour') {
+        modalHeaderText = 'change colour of Square #' + indexSquare
+    } else {
+        modalHeaderText = 'claim Square #' + indexSquare
+    }
+
     return(
         <div>
             <Button onClick={handleFormOpen}>{message}</Button>
@@ -79,12 +91,21 @@ const BaseForm = ({ callback, message, currentColour }) => {
             >
                 <Modal.Header>
                     <Modal.Title> 
-                        {message === 'change colour' ? 'Change colour of square ' : 'claim this square'}
+                        {modalHeaderText}
                     </Modal.Title>
                 </Modal.Header>
 
                 <Form onSubmit={handleSubmit}>
                 <Modal.Body>   
+                    {/* Proof of concept - adding info to modal body */}
+                                        
+                    <h6>Square #{indexSquare}</h6>    
+                    <h6>Co-ordinates: {squareCoords}</h6>
+                    <h6>Current colour: {currentColour}</h6>    
+                    
+                    <SquareHistoryButton indexSquare = {indexSquare} />
+                    <p> </p>
+                    
                     <Form.Control 
                         readOnly
                         type='text'
@@ -98,6 +119,7 @@ const BaseForm = ({ callback, message, currentColour }) => {
                         onChange={handleChange}
                         onChangeChangeComplete={handleChange} 
                     />
+                    
                     <p><i>*There is a small gas fee associated with changes to the flatland</i></p>
                 </Modal.Body>
 
@@ -107,7 +129,7 @@ const BaseForm = ({ callback, message, currentColour }) => {
                         disabled= {loading}
                         onClick={handleFormClose}
                     >
-                        Cancel 
+                        cancel 
                     </Button>
 
                     <Button 
