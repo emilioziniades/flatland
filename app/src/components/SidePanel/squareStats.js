@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { Row, Alert, Badge, Button, Modal } from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { Alert, Badge } from 'react-bootstrap'
 import styled from 'styled-components'
 import $ from 'jquery'
 
@@ -8,7 +8,8 @@ import { coordToString, decimalToHexColour } from '../../utils/utilityFunctions'
 import ManageForm from '../forms/manageForm'
 import MintForm from '../forms/mintForm'
 import ConnectButton from '../Header/connectButton'
-import SquareHistory from '../Canvas/squareHistory'
+
+import SquareHistoryButton from '../Canvas/squareHistoryButton'
 
 
 const SquareIcon = styled.div`
@@ -41,11 +42,6 @@ const SquareStats = () => {
     const buttonId = '#node-' + selectedSquare
     const squareColour = (squares[selectedSquare - 1] > -1 ? decimalToHexColour(squares[selectedSquare - 1]) : $(buttonId).css('background-color'))
     const coords = coordToString(selectedSquare)
-    const [showHistory, setShowHistory] = useState(false)
-
-    const handleClose = () => setShowHistory(false);
-    const handleShow = () => setShowHistory(true);
-
 
     return (
         <Alert
@@ -57,50 +53,52 @@ const SquareStats = () => {
                 setSelectedSquare(null)
             }}>
 
-            {
-                (squares[selectedSquare - 1] > -1) ?
-                    <div>
-                        <span>
-                            <SquareIcon background={squareColour} className='mr-2' />
-                            <SquareName className='mr-auto'> Square # {selectedSquare} <Badge pill variant='info'>Claimed</Badge> </SquareName>
-                        </span>
-                        <br />
-                        
-                        <h6> Co-ordinates : {coords} </h6>
-                        <h6> Owner : {(ownedSquares[selectedSquare] > -1) ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[selectedSquare - 1])} </h6>
-                        <Row className='justify-content-center'>
-                            {account ? (ownedSquares[selectedSquare] > -1) ? <ManageForm squareId={selectedSquare} /> : <div /> : <ConnectButton />}
-                            </Row>
-                    </div>
-                    :
-                    <div>
-                        <span>
-                            <SquareIcon background={squareColour} className='mr-2'/>
-                            <SquareName className='mr-auto'> Square # {selectedSquare} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
-                        </span>
-                        <br />
-                        
-                        <h6> Co-ordinates : {coords} </h6>
-                        <h6> Claim it </h6>
-                        <Row className='justify-content-center'>
-                            {account ? <MintForm /> : <ConnectButton />}
-                        </Row>
-                    </div>
+            { (squares[selectedSquare - 1] > -1) ?
+                <div>
+                    <span>
+                        <SquareIcon background={squareColour} className='mr-2' />
+                        <SquareName className='mr-auto'> Square # {selectedSquare} <Badge pill variant='info'>Claimed</Badge> </SquareName>
+                    </span>
+                    <br />
+                    
+                    <h6> Co-ordinates : {coords} </h6>
+                    <h6> Owner : {(ownedSquares[selectedSquare] > -1) ? 'You!' : 'Someone else'} <br /> Current colour : {decimalToHexColour(squares[selectedSquare - 1])} </h6>
+
+                    { account ? (ownedSquares[selectedSquare] > -1) ?
+                        <div>
+                            <ManageForm squareId={selectedSquare} />
+                            <p> </p>
+                            <SquareHistoryButton indexSquare = {selectedSquare} />
+                        </div>
+                        :
+                        <SquareHistoryButton indexSquare = {selectedSquare} />
+                        :
+                        <ConnectButton />
+                    }
+
+                </div>
+                :
+                <div>
+                    <span>
+                        <SquareIcon background={squareColour} className='mr-2'/>
+                        <SquareName className='mr-auto'> Square # {selectedSquare} <Badge pill variant='warning'><i>Unclaimed</i></Badge> </SquareName>
+                    </span>
+                    <br />
+                    
+                    <h6> Co-ordinates : {coords} </h6>
+                    <h6> Claim it </h6>
+                                                
+                    { account ?
+                        <div>
+                            <MintForm />
+                            <p> </p>
+                            <SquareHistoryButton indexSquare = {selectedSquare} />
+                        </div>
+                        :
+                        <ConnectButton />
+                    }
+                </div>
             }
-
-            {account ? <Button onClick={handleShow}>Show Square History</Button> : <div></div>}
-            
-              
-            
-            <Modal size="lg" show={showHistory} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>History of Square # {selectedSquare}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <SquareHistory squareId={selectedSquare} />
-                </Modal.Body>
-            </Modal>
-
         </Alert>
     )
 }

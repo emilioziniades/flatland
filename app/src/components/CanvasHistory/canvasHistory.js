@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Row, Table, Pagination, PageItem, Form } from 'react-bootstrap'
-import { blockHeightToDate } from '../../utils/blockchainUtils'
+import { batchEventBlockHeightToDate } from '../../utils/blockchainUtils'
 
 import { BlockchainContext } from '../stateProvider'
 import EventRow from './eventRow'
@@ -9,42 +9,16 @@ import { TableHead, Head, TableBody, TableRow } from '../SquareManager/tableComp
 
 const CanvasHistory = () => {
 
-    const { state, dispatch } = useContext(BlockchainContext)
-    const { provider, connected, history, ownedSquares } = state
+    const { state } = useContext(BlockchainContext)
+    const { provider, history, ownedSquares } = state
 
     const [checked, setChecked] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const eventsPerPage = 50
+    const [loadingDates, setLoadingDates] = useState(true)
+    const eventsPerPage = 30
 
-    const replaceBlockHeightWithDate = async () => {
-
-        console.log('Starting date replacement')
-        
-        for (let i = 0; i < history.length; i++) {
-            try {
-                let newHistory = history
-                const blockHeight = newHistory[i].blockHeight
-                const date = await blockHeightToDate(blockHeight, provider)
-                newHistory[i].date = date
-                dispatch({type: 'UPDATE-LOGS', payload: newHistory})
-
-            }
-            catch (e) {
-
-            }
-        }
-
-        console.log('finished date replacement')
-    }
-
-    useEffect(() => {
-        if (connected) {
-            replaceBlockHeightWithDate()
-        } 
-    }, [])
-
-    let listUserEvents = []
-    let events = history.map(element => {
+        let listUserEvents = []
+    let allEvents = history.map(element => {
         if (ownedSquares[element.id] > -1) {
             listUserEvents.push(element)
         }
@@ -52,8 +26,6 @@ const CanvasHistory = () => {
             <EventRow data={element} key={element.txId} showID={true}/>
         )
     })
-
-    // console.log(listUserEvents)
 
     let userEvents = listUserEvents.map(element => {
         return(
@@ -63,11 +35,17 @@ const CanvasHistory = () => {
 
     const lastEventOnPage = currentPage * eventsPerPage
     const firstEventOnPage = lastEventOnPage - eventsPerPage
-    const eventsOnAllPage = events.slice(firstEventOnPage, lastEventOnPage)
+    let indexEvents = checked ? listUserEvents.slice(firstEventOnPage, lastEventOnPage) : history.slice(firstEventOnPage, lastEventOnPage)
+    const eventsOnAllPage = allEvents.slice(firstEventOnPage, lastEventOnPage)
     const eventsOnUserPage = userEvents.slice(firstEventOnPage, lastEventOnPage)
-    const totalAllPages = Math.ceil(events.length/eventsPerPage)
+    const totalAllPages = Math.ceil(allEvents.length/eventsPerPage)
     const totalUserPages = Math.ceil(userEvents.length/eventsPerPage)
-
+    
+    const callBatchDateFunction = async() => {
+        await batchEventBlockHeightToDate(indexEvents, provider)
+        setLoadingDates(false)
+    }
+    
     const allPageNumbers = [];
     for (let i = 1; i <= totalAllPages; i++) {
         allPageNumbers.push(i)
@@ -80,7 +58,12 @@ const CanvasHistory = () => {
 
     const handlePageClick = (page) => {
         setCurrentPage(page)
+        setLoadingDates(true)
     }
+
+    useEffect(() => {
+        callBatchDateFunction()
+    }, [currentPage, checked, allEvents, userEvents])
  
     let allPages = allPageNumbers.map(page => {
         return(
@@ -101,6 +84,7 @@ const CanvasHistory = () => {
     const handleToggle = () => {
         setCurrentPage(1)
         setChecked(!checked)
+        setLoadingDates(true)
     }
 
     let columnTitles = ['Event', 'Square #', 'Colour', 'Date', 'Receipt']
@@ -124,9 +108,9 @@ const CanvasHistory = () => {
                     value="1"
                     onChange={handleToggle}
                     label={checked ?
-                            'Show all transaction history'
+                            'showing only my transaction history'
                             :
-                            'Only show my transaction history'}
+                            'showing all transaction history'}
                 />
             </Form>
         </Row>

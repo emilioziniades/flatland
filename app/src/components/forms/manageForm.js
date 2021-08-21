@@ -50,6 +50,7 @@ const ManageForm = ({ squareId }) => {
             message= 'change colour'
             key={squareId}
             currentColour={currentColour}
+            indexSquare = {squareId}
              />
 
         )

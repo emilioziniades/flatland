@@ -9,6 +9,8 @@ const MintForm = () => {
     const { state, dispatch } = useContext(BlockchainContext)
     const { contract, squares } = state
 
+    const squareId = squares.length + 1
+
     const mintSquare = async (input) => {
 
         try {
@@ -17,7 +19,7 @@ const MintForm = () => {
             let tx = await contract.mint(squareDecimal)
             console.log(tx)
             await tx.wait(1)
-            const squareId = squares.length + 1
+            
             
             console.log(tx)
 
@@ -39,8 +41,9 @@ const MintForm = () => {
         <BaseForm
             callback={mintSquare}
             message= 'claim square'
-            currentColour='#000000' 
-            key = ''/>
+            currentColour='#ffffff' 
+            key = ''
+            indexSquare = {squareId} />
         )
 }
 

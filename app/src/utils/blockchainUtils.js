@@ -207,15 +207,30 @@ const parseLogs = (logs) => {
 }
 
 const blockHeightToDate = async (blockHeight, provider) => {
-
 	const blockData = await provider.getBlock(blockHeight)
 	let date = new Date(blockData.timestamp * 1000)
 	date = date.toLocaleDateString('en-GB') + ' at ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
 	return date
 }
 
+const batchEventBlockHeightToDate = async (batchEvents, provider) => {
+	console.log('starting replacement')
+	var t0 = performance.now()
+
+	for (let event of batchEvents) {
+		if (event.date === '') {
+			const blockHeight = event.blockHeight
+			const date = await blockHeightToDate(blockHeight, provider)
+			event.date = date
+		}
+	}
+	//dispatch({type: 'UPDATE-LOGS', payload: newHistory})
+	var t1 = performance.now()
+	console.log('time to date replace: ' + (t1 - t0) + 'ms') 
+}
+
 const claimTopic = ethers.utils.id('NewSquare(uint256,uint256)')
 const changeTopic = ethers.utils.id('ColourChange(uint256,uint256)')
 
 
-export { blockchainReducer, loadBlockchain, ropstenLinkMaker, parseLogs, blockHeightToDate, claimTopic, changeTopic }
+export { blockchainReducer, loadBlockchain, ropstenLinkMaker, parseLogs, blockHeightToDate, batchEventBlockHeightToDate, claimTopic, changeTopic }
