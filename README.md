@@ -10,7 +10,7 @@
 
 ## Demo
 
-[Here](https://flatland.gq) is a working live demo.
+[Here](https://gracious-feynman-797005.netlify.app/) is a working live demo.
 
 For testing purposes, earlier versions of Flatland will be deployed to the Ropsten Test Network. To use the app, you'll need a [Metamask](https://metamask.io/) wallet and some test Ether from a [faucet](https://faucet.ropsten.be/). Yay, free money!
 
