@@ -3,7 +3,7 @@
 <table>
 <tr>
 <td>
-  A dapp built on the Ethereum blockchain. Collaborative pixel art using the ERC721 Non-Fungible Token standard.
+  A dapp (distributed application) built on the Ethereum blockchain. Collaborative pixel art using the ERC721 Non-Fungible Token standard. For more information, read the [explainer](https://gracious-feynman-797005.netlify.app/explainer)
 </td>
 </tr>
 </table>
