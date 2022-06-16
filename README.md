@@ -3,14 +3,14 @@
 <table>
 <tr>
 <td>
-  A dapp (distributed application) built on the Ethereum blockchain. Collaborative pixel art using the ERC721 Non-Fungible Token standard. You can find more information in the <a href="https://gracious-feynman-797005.netlify.app/explainer">explainer</a>.
+  A dapp (distributed application) built on the Ethereum blockchain. Collaborative pixel art using the ERC721 Non-Fungible Token standard. You can find more information in the <a href="https://flatland.emilio.co.za/explainer">explainer</a>.
 </td>
 </tr>
 </table>
 
 ## Demo
 
-[Here](https://gracious-feynman-797005.netlify.app/) is a working live demo.
+[Here](https://flatland.emilio.co.za) is a working live demo.
 
 For testing purposes, earlier versions of Flatland will be deployed to the Ropsten Test Network. To use the app, you'll need a [Metamask](https://metamask.io/) wallet and some test Ether from a [faucet](https://faucet.ropsten.be/). Yay, free money!
 
